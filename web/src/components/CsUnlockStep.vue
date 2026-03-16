@@ -2,27 +2,19 @@
 import AuthStepLayout from '../layouts/AuthStepLayout.vue';
 import MainLayout from '../layouts/MainLayout.vue';
 
-import CsPassword from './CsPassword.vue';
 import CsStep from './CsStep.vue';
+import CsUnlock from './CsUnlock.vue';
 
 export default {
   components: {
     AuthStepLayout,
-    CsPassword,
+    CsUnlock,
     MainLayout,
   },
   extends: CsStep,
   computed: {
     title() {
-      if (this.args?.title) {
-        return this.args.title;
-      }
-      return this.args?.mode === 'setup' ? this.$t('Set a password') : this.$t('Enter your password');
-    },
-  },
-  methods: {
-    usePin() {
-      this.next('pin', this.args);
+      return this.args?.title || this.$t('Unlock');
     },
   },
 };
@@ -33,10 +25,11 @@ export default {
     :is="args.layout"
     :title="title"
   >
-    <CsPassword
+    <CsUnlock
       :mode="args.mode"
+      :method="args.method"
+      :logoutButton="args.logoutButton"
       :onSuccess="args.success"
-      :onUsePin="args.allowPin === false ? undefined : usePin"
     />
   </component>
 </template>

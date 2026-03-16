@@ -51,6 +51,13 @@ export default {
     },
   },
   methods: {
+    reset() {
+      this.password = '';
+      this.confirmPassword = '';
+      this.passwordError = undefined;
+      this.confirmPasswordError = undefined;
+      this.isLoading = false;
+    },
     async submit() {
       if (this.isLoading) return;
       this.passwordError = undefined;

@@ -1,7 +1,6 @@
 <script>
-import CsPasswordStep from '../../../components/CsPasswordStep.vue';
-import CsPinStep from '../../../components/CsPinStep.vue';
 import CsSteps from '../../../components/CsSteps.vue';
+import CsUnlockStep from '../../../components/CsUnlockStep.vue';
 
 import CryptoHistoryStepAccelerate from './CryptoHistoryStepAccelerate.vue';
 import CryptoHistoryStepAccelerateStatus from './CryptoHistoryStepAccelerateStatus.vue';
@@ -17,8 +16,7 @@ export default {
     accelerate: CryptoHistoryStepAccelerate,
     accelerateStatus: CryptoHistoryStepAccelerateStatus,
     transaction: CryptoHistoryStepTransaction,
-    password: CsPasswordStep,
-    pin: CsPinStep,
+    unlock: CsUnlockStep,
   },
 };
 </script>

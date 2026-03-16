@@ -1,7 +1,6 @@
 <script>
-import CsPasswordStep from '../../../components/CsPasswordStep.vue';
-import CsPinStep from '../../../components/CsPinStep.vue';
 import CsSteps from '../../../components/CsSteps.vue';
+import CsUnlockStep from '../../../components/CsUnlockStep.vue';
 
 import CryptoReceiveStepIndex from './CryptoReceiveStepIndex.vue';
 
@@ -11,8 +10,7 @@ export default {
   },
   steps: {
     index: CryptoReceiveStepIndex,
-    password: CsPasswordStep,
-    pin: CsPinStep,
+    unlock: CsUnlockStep,
   },
 };
 </script>

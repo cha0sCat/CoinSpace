@@ -1,7 +1,6 @@
 <script>
-import CsPasswordStep from '../../../components/CsPasswordStep.vue';
-import CsPinStep from '../../../components/CsPinStep.vue';
 import CsSteps from '../../../components/CsSteps.vue';
+import CsUnlockStep from '../../../components/CsUnlockStep.vue';
 
 import CryptoAddStepCustomToken from './CryptoAddStepCustomToken.vue';
 import CryptoAddStepFilterBlockchain from './CryptoAddStepFilterBlockchain.vue';
@@ -21,8 +20,7 @@ export default {
     filterBlockchain: CryptoAddStepFilterBlockchain,
     tokenInfo: CryptoAddStepTokenInfo,
     qr: CryptoAddStepQr,
-    password: CsPasswordStep,
-    pin: CsPinStep,
+    unlock: CsUnlockStep,
   },
 };
 </script>

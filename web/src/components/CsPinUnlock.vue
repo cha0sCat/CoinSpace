@@ -66,6 +66,12 @@ export default {
     window.removeEventListener('keydown', this.keydown);
   },
   methods: {
+    reset() {
+      this.value = '';
+      this.isLoading = false;
+      this.isWrong = false;
+      this.error = undefined;
+    },
     enter(number) {
       if (this.isLoading) return;
       if (this.value.length === this.pinLength) return;

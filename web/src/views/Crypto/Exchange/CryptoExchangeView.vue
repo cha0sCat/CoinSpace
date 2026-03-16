@@ -1,7 +1,6 @@
 <script>
-import CsPasswordStep from '../../../components/CsPasswordStep.vue';
-import CsPinStep from '../../../components/CsPinStep.vue';
 import CsSteps from '../../../components/CsSteps.vue';
+import CsUnlockStep from '../../../components/CsUnlockStep.vue';
 
 import CryptoExchangeStepAddress from './CryptoExchangeStepAddress.vue';
 import CryptoExchangeStepConfirm from './CryptoExchangeStepConfirm.vue';
@@ -31,8 +30,7 @@ export default {
     meta: CryptoExchangeStepMeta,
     confirm: CryptoExchangeStepConfirm,
     status: CryptoExchangeStepStatus,
-    password: CsPasswordStep,
-    pin: CsPinStep,
+    unlock: CsUnlockStep,
     qr: CryptoExchangeStepQr,
     poor: CryptoExchangeStepPoor,
     filterBlockchain: CryptoExchangeStepFilterBlockchain,

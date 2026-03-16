@@ -18,7 +18,7 @@ export const onShowOnHide = {
 
 export const walletSeed = {
   methods: {
-    async walletSeed(callback, { step = 'pin', keepStep = false, layout = 'MainLayout' } = {}) {
+    async walletSeed(callback, { step = 'unlock', keepStep = false, layout = 'MainLayout' } = {}) {
       try {
         if (this.$account.settings.get('1faWallet')) {
           this.next(step, {

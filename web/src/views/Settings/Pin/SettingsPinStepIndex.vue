@@ -70,9 +70,10 @@ export default {
         await this.$account.biometry.disable();
         this.isBiometryEnabled = this.$account.biometry.isEnabled;
       } else {
-        this.next('pin', {
+        this.next('unlock', {
           mode: 'deviceSeed',
           layout: 'MainLayout',
+          title: this.$t('Unlock'),
           success: async (deviceSeed) => {
             await this.$account.biometry.enable(deviceSeed);
             this.isBiometryEnabled = this.$account.biometry.isEnabled;
@@ -90,15 +91,17 @@ export default {
         this.isLoading = false;
         return;
       }
-      this.next('pin', {
+      this.next('unlock', {
         mode: 'deviceSeed',
         layout: 'MainLayout',
+        title: this.$t('Unlock'),
         success: async (deviceSeed) => {
           this.isLoading = false;
-          this.next('password', {
+          this.next('unlock', {
             mode: 'setup',
+            method: 'password',
             layout: 'MainLayout',
-            allowPin: false,
+            title: this.$t('Set a password'),
             success: async (password) => {
               const result = await this.$account.passwordUnlock.enable(deviceSeed, password);
               if (!result) return;
@@ -117,9 +120,10 @@ export default {
         this.isLoading = false;
         return;
       }
-      this.next('pin', {
+      this.next('unlock', {
         mode: 'deviceSeed',
         layout: 'MainLayout',
+        title: this.$t('Unlock'),
         success: async (deviceSeed) => {
           await this.$account.webAuthn.enable(deviceSeed);
           this.isWebAuthnEnabled = this.$account.webAuthn.isEnabled;

@@ -1,13 +1,13 @@
 <script>
 import AuthStepLayout from '../../layouts/AuthStepLayout.vue';
-import CsPin from '../../components/CsPin.vue';
 import CsStep from '../../components/CsStep.vue';
+import CsUnlock from '../../components/CsUnlock.vue';
 import { onShowOnHide, redirectToApp } from '../../lib/mixins.js';
 
 export default {
   components: {
     AuthStepLayout,
-    CsPin,
+    CsUnlock,
   },
   extends: CsStep,
   mixins: [onShowOnHide, redirectToApp],
@@ -25,19 +25,12 @@ export default {
     }
   },
   onHide() {
-    this.$refs.pin.value = '';
+    this.$refs.pin?.reset?.();
   },
   methods: {
     async success(deviceSeed) {
       await this.$account.open(deviceSeed);
       this.done();
-    },
-    usePassword() {
-      this.next('password', {
-        layout: 'AuthStepLayout',
-        mode: 'deviceSeed',
-        success: this.success,
-      });
     },
     done() {
       if (this.$account.walletsNeedSynchronization.length) {
@@ -54,17 +47,16 @@ export default {
 
 <template>
   <AuthStepLayout
-    :title="$t('Enter your PIN')"
+    :title="$t('Unlock')"
     :showBack="false"
     :centered="true"
   >
-    <CsPin
+    <CsUnlock
       v-if="isReady"
       ref="pin"
       mode="deviceSeed"
       logoutButton
       :onSuccess="success"
-      :onUsePassword="usePassword"
     />
   </AuthStepLayout>
 </template>

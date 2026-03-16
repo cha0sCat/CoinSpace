@@ -78,7 +78,7 @@ export default {
       this.transition = 'slide-left';
     },
     sliceUnlockStep() {
-      if (['pin', 'password'].includes(this.currentStep)) {
+      if (this.currentStep === 'unlock') {
         const prevStep = this.prevSteps.get(this.currentStep);
         this.prevSteps.delete(this.currentStep);
         return [prevStep, this.steps[this.currentStep].name];

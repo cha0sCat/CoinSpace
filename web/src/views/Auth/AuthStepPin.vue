@@ -1,6 +1,6 @@
 <script>
 import AuthStepLayout from '../../layouts/AuthStepLayout.vue';
-import CsPin from '../../components/CsPin.vue';
+import CsPinUnlock from '../../components/CsPinUnlock.vue';
 import CsStep from '../../components/CsStep.vue';
 
 import { redirectToApp } from '../../lib/mixins.js';
@@ -8,7 +8,7 @@ import { redirectToApp } from '../../lib/mixins.js';
 export default {
   components: {
     AuthStepLayout,
-    CsPin,
+    CsPinUnlock,
   },
   extends: CsStep,
   mixins: [redirectToApp],
@@ -33,9 +33,9 @@ export default {
     :title="$t('Set a PIN')"
     :description="$t('for quick access')"
   >
-    <CsPin
+    <CsPinUnlock
       mode="setup"
-      @success="setup"
+      :onSuccess="setup"
     />
   </AuthStepLayout>
 </template>

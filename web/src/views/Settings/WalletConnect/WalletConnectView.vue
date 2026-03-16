@@ -1,7 +1,6 @@
 <script>
-import CsPasswordStep from '../../../components/CsPasswordStep.vue';
-import CsPinStep from '../../../components/CsPinStep.vue';
 import CsSteps from '../../../components/CsSteps.vue';
+import CsUnlockStep from '../../../components/CsUnlockStep.vue';
 
 import WalletConnectStepConfirm from './WalletConnectStepConfirm.vue';
 import WalletConnectStepGas from './WalletConnectStepGas.vue';
@@ -37,8 +36,7 @@ export default {
     main: WalletConnectStepMain,
     confirm: WalletConnectStepConfirm,
     sign: WalletConnectStepSign,
-    password: CsPasswordStep,
-    pin: CsPinStep,
+    unlock: CsUnlockStep,
     status: WalletConnectStepStatus,
     qr: WalletConnectStepQr,
     gas: WalletConnectStepGas,

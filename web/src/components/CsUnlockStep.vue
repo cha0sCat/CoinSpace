@@ -27,7 +27,8 @@ export default {
   >
     <CsUnlock
       :mode="args.mode"
-      :method="args.method"
+      :passcodeType="args.passcodeType"
+      :allowTypeSwitch="args.allowTypeSwitch"
       :logoutButton="args.logoutButton"
       :onSuccess="args.success"
     />

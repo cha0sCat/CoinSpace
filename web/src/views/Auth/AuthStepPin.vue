@@ -1,6 +1,6 @@
 <script>
 import AuthStepLayout from '../../layouts/AuthStepLayout.vue';
-import CsPinUnlock from '../../components/CsPinUnlock.vue';
+import CsPasscodeUnlock from '../../components/CsPasscodeUnlock.vue';
 import CsStep from '../../components/CsStep.vue';
 
 import { redirectToApp } from '../../lib/mixins.js';
@@ -8,13 +8,13 @@ import { redirectToApp } from '../../lib/mixins.js';
 export default {
   components: {
     AuthStepLayout,
-    CsPinUnlock,
+    CsPasscodeUnlock,
   },
   extends: CsStep,
   mixins: [redirectToApp],
   methods: {
-    async setup(pin) {
-      await this.$account.create(this.storage.seed, pin);
+    async setup(passcode, passcodeType) {
+      await this.$account.create(this.storage.seed, passcode, passcodeType);
 
       if (this.$account.biometry.isAvailable || this.$account.webAuthn.isAvailable) {
         this.next('biometry');
@@ -30,11 +30,13 @@ export default {
 
 <template>
   <AuthStepLayout
-    :title="$t('Set a PIN')"
+    :title="$t('Set a passcode')"
     :description="$t('for quick access')"
   >
-    <CsPinUnlock
+    <CsPasscodeUnlock
       mode="setup"
+      passcodeType="pin"
+      allowTypeSwitch
       :onSuccess="setup"
     />
   </AuthStepLayout>

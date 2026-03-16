@@ -56,7 +56,7 @@ export default {
       this.transition = 'slide-right';
     },
     next(value, args) {
-      if (this.currentStep === value) return;
+      if (this.currentStep === value && this.currentStep !== 'unlock') return;
       const [currentStep, exclude] = this.sliceUnlockStep();
       this.prevSteps.set(value, currentStep);
       this.currentStep = value;
@@ -65,7 +65,7 @@ export default {
       this.transition = 'slide-left';
     },
     replace(value, args) {
-      if (this.currentStep === value) return;
+      if (this.currentStep === value && this.currentStep !== 'unlock') return;
       const [currentStep, exclude] = this.sliceUnlockStep();
       const prevStep = this.prevSteps.get(currentStep);
       if (prevStep) {

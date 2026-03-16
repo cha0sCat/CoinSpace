@@ -71,35 +71,19 @@ export default class ClientStorage {
   }
 
   /**
-   * PIN unlock
+   * Passcode unlock
    */
-  getPinUnlock() {
-    return this.#getItem('_cs_pin_unlock', { type: OBJECT });
+  getPasscodeUnlock() {
+    return this.#getItem('_cs_passcode_unlock', { type: OBJECT });
   }
-  hasPinUnlock() {
-    return this.#hasItem('_cs_pin_unlock');
+  hasPasscodeUnlock() {
+    return this.#hasItem('_cs_passcode_unlock');
   }
-  setPinUnlock(config) {
-    this.#setItem('_cs_pin_unlock', config, { type: OBJECT });
+  setPasscodeUnlock(config) {
+    this.#setItem('_cs_passcode_unlock', config, { type: OBJECT });
   }
-  unsetPinUnlock() {
-    this.#unsetItem('_cs_pin_unlock');
-  }
-
-  /**
-   * Password unlock
-   */
-  getPasswordUnlock() {
-    return this.#getItem('_cs_password_unlock', { type: OBJECT });
-  }
-  hasPasswordUnlock() {
-    return this.#hasItem('_cs_password_unlock');
-  }
-  setPasswordUnlock(config) {
-    this.#setItem('_cs_password_unlock', config, { type: OBJECT });
-  }
-  unsetPasswordUnlock() {
-    this.#unsetItem('_cs_password_unlock');
+  unsetPasscodeUnlock() {
+    this.#unsetItem('_cs_passcode_unlock');
   }
 
   /**
@@ -275,5 +259,8 @@ export default class ClientStorage {
 
   cleanupLegacyKeys() {
     this.#unsetItem('_cs_details_key');
+    this.#unsetItem('_cs_secret_unlock');
+    this.#unsetItem('_cs_pin_unlock');
+    this.#unsetItem('_cs_password_unlock');
   }
 }

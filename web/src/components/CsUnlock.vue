@@ -1,20 +1,22 @@
 <script>
-import CsPassword from './CsPassword.vue';
-import CsPinUnlock from './CsPinUnlock.vue';
+import CsPasscodeUnlock from './CsPasscodeUnlock.vue';
 
 export default {
   components: {
-    CsPassword,
-    CsPinUnlock,
+    CsPasscodeUnlock,
   },
   props: {
     mode: {
       type: String,
       default: 'deviceSeed',
     },
-    method: {
+    passcodeType: {
       type: String,
-      default: 'pin',
+      default: undefined,
+    },
+    allowTypeSwitch: {
+      type: Boolean,
+      default: false,
     },
     logoutButton: {
       type: Boolean,
@@ -25,55 +27,22 @@ export default {
       default: undefined,
     },
   },
-  data() {
-    return {
-      currentMethod: this.method || 'pin',
-    };
-  },
-  computed: {
-    canUsePassword() {
-      return this.mode !== 'setup' && this.$account.passwordUnlock.isEnabled;
-    },
-    canUsePin() {
-      return this.mode !== 'setup';
-    },
-  },
-  watch: {
-    method(value) {
-      this.currentMethod = value || 'pin';
-    },
-  },
   methods: {
-    usePassword() {
-      this.currentMethod = 'password';
-    },
-    usePin() {
-      this.currentMethod = 'pin';
-    },
     reset() {
-      this.currentMethod = this.method || 'pin';
-      this.$refs.method?.reset?.();
+      this.$refs.passcode?.reset?.();
     },
   },
 };
 </script>
 
 <template>
-  <CsPinUnlock
-    v-if="currentMethod === 'pin'"
-    ref="method"
-    :key="`pin:${mode}`"
+  <CsPasscodeUnlock
+    ref="passcode"
+    :key="`${mode}:${passcodeType || 'active'}`"
     :mode="mode"
+    :passcodeType="passcodeType"
+    :allowTypeSwitch="allowTypeSwitch"
     :logoutButton="logoutButton"
     :onSuccess="onSuccess"
-    :onUsePassword="canUsePassword ? usePassword : undefined"
-  />
-  <CsPassword
-    v-else
-    ref="method"
-    :key="`password:${mode}`"
-    :mode="mode"
-    :onSuccess="onSuccess"
-    :onUsePin="canUsePin ? usePin : undefined"
   />
 </template>

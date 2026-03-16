@@ -20,38 +20,38 @@ export default {
   data() {
     return {
       isBiometryEnabled: this.$account.biometry.isEnabled,
-      isPasswordEnabled: this.$account.passwordUnlock.isEnabled,
+      isPasswordSelected: this.$account.passcodeUnlock.type === 'password',
       isWebAuthnEnabled: this.$account.webAuthn.isEnabled,
       isHighSecurityEnabled: this.$account.settings.get('1faWallet'),
       isLoading: false,
     };
   },
   computed: {
+    passcodeDescription() {
+      return this.isPasswordSelected ? this.$t('Current: Password') : this.$t('Current: PIN');
+    },
     labels() {
       const { $t } = this;
       switch (this.$account.biometry.type) {
         case TYPES.BIOMETRICS:
           return {
-            title: $t('PIN & Biometrics'),
             biometry: $t('Biometrics'),
-            description: $t('Use Biometrics instead of PIN.'),
+            description: $t('Use Biometrics for local unlock.'),
           };
         case TYPES.FINGERPRINT:
           return {
-            title: $t('PIN & Fingerprint'),
             biometry: $t('Fingerprint'),
-            description: $t('Use Fingerprint instead of PIN.'),
+            description: $t('Use Fingerprint for local unlock.'),
           };
         case TYPES.TOUCH_ID:
           return {
-            title: $t('PIN & Touch ID'),
             biometry: $t('Touch ID'),
-            description: $t('Use Touch ID instead of PIN.'),
+            description: $t('Use Touch ID for local unlock.'),
           };
         case TYPES.FACE_ID:
           return {
             biometry: $t('Face ID'),
-            description: $t('Use Face ID instead of PIN.'),
+            description: $t('Use Face ID for local unlock.'),
           };
         default:
           return {
@@ -83,30 +83,27 @@ export default {
       }
       this.isLoading = false;
     },
-    async togglePassword() {
-      this.isLoading = true;
-      if (this.isPasswordEnabled) {
-        await this.$account.passwordUnlock.disable();
-        this.isPasswordEnabled = this.$account.passwordUnlock.isEnabled;
-        this.isLoading = false;
-        return;
-      }
+    changePasscode() {
       this.next('unlock', {
         mode: 'deviceSeed',
         layout: 'MainLayout',
         title: this.$t('Unlock'),
         success: async (deviceSeed) => {
-          this.isLoading = false;
           this.next('unlock', {
             mode: 'setup',
-            method: 'password',
+            passcodeType: this.$account.passcodeUnlock.type,
+            allowTypeSwitch: true,
             layout: 'MainLayout',
-            title: this.$t('Set a password'),
-            success: async (password) => {
-              const result = await this.$account.passwordUnlock.enable(deviceSeed, password);
+            title: this.$t('Change Passcode'),
+            success: async (passcode, passcodeType) => {
+              const result = await this.$account.passcodeUnlock.enable(
+                deviceSeed,
+                passcode,
+                passcodeType
+              );
               if (!result) return;
-              this.isPasswordEnabled = this.$account.passwordUnlock.isEnabled;
-              this.backTo('index');
+              this.isPasswordSelected = this.$account.passcodeUnlock.type === 'password';
+              this.back({ passcodeChanged: true });
             },
           });
         },
@@ -148,21 +145,19 @@ export default {
   <MainLayout
     :title="$t('Unlock methods')"
   >
+    <div
+      v-if="args?.passcodeChanged"
+      class="&__success"
+    >
+      {{ $t('Passcode updated') }}
+    </div>
     <CsListItems>
       <CsListItem
-        :title="$t('Password')"
-        :description="$t('Use Password instead of PIN.')"
-        :arrow="false"
-      >
-        <template #after>
-          <CsSwitch
-            :checked="isPasswordEnabled"
-            :isLoading="isLoading"
-            :aria-label="$t('Password')"
-            @click="togglePassword"
-          />
-        </template>
-      </CsListItem>
+        :title="$t('Change Passcode')"
+        :description="passcodeDescription"
+        :disabled="isLoading"
+        @click="changePasscode"
+      />
       <CsListItem
         v-if="$account.biometry.isAvailable"
         :title="labels.biometry"
@@ -181,7 +176,7 @@ export default {
       <CsListItem
         v-if="$account.webAuthn.isAvailable"
         :title="$t('Passkey')"
-        :description="$t('Use Passkey instead of PIN.')"
+        :description="$t('Use Passkey for local unlock.')"
         :arrow="false"
       >
         <template #after>
@@ -210,3 +205,18 @@ export default {
     </CsListItems>
   </MainLayout>
 </template>
+
+<style lang="scss">
+  .#{ $filename } {
+    &__success {
+      @include text-sm;
+      padding: 0 max($spacing-xl, env(safe-area-inset-right)) $spacing-md max($spacing-xl, env(safe-area-inset-left));
+      color: $primary-brand;
+
+      @include breakpoint(lg) {
+        padding-right: 0;
+        padding-left: 0;
+      }
+    }
+  }
+</style>

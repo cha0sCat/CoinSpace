@@ -20,12 +20,12 @@ import {
 } from '../constants.js';
 
 import Biometry from './Biometry.js';
-import PasswordUnlock from './PasswordUnlock.js';
+import PasscodeUnlock from './PasscodeUnlock.js';
 import WebAuthnUnlock from './WebAuthnUnlock.js';
 import {
-  createPinUnlockConfig,
-  unlockDeviceSeedWithPin,
-} from './PinUnlock.js';
+  PASSCODE_TYPES,
+  createPasscodeUnlockConfig,
+} from './PasscodeUnlock.js';
 
 import Cache from './Cache.js';
 
@@ -198,7 +198,7 @@ export default class Account extends EventEmitter {
   #wallets = new WalletManager();
   #deviceSeed;
   #biometry;
-  #passwordUnlock;
+  #passcodeUnlock;
   #webAuthn;
   #exchanges;
   #needToMigrateV5Balance = false;
@@ -281,8 +281,8 @@ export default class Account extends EventEmitter {
     return this.#biometry;
   }
 
-  get passwordUnlock() {
-    return this.#passwordUnlock;
+  get passcodeUnlock() {
+    return this.#passcodeUnlock;
   }
 
   get webAuthn() {
@@ -296,7 +296,7 @@ export default class Account extends EventEmitter {
   get isCreated() {
     return this.#clientStorage.hasId()
       && this.#clientStorage.hasSeed('wallet')
-      && this.#clientStorage.hasPinUnlock();
+      && this.#clientStorage.hasPasscodeUnlock();
   }
 
   get isLocked() {
@@ -383,7 +383,7 @@ export default class Account extends EventEmitter {
     this.#biometry = new Biometry({
       clientStorage: this.#clientStorage,
     });
-    this.#passwordUnlock = new PasswordUnlock({
+    this.#passcodeUnlock = new PasscodeUnlock({
       clientStorage: this.#clientStorage,
     });
     this.#webAuthn = new WebAuthnUnlock({
@@ -392,7 +392,7 @@ export default class Account extends EventEmitter {
     });
   }
 
-  async create(walletSeed, pin) {
+  async create(walletSeed, passcode, passcodeType = PASSCODE_TYPES.PIN) {
     if (!(walletSeed instanceof Uint8Array)) {
       throw new TypeError('walletSeed must be Uint8Array or Buffer');
     }
@@ -403,11 +403,11 @@ export default class Account extends EventEmitter {
 
     const deviceSeed = randomBytes(32);
     const deviceId = hex.encode(await ed25519.getPublicKey(deviceSeed));
-    const pinUnlock = await createPinUnlockConfig(pin, deviceSeed);
+    const passcodeUnlock = await createPasscodeUnlockConfig(passcode, deviceSeed, passcodeType);
     this.#deviceSeed = deviceSeed;
     this.#storageKey = this.getStorageKeyFromWalletSeed(walletSeed);
 
-    this.#clientStorage.setPinUnlock(pinUnlock);
+    this.#clientStorage.setPasscodeUnlock(passcodeUnlock);
     this.#seeds.set('wallet', walletSeed, deviceSeed);
     this.#clientStorage.setId(deviceId);
 
@@ -906,16 +906,8 @@ export default class Account extends EventEmitter {
     return this.#deviceSeed;
   }
 
-  async getDeviceSeedFromPin(pin) {
-    const config = this.#clientStorage.getPinUnlock();
-    if (!config) {
-      throw new Error('PIN unlock is not configured');
-    }
-    return unlockDeviceSeedWithPin(pin, config);
-  }
-
-  async getDeviceSeedFromPassword(password) {
-    return this.#passwordUnlock.unlock(password);
+  async getDeviceSeedFromPasscode(passcode) {
+    return this.#passcodeUnlock.unlock(passcode);
   }
 
   getDeviceSeedFromBiometrySecret(secret) {
@@ -929,12 +921,8 @@ export default class Account extends EventEmitter {
     return this.getSeed('wallet', deviceSeed);
   }
 
-  async getWalletSeedFromPin(pin) {
-    return this.getWalletSeedFromDeviceSeed(await this.getDeviceSeedFromPin(pin));
-  }
-
-  async getWalletSeedFromPassword(password) {
-    return this.getWalletSeedFromDeviceSeed(await this.getDeviceSeedFromPassword(password));
+  async getWalletSeedFromPasscode(passcode) {
+    return this.getWalletSeedFromDeviceSeed(await this.getDeviceSeedFromPasscode(passcode));
   }
 
   async getNormalSecurityWalletSeed() {

@@ -28,6 +28,10 @@ export default {
       type: Function,
       default: undefined,
     },
+    onUsePassword: {
+      type: Function,
+      default: undefined,
+    },
   },
   data() {
     const { type, isEnabled } = this.$account.biometry;
@@ -39,6 +43,9 @@ export default {
       error: undefined,
       biometryIsEnabled: isEnabled && this.mode !== 'setup',
       webAuthnIsEnabled: this.$account.webAuthn.isEnabled && this.mode !== 'setup',
+      passwordIsEnabled: this.$account.passwordUnlock.isEnabled &&
+        this.mode !== 'setup' &&
+        typeof this.onUsePassword === 'function',
       biometryIcon: type === TYPES.FACE_ID ? 'FaceIdSolidIcon' : 'TouchIdSolidIcon',
     };
   },
@@ -202,10 +209,18 @@ export default {
     </template>
   </div>
   <div
-    v-if="webAuthnIsEnabled"
+    v-if="webAuthnIsEnabled || passwordIsEnabled"
     class="&__methods"
   >
     <CsButton
+      v-if="passwordIsEnabled"
+      type="primary-link"
+      @click="onUsePassword"
+    >
+      {{ $t('Use Password') }}
+    </CsButton>
+    <CsButton
+      v-if="webAuthnIsEnabled"
       type="primary-link"
       @click="webAuthn"
     >
@@ -347,6 +362,7 @@ export default {
     &__methods {
       display: flex;
       justify-content: center;
+      gap: $spacing-md;
       margin-bottom: $spacing-sm;
     }
 

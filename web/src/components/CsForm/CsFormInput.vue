@@ -21,6 +21,10 @@ export default {
       type: [String, Boolean],
       default: false,
     },
+    type: {
+      type: String,
+      default: 'text',
+    },
     placeholder: {
       type: String,
       default: '',
@@ -41,6 +45,10 @@ export default {
       type: Boolean,
       default: false,
     },
+    trim: {
+      type: Boolean,
+      default: true,
+    },
   },
   emits: ['update:modelValue'],
 };
@@ -60,7 +68,7 @@ export default {
     </div>
     <input
       :value="modelValue"
-      type="text"
+      :type="type"
       lang="en"
       class="&__input"
       autocorrect="off"
@@ -69,7 +77,7 @@ export default {
       spellcheck="false"
       :placeholder="placeholder"
       :readonly="readonly"
-      @input="$emit('update:modelValue', $event.target.value.trim())"
+      @input="$emit('update:modelValue', trim ? $event.target.value.trim() : $event.target.value)"
     >
     <div
       v-if="$slots.after"

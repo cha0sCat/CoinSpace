@@ -20,6 +20,7 @@ export default {
   data() {
     return {
       isBiometryEnabled: this.$account.biometry.isEnabled,
+      isPasswordEnabled: this.$account.passwordUnlock.isEnabled,
       isWebAuthnEnabled: this.$account.webAuthn.isEnabled,
       isHighSecurityEnabled: this.$account.settings.get('1faWallet'),
       isLoading: false,
@@ -49,13 +50,12 @@ export default {
           };
         case TYPES.FACE_ID:
           return {
-            title: $t('PIN & Face ID'),
             biometry: $t('Face ID'),
             description: $t('Use Face ID instead of PIN.'),
           };
         default:
           return {
-            title: $t('PIN'),
+            biometry: $t('Biometrics'),
           };
       }
     },
@@ -81,6 +81,33 @@ export default {
         });
       }
       this.isLoading = false;
+    },
+    async togglePassword() {
+      this.isLoading = true;
+      if (this.isPasswordEnabled) {
+        await this.$account.passwordUnlock.disable();
+        this.isPasswordEnabled = this.$account.passwordUnlock.isEnabled;
+        this.isLoading = false;
+        return;
+      }
+      this.next('pin', {
+        mode: 'deviceSeed',
+        layout: 'MainLayout',
+        success: async (deviceSeed) => {
+          this.isLoading = false;
+          this.next('password', {
+            mode: 'setup',
+            layout: 'MainLayout',
+            allowPin: false,
+            success: async (password) => {
+              const result = await this.$account.passwordUnlock.enable(deviceSeed, password);
+              if (!result) return;
+              this.isPasswordEnabled = this.$account.passwordUnlock.isEnabled;
+              this.backTo('index');
+            },
+          });
+        },
+      });
     },
     async toggleWebAuthn() {
       this.isLoading = true;
@@ -115,9 +142,23 @@ export default {
 
 <template>
   <MainLayout
-    :title="labels.title"
+    :title="$t('Unlock methods')"
   >
     <CsListItems>
+      <CsListItem
+        :title="$t('Password')"
+        :description="$t('Use Password instead of PIN.')"
+        :arrow="false"
+      >
+        <template #after>
+          <CsSwitch
+            :checked="isPasswordEnabled"
+            :isLoading="isLoading"
+            :aria-label="$t('Password')"
+            @click="togglePassword"
+          />
+        </template>
+      </CsListItem>
       <CsListItem
         v-if="$account.biometry.isAvailable"
         :title="labels.biometry"

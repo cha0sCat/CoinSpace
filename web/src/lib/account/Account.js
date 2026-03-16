@@ -20,6 +20,7 @@ import {
 } from '../constants.js';
 
 import Biometry from './Biometry.js';
+import PasswordUnlock from './PasswordUnlock.js';
 import WebAuthnUnlock from './WebAuthnUnlock.js';
 import {
   createPinUnlockConfig,
@@ -197,6 +198,7 @@ export default class Account extends EventEmitter {
   #wallets = new WalletManager();
   #deviceSeed;
   #biometry;
+  #passwordUnlock;
   #webAuthn;
   #exchanges;
   #needToMigrateV5Balance = false;
@@ -277,6 +279,10 @@ export default class Account extends EventEmitter {
 
   get biometry() {
     return this.#biometry;
+  }
+
+  get passwordUnlock() {
+    return this.#passwordUnlock;
   }
 
   get webAuthn() {
@@ -375,6 +381,9 @@ export default class Account extends EventEmitter {
       account: this,
     });
     this.#biometry = new Biometry({
+      clientStorage: this.#clientStorage,
+    });
+    this.#passwordUnlock = new PasswordUnlock({
       clientStorage: this.#clientStorage,
     });
     this.#webAuthn = new WebAuthnUnlock({
@@ -905,6 +914,10 @@ export default class Account extends EventEmitter {
     return unlockDeviceSeedWithPin(pin, config);
   }
 
+  async getDeviceSeedFromPassword(password) {
+    return this.#passwordUnlock.unlock(password);
+  }
+
   getDeviceSeedFromBiometrySecret(secret) {
     if (typeof secret !== 'string') {
       throw new TypeError('biometry secret must be string');
@@ -918,6 +931,10 @@ export default class Account extends EventEmitter {
 
   async getWalletSeedFromPin(pin) {
     return this.getWalletSeedFromDeviceSeed(await this.getDeviceSeedFromPin(pin));
+  }
+
+  async getWalletSeedFromPassword(password) {
+    return this.getWalletSeedFromDeviceSeed(await this.getDeviceSeedFromPassword(password));
   }
 
   async getNormalSecurityWalletSeed() {

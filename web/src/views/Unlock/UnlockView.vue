@@ -1,4 +1,5 @@
 <script>
+import CsPasswordStep from '../../components/CsPasswordStep.vue';
 import CsPinStep from '../../components/CsPinStep.vue';
 import CsSteps from '../../components/CsSteps.vue';
 
@@ -13,6 +14,7 @@ export default {
   steps: {
     index: UnlockStepIndex,
     synchronization: UnlockStepSynchronization,
+    password: CsPasswordStep,
     pin: CsPinStep,
     selectCryptos: CsSelectCryptosStep,
   },

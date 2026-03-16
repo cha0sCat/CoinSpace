@@ -8,7 +8,6 @@ import MainLayout from '../../layouts/MainLayout.vue';
 import { currencies } from '../../lib/account/Market.js';
 import { prettyVersion } from '../../lib/version.js';
 
-import { TYPES } from '../../lib/account/Biometry.js';
 import { languages } from '../../lib/i18n/i18n.js';
 
 export default {
@@ -31,25 +30,7 @@ export default {
   },
   computed: {
     securityPinTitle() {
-      const { $t } = this;
-      if (this.$account.biometry.isAvailable && this.$account.webAuthn.isAvailable) {
-        return $t('Unlock methods');
-      }
-      if (this.$account.webAuthn.isAvailable) {
-        return $t('PIN & Passkey');
-      }
-      switch (this.$account.biometry.type) {
-        case TYPES.BIOMETRICS:
-          return $t('PIN & Biometrics');
-        case TYPES.FINGERPRINT:
-          return $t('PIN & Fingerprint');
-        case TYPES.TOUCH_ID:
-          return $t('PIN & Touch ID');
-        case TYPES.FACE_ID:
-          return $t('PIN & Face ID');
-        default:
-          return $t('PIN');
-      }
+      return this.$t('Unlock methods');
     },
   },
   watch: {

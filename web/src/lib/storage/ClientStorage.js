@@ -87,6 +87,22 @@ export default class ClientStorage {
   }
 
   /**
+   * Password unlock
+   */
+  getPasswordUnlock() {
+    return this.#getItem('_cs_password_unlock', { type: OBJECT });
+  }
+  hasPasswordUnlock() {
+    return this.#hasItem('_cs_password_unlock');
+  }
+  setPasswordUnlock(config) {
+    this.#setItem('_cs_password_unlock', config, { type: OBJECT });
+  }
+  unsetPasswordUnlock() {
+    this.#unsetItem('_cs_password_unlock');
+  }
+
+  /**
    * Seeds
    */
   getSeed(type, token) {

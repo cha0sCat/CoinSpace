@@ -1,4 +1,5 @@
 <script>
+import CsPasswordStep from '../../../components/CsPasswordStep.vue';
 import CsPinStep from '../../../components/CsPinStep.vue';
 import CsSteps from '../../../components/CsSteps.vue';
 
@@ -12,6 +13,7 @@ export default {
   steps: {
     index: SettingsAccountStepIndex,
     remove: SettingsAccountStepRemove,
+    password: CsPasswordStep,
     pin: CsPinStep,
   },
 };

@@ -1,6 +1,7 @@
 <script>
 import { Amount } from '@coinspace/cs-common';
 
+import CsPasswordStep from '../../../components/CsPasswordStep.vue';
 import CsPinStep from '../../../components/CsPinStep.vue';
 import CsSteps from '../../../components/CsSteps.vue';
 
@@ -31,6 +32,7 @@ export default {
     amount: CryptoSendStepAmount,
     confirm: CryptoSendStepConfirm,
     status: CryptoSendStepStatus,
+    password: CsPasswordStep,
     pin: CsPinStep,
     qr: CryptoSendStepQr,
     poor: CryptoSendStepPoor,

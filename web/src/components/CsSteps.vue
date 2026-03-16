@@ -57,7 +57,7 @@ export default {
     },
     next(value, args) {
       if (this.currentStep === value) return;
-      const [currentStep, exclude] = this.slicePinStep();
+      const [currentStep, exclude] = this.sliceUnlockStep();
       this.prevSteps.set(value, currentStep);
       this.currentStep = value;
       this.exclude = exclude;
@@ -66,7 +66,7 @@ export default {
     },
     replace(value, args) {
       if (this.currentStep === value) return;
-      const [currentStep, exclude] = this.slicePinStep();
+      const [currentStep, exclude] = this.sliceUnlockStep();
       const prevStep = this.prevSteps.get(currentStep);
       if (prevStep) {
         this.prevSteps.delete(currentStep);
@@ -77,8 +77,8 @@ export default {
       this.args = args;
       this.transition = 'slide-left';
     },
-    slicePinStep() {
-      if (this.currentStep === 'pin') {
+    sliceUnlockStep() {
+      if (['pin', 'password'].includes(this.currentStep)) {
         const prevStep = this.prevSteps.get(this.currentStep);
         this.prevSteps.delete(this.currentStep);
         return [prevStep, this.steps[this.currentStep].name];

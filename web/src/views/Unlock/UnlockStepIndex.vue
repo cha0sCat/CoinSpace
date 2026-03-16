@@ -32,6 +32,13 @@ export default {
       await this.$account.open(deviceSeed);
       this.done();
     },
+    usePassword() {
+      this.next('password', {
+        layout: 'AuthStepLayout',
+        mode: 'deviceSeed',
+        success: this.success,
+      });
+    },
     done() {
       if (this.$account.walletsNeedSynchronization.length) {
         this.next('synchronization');
@@ -56,7 +63,8 @@ export default {
       ref="pin"
       mode="deviceSeed"
       logoutButton
-      @success="success"
+      :onSuccess="success"
+      :onUsePassword="usePassword"
     />
   </AuthStepLayout>
 </template>

@@ -2,6 +2,7 @@
 import CsButton from './CsButton.vue';
 import CsButtonGroup from './CsButtonGroup.vue';
 import CsFormInput from './CsForm/CsFormInput.vue';
+import CsLogoutConfirmModal from './CsLogoutConfirmModal.vue';
 
 import { TYPES } from '../lib/account/Biometry.js';
 import { onShowOnHide } from '../lib/mixins.js';
@@ -19,6 +20,7 @@ export default {
     CsButton,
     CsButtonGroup,
     CsFormInput,
+    CsLogoutConfirmModal,
     FaceIdSolidIcon,
     TouchIdSolidIcon,
   },
@@ -58,6 +60,7 @@ export default {
       error: undefined,
       isLoading: false,
       isWrong: false,
+      logoutConfirmStep: 0,
       biometryIsEnabled: isEnabled && this.mode !== 'setup',
       webAuthnIsEnabled: this.$account.webAuthn.isEnabled && this.mode !== 'setup',
       biometryIcon: type === TYPES.FACE_ID ? 'FaceIdSolidIcon' : 'TouchIdSolidIcon',
@@ -91,6 +94,9 @@ export default {
     isSetup() {
       return this.mode === 'setup';
     },
+    showLogoutConfirm() {
+      return this.logoutConfirmStep > 0;
+    },
     canSwitchToPassword() {
       return this.isSetup
         && this.allowTypeSwitch
@@ -112,6 +118,8 @@ export default {
     },
     async pinValue(value) {
       if (this.isPinType && value.length === this.pinLength) {
+        await this.$nextTick();
+        await this.waitForPaint();
         await this.submitPin(value);
       }
     },
@@ -137,6 +145,17 @@ export default {
       if (this.isPinType) {
         window.addEventListener('keydown', this.keydown);
       }
+    },
+    waitForPaint() {
+      return new Promise((resolve) => {
+        if (typeof window.requestAnimationFrame === 'function') {
+          window.requestAnimationFrame(() => {
+            window.requestAnimationFrame(() => resolve());
+          });
+          return;
+        }
+        setTimeout(resolve, 0);
+      });
     },
     reset() {
       this.pinValue = '';
@@ -170,6 +189,13 @@ export default {
       }
     },
     logout() {
+      if (!this.logoutButton) return;
+      this.logoutConfirmStep = 1;
+    },
+    closeLogoutConfirm() {
+      this.logoutConfirmStep = 0;
+    },
+    confirmLogout() {
       this.$account.logout();
       this.$router.replace({ name: 'auth' });
     },
@@ -183,6 +209,8 @@ export default {
     },
     async submitPin(pin) {
       this.isLoading = true;
+      await this.$nextTick();
+      await this.waitForPaint();
       try {
         switch (this.mode) {
           case 'setup':
@@ -218,6 +246,8 @@ export default {
       }
 
       this.isLoading = true;
+      await this.$nextTick();
+      await this.waitForPaint();
       try {
         switch (this.mode) {
           case 'setup':
@@ -515,6 +545,11 @@ export default {
       </CsButton>
     </CsButtonGroup>
   </form>
+  <CsLogoutConfirmModal
+    :show="showLogoutConfirm"
+    @close="closeLogoutConfirm"
+    @confirm="confirmLogout"
+  />
 </template>
 
 <style lang="scss">

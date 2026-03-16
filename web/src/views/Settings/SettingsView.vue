@@ -4,6 +4,7 @@ import CsButton from '../../components/CsButton.vue';
 import CsListItem from '../../components/CsListItem.vue';
 import CsListItemDropdown from '../../components/CsListItemDropdown.vue';
 import CsListItems from '../../components/CsListItems.vue';
+import CsLogoutConfirmModal from '../../components/CsLogoutConfirmModal.vue';
 import MainLayout from '../../layouts/MainLayout.vue';
 import { currencies } from '../../lib/account/Market.js';
 import { prettyVersion } from '../../lib/version.js';
@@ -18,6 +19,7 @@ export default {
     CsListItem,
     CsListItemDropdown,
     CsListItems,
+    CsLogoutConfirmModal,
   },
   data() {
     return {
@@ -26,6 +28,7 @@ export default {
       currencies: currencies.map((currency) => ({ value: currency, name: currency })),
       language: this.$i18n.locale,
       languages,
+      showLogoutConfirm: false,
     };
   },
   computed: {
@@ -60,6 +63,12 @@ export default {
   },
   methods: {
     logout() {
+      this.showLogoutConfirm = true;
+    },
+    closeLogoutConfirm() {
+      this.showLogoutConfirm = false;
+    },
+    confirmLogout() {
       this.$account.logout();
       this.$router.replace({ name: 'auth' });
     },
@@ -189,6 +198,11 @@ export default {
     <div class="&__version">
       {{ version }}
     </div>
+    <CsLogoutConfirmModal
+      :show="showLogoutConfirm"
+      @close="closeLogoutConfirm"
+      @confirm="confirmLogout"
+    />
   </MainLayout>
 </template>
 

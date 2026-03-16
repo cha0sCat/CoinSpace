@@ -20,6 +20,7 @@ export default {
   data() {
     return {
       isBiometryEnabled: this.$account.biometry.isEnabled,
+      isWebAuthnEnabled: this.$account.webAuthn.isEnabled,
       isHighSecurityEnabled: this.$account.settings.get('1faWallet'),
       isLoading: false,
     };
@@ -62,16 +63,7 @@ export default {
   methods: {
     async toggleBiometry() {
       this.isLoading = true;
-      if (this.env.VITE_BUILD_TYPE === 'phonegap') return this.toggleBiometryPhongap();
-      await this.walletSeed(async (walletSeed) => {
-        if (this.isBiometryEnabled) {
-          await this.$account.biometry.disable(walletSeed);
-        } else {
-          await this.$account.biometry.enable(undefined, walletSeed);
-        }
-        this.isBiometryEnabled = this.$account.biometry.isEnabled;
-      }, { keepStep: true });
-      this.isLoading = false;
+      return this.toggleBiometryPhongap();
     },
     async toggleBiometryPhongap() {
       if (this.isBiometryEnabled) {
@@ -81,14 +73,33 @@ export default {
         this.next('pin', {
           mode: 'deviceSeed',
           layout: 'MainLayout',
-          success: async (_, pin) => {
-            await this.$account.biometry.enable(pin);
+          success: async (deviceSeed) => {
+            await this.$account.biometry.enable(deviceSeed);
             this.isBiometryEnabled = this.$account.biometry.isEnabled;
             this.back();
           },
         });
       }
       this.isLoading = false;
+    },
+    async toggleWebAuthn() {
+      this.isLoading = true;
+      if (this.isWebAuthnEnabled) {
+        await this.$account.webAuthn.disable();
+        this.isWebAuthnEnabled = this.$account.webAuthn.isEnabled;
+        this.isLoading = false;
+        return;
+      }
+      this.next('pin', {
+        mode: 'deviceSeed',
+        layout: 'MainLayout',
+        success: async (deviceSeed) => {
+          await this.$account.webAuthn.enable(deviceSeed);
+          this.isWebAuthnEnabled = this.$account.webAuthn.isEnabled;
+          this.isLoading = false;
+          this.back();
+        },
+      });
     },
     async toggleHighSecurity() {
       this.isLoading = true;
@@ -119,6 +130,21 @@ export default {
             :isLoading="isLoading"
             :aria-label="labels.biometry"
             @click="toggleBiometry"
+          />
+        </template>
+      </CsListItem>
+      <CsListItem
+        v-if="$account.webAuthn.isAvailable"
+        :title="$t('Passkey')"
+        :description="$t('Use Passkey instead of PIN.')"
+        :arrow="false"
+      >
+        <template #after>
+          <CsSwitch
+            :checked="isWebAuthnEnabled"
+            :isLoading="isLoading"
+            :aria-label="$t('Passkey')"
+            @click="toggleWebAuthn"
           />
         </template>
       </CsListItem>

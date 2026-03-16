@@ -84,19 +84,6 @@ export default class ClientStorage {
   }
 
   /**
-   * Details key
-   */
-  getDetailsKey() {
-    return this.#getItem('_cs_details_key', { type: BUFFER });
-  }
-  hasDetailsKey() {
-    return this.#hasItem('_cs_details_key');
-  }
-  setDetailsKey(detailsKey) {
-    this.#setItem('_cs_details_key', detailsKey, { type: BUFFER });
-  }
-
-  /**
    * Seeds
    */
   getSeed(type, token) {
@@ -150,6 +137,22 @@ export default class ClientStorage {
   setBiometryEnabled(value) {
     if (!value) return this.#unsetItem('_cs_biometry_enabled');
     this.#setItem('_cs_biometry_enabled', value);
+  }
+
+  /**
+   * WebAuthn
+   */
+  getWebAuthn() {
+    return this.#getItem('_cs_webauthn', { type: OBJECT });
+  }
+  hasWebAuthn() {
+    return this.#hasItem('_cs_webauthn');
+  }
+  setWebAuthn(config) {
+    this.#setItem('_cs_webauthn', config, { type: OBJECT });
+  }
+  unsetWebAuthn() {
+    this.#unsetItem('_cs_webauthn');
   }
 
   /**
@@ -246,5 +249,9 @@ export default class ClientStorage {
         this.#localStorage.removeItem(key);
       }
     }
+  }
+
+  cleanupLegacyKeys() {
+    this.#unsetItem('_cs_details_key');
   }
 }

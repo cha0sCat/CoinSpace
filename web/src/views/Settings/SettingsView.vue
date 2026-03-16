@@ -32,6 +32,12 @@ export default {
   computed: {
     securityPinTitle() {
       const { $t } = this;
+      if (this.$account.biometry.isAvailable && this.$account.webAuthn.isAvailable) {
+        return $t('Unlock methods');
+      }
+      if (this.$account.webAuthn.isAvailable) {
+        return $t('PIN & Passkey');
+      }
       switch (this.$account.biometry.type) {
         case TYPES.BIOMETRICS:
           return $t('PIN & Biometrics');

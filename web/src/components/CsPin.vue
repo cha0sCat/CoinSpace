@@ -35,6 +35,7 @@ export default {
       isWrong: false,
       error: undefined,
       biometryIsEnabled: isEnabled && this.mode !== 'setup',
+      webAuthnIsEnabled: this.$account.webAuthn.isEnabled && this.mode !== 'setup',
       biometryIcon: type === TYPES.FACE_ID ? 'FaceIdSolidIcon' : 'TouchIdSolidIcon',
     };
   },
@@ -114,9 +115,35 @@ export default {
       this.error = undefined;
       try {
         if (this.env.VITE_BUILD_TYPE === 'phonegap') {
-          const pin = await this.$account.biometry.phonegap();
-          if (!pin) return;
-          return await this.confirm(pin);
+          const secret = await this.$account.biometry.phonegap();
+          if (!secret) return;
+          const deviceSeed = this.$account.getDeviceSeedFromBiometrySecret(secret);
+          switch (this.mode) {
+            case 'deviceSeed':
+              return await this.onSuccess(deviceSeed);
+            case 'walletSeed':
+              return await this.onSuccess(this.$account.getWalletSeedFromDeviceSeed(deviceSeed));
+          }
+        }
+      } catch (err) {
+        this._errorHandler(err);
+      } finally {
+        this.isLoading = false;
+      }
+    },
+
+    async webAuthn() {
+      if (this.isLoading) return;
+      this.isLoading = true;
+      this.error = undefined;
+      try {
+        const deviceSeed = await this.$account.webAuthn.unlock();
+        if (!deviceSeed) return;
+        switch (this.mode) {
+          case 'deviceSeed':
+            return await this.onSuccess(deviceSeed);
+          case 'walletSeed':
+            return await this.onSuccess(this.$account.getWalletSeedFromDeviceSeed(deviceSeed));
         }
       } catch (err) {
         this._errorHandler(err);
@@ -180,6 +207,17 @@ export default {
         :class="{ '&__dot--active': value.length > 3 }"
       />
     </template>
+  </div>
+  <div
+    v-if="webAuthnIsEnabled"
+    class="&__methods"
+  >
+    <CsButton
+      type="primary-link"
+      @click="webAuthn"
+    >
+      {{ $t('Use Passkey') }}
+    </CsButton>
   </div>
   <div class="&__keyboard">
     <div class="&__row">
@@ -311,6 +349,12 @@ export default {
       display: flex;
       flex-direction: column;
       gap: $spacing-sm;
+    }
+
+    &__methods {
+      display: flex;
+      justify-content: center;
+      margin-bottom: $spacing-sm;
     }
 
     &__row {

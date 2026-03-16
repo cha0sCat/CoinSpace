@@ -14,6 +14,7 @@ export async function createAccount({ app, router }) {
     release,
   });
   await account.biometry.init();
+  await account.webAuthn.init();
 
   defineAppProperty(app, '$account', account);
   router.$account = account;

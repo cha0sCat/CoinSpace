@@ -23,6 +23,7 @@ import {
 } from '../constants.js';
 
 import Biometry from './Biometry.js';
+import WebAuthnUnlock from './WebAuthnUnlock.js';
 
 import Cache from './Cache.js';
 
@@ -166,6 +167,13 @@ function normalizeBaseUrl(url) {
   return url.endsWith('/') ? url : `${url}/`;
 }
 
+function deriveStorageKey(walletSeed) {
+  if (!(walletSeed instanceof Uint8Array)) {
+    throw new TypeError('walletSeed must be Uint8Array or Buffer');
+  }
+  return hmac(sha256, 'Coin Wallet', hex.encode(walletSeed));
+}
+
 function resolveAccountUrl(explicitUrl, baseUrl, path) {
   if (explicitUrl) {
     return explicitUrl;
@@ -181,12 +189,14 @@ export default class Account extends EventEmitter {
   #seeds;
   #request;
   #settings;
+  #storageKey;
   #details;
   #market;
   #cryptoDB;
   #wallets = new WalletManager();
   #deviceSeed;
   #biometry;
+  #webAuthn;
   #exchanges;
   #needToMigrateV5Balance = false;
   #walletConnect;
@@ -268,6 +278,10 @@ export default class Account extends EventEmitter {
     return this.#biometry;
   }
 
+  get webAuthn() {
+    return this.#webAuthn;
+  }
+
   get exchanges() {
     return this.#exchanges;
   }
@@ -276,8 +290,7 @@ export default class Account extends EventEmitter {
     return this.#clientStorage.hasId()
       && this.#clientStorage.hasSeed('device')
       && this.#clientStorage.hasSeed('wallet')
-      && this.#clientStorage.hasPinKey()
-      && this.#clientStorage.hasDetailsKey();
+      && this.#clientStorage.hasPinKey();
   }
 
   get isLocked() {
@@ -308,7 +321,7 @@ export default class Account extends EventEmitter {
         const hash = hex.encode(sha256(user.email.trim().toLowerCase()));
         avatar = `gravatar:${hash}`;
       } else {
-        const hash = hex.encode(hmac(sha256, 'Coin Wallet', hex.encode(this.#clientStorage.getDetailsKey())));
+        const hash = hex.encode(hmac(sha256, 'Coin Wallet', hex.encode(this.getStorageKey())));
         avatar = `identicon:${hash}`;
       }
       return {
@@ -344,6 +357,7 @@ export default class Account extends EventEmitter {
     }
 
     this.#clientStorage = new ClientStorage({ localStorage });
+    this.#clientStorage.cleanupLegacyKeys();
     this.#seeds = new Seeds({
       clientStorage: this.#clientStorage,
     });
@@ -361,8 +375,11 @@ export default class Account extends EventEmitter {
       account: this,
     });
     this.#biometry = new Biometry({
-      request: this.request,
       clientStorage: this.#clientStorage,
+    });
+    this.#webAuthn = new WebAuthnUnlock({
+      clientStorage: this.#clientStorage,
+      appName: this.appName,
     });
   }
 
@@ -377,16 +394,15 @@ export default class Account extends EventEmitter {
 
     const deviceSeed = randomBytes(32);
     const deviceId = hex.encode(await ed25519.getPublicKey(deviceSeed));
-    const detailsKey = hmac(sha256, 'Coin Wallet', hex.encode(walletSeed));
     const pinKey = randomBytes(32);
     const pinToken = this.pinToken(pin, pinKey);
     this.#deviceSeed = deviceSeed;
+    this.#storageKey = this.getStorageKeyFromWalletSeed(walletSeed);
 
     this.#seeds.set('device', deviceSeed, pinToken);
     this.#seeds.set('wallet', walletSeed, deviceSeed);
     this.#clientStorage.setPinKey(pinKey);
     this.#clientStorage.setId(deviceId);
-    this.#clientStorage.setDetailsKey(detailsKey);
 
     await this.#init();
     await this.#initWalletsFromDetails(walletSeed);
@@ -394,6 +410,7 @@ export default class Account extends EventEmitter {
 
   async open(deviceSeed) {
     this.#deviceSeed = deviceSeed;
+    this.#storageKey = this.getStorageKeyFromWalletSeed(this.getWalletSeedFromDeviceSeed(deviceSeed));
     await this.#init();
     await this.#initWalletsFromDetails();
   }
@@ -404,7 +421,7 @@ export default class Account extends EventEmitter {
     await this.#cryptoDB.init();
     this.#details = new Details({
       clientStorage: this.#clientStorage,
-      key: this.#clientStorage.getDetailsKey(),
+      key: this.getStorageKey(),
       cryptoDB: this.#cryptoDB,
     });
     await this.#details.init();
@@ -431,7 +448,7 @@ export default class Account extends EventEmitter {
         console.error('Exchange init failed', err);
       }
     }
-    this.#dummy = hex.encode(this.#clientStorage.getDetailsKey())
+    this.#dummy = hex.encode(this.getStorageKey())
       === import.meta.env.VITE_DUMMY_ACCOUNT;
 
     this.#initCryptosToSelect();
@@ -602,6 +619,8 @@ export default class Account extends EventEmitter {
   }
 
   logout() {
+    this.#deviceSeed = undefined;
+    this.#storageKey = undefined;
     this.#clientStorage.clear();
     this.emit('logout');
   }
@@ -862,6 +881,24 @@ export default class Account extends EventEmitter {
     });
   };
 
+  getStorageKeyFromWalletSeed(walletSeed) {
+    return deriveStorageKey(walletSeed);
+  }
+
+  getStorageKey() {
+    if (!(this.#storageKey instanceof Uint8Array)) {
+      throw new Error('Storage key is locked');
+    }
+    return this.#storageKey;
+  }
+
+  getUnlockedDeviceSeed() {
+    if (!(this.#deviceSeed instanceof Uint8Array)) {
+      throw new Error('Device seed is locked');
+    }
+    return this.#deviceSeed;
+  }
+
   pinHash(pin, pinKey) {
     if (typeof pin !== 'string') {
       throw new TypeError('pin must be string');
@@ -878,9 +915,19 @@ export default class Account extends EventEmitter {
     return this.getSeed('device', this.pinToken(pin));
   }
 
-  getWalletSeedFromPin(pin) {
-    const deviceSeed = this.getDeviceSeedFromPin(pin);
+  getDeviceSeedFromBiometrySecret(secret) {
+    if (typeof secret !== 'string') {
+      throw new TypeError('biometry secret must be string');
+    }
+    return hex.decode(secret);
+  }
+
+  getWalletSeedFromDeviceSeed(deviceSeed) {
     return this.getSeed('wallet', deviceSeed);
+  }
+
+  getWalletSeedFromPin(pin) {
+    return this.getWalletSeedFromDeviceSeed(this.getDeviceSeedFromPin(pin));
   }
 
   async getNormalSecurityWalletSeed() {

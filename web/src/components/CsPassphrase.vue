@@ -1,7 +1,5 @@
 <script>
 import { hex } from '@scure/base';
-import { hmac } from '@noble/hashes/hmac';
-import { sha256 } from '@noble/hashes/sha256';
 import { wordlist } from '@scure/bip39/wordlists/english';
 import { mnemonicToSeed, validateMnemonic } from '@scure/bip39';
 
@@ -71,9 +69,9 @@ export default {
       try {
         if (!validateMnemonic(passphrase, wordlist)) throw new Error();
         const seed = await mnemonicToSeed(passphrase);
-        if (this.$account.isCreated) {
-          const detailsKey = hmac(sha256, 'Coin Wallet', hex.encode(seed));
-          if (hex.encode(detailsKey) !== hex.encode(this.$account.clientStorage.getDetailsKey())) {
+        if (this.$account.isCreated && !this.$account.isLocked) {
+          const storageKey = this.$account.getStorageKeyFromWalletSeed(seed);
+          if (hex.encode(storageKey) !== hex.encode(this.$account.getStorageKey())) {
             throw new Error();
           }
         }

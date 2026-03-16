@@ -23,7 +23,7 @@ export default class ExchangeStorage extends LocalStorageStore {
       const storage = new ExchangeStorage({
         clientStorage: account.clientStorage,
         name: exchange.id,
-        key: account.clientStorage.getDetailsKey(),
+        key: account.getStorageKey(),
       });
       await storage.init();
       result[exchange.id] = storage;

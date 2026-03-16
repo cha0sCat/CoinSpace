@@ -13,7 +13,7 @@ export default class WalletStorage extends LocalStorageStore {
     const storage = new WalletStorage({
       clientStorage: account.clientStorage,
       name: crypto._id,
-      key: account.clientStorage.getDetailsKey(),
+      key: account.getStorageKey(),
     });
     await storage.init();
     return storage;
@@ -27,7 +27,7 @@ export default class WalletStorage extends LocalStorageStore {
       const storage = new WalletStorage({
         clientStorage: account.clientStorage,
         name: crypto._id,
-        key: account.clientStorage.getDetailsKey(),
+        key: account.getStorageKey(),
       });
       await storage.init();
       result[crypto._id] = storage;

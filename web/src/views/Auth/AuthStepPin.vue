@@ -16,8 +16,7 @@ export default {
     async setup(pin) {
       await this.$account.create(this.storage.seed, pin);
 
-      if (this.$account.biometry.isAvailable) {
-        this.updateStorage({ pin });
+      if (this.$account.biometry.isAvailable || this.$account.webAuthn.isAvailable) {
         this.next('biometry');
       } else if (this.$account.cryptosToSelect) {
         this.next('selectCryptos');

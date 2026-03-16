@@ -1,8 +1,5 @@
+import { hex } from '@scure/base';
 import i18n from '../i18n/i18n.js';
-import {
-  startAuthentication,
-  startRegistration,
-} from '@simplewebauthn/browser';
 
 export const TYPES = {
   BIOMETRICS: Symbol('BIOMETRICS'),
@@ -12,7 +9,6 @@ export const TYPES = {
 };
 
 export default class Biometry {
-  #request;
   #clientStorage;
   #isAvailable;
   #type;
@@ -30,15 +26,11 @@ export default class Biometry {
     return this.#type;
   }
 
-  constructor({ request, clientStorage }) {
-    if (!request) {
-      throw new TypeError('request is required');
-    }
+  constructor({ clientStorage }) {
     if (!clientStorage) {
       throw new TypeError('clientStorage is required');
     }
     this.#clientStorage = clientStorage;
-    this.#request = request;
   }
 
   async init() {
@@ -80,32 +72,22 @@ export default class Biometry {
     this.#type = type;
   }
 
-  async enable(pin, seed) {
+  async enable(secret, seed) {
+    void seed;
     try {
-      if (import.meta.env.VITE_BUILD_TYPE === 'phonegap') {
-        await new Promise((resolve, reject) => {
-          window.Fingerprint.registerBiometricSecret({
-            description: import.meta.env.VITE_PLATFORM === 'ios' ? i18n.global.t('Scan your fingerprint please') : '',
-            secret: pin,
-            invalidateOnEnrollment: true,
-            fallbackButtonTitle: i18n.global.t('Cancel'),
-            disableBackup: true,
-          }, resolve, reject);
-        });
-      } else {
-        const options = await this.#request({
-          url: 'api/v4/platform/registration',
-          method: 'get',
-          seed,
-        });
-        const registration = await startRegistration(options);
-        await this.#request({
-          url: 'api/v4/platform/registration',
-          method: 'post',
-          data: registration,
-          seed,
-        });
+      if (import.meta.env.VITE_BUILD_TYPE !== 'phonegap') return false;
+      if (secret instanceof Uint8Array) {
+        secret = hex.encode(secret);
       }
+      await new Promise((resolve, reject) => {
+        window.Fingerprint.registerBiometricSecret({
+          description: import.meta.env.VITE_PLATFORM === 'ios' ? i18n.global.t('Scan your fingerprint please') : '',
+          secret,
+          invalidateOnEnrollment: true,
+          fallbackButtonTitle: i18n.global.t('Cancel'),
+          disableBackup: true,
+        }, resolve, reject);
+      });
       this.#clientStorage.setBiometryEnabled(true);
       return true;
     } catch (err) {
@@ -115,14 +97,8 @@ export default class Biometry {
   }
 
   async disable(seed) {
+    void seed;
     try {
-      if (import.meta.env.VITE_BUILD_TYPE !== 'phonegap') {
-        await this.#request({
-          url: 'api/v4/platform',
-          method: 'delete',
-          seed,
-        });
-      }
       this.#clientStorage.setBiometryEnabled(false);
       return true;
     } catch (err) {
@@ -133,56 +109,14 @@ export default class Biometry {
 
   async phonegap() {
     try {
-      const pin = await new Promise((resolve, reject) => {
+      const secret = await new Promise((resolve, reject) => {
         window.Fingerprint.loadBiometricSecret({
           description: import.meta.env.VITE_PLATFORM === 'ios' ? i18n.global.t('Scan your fingerprint please') : '',
           fallbackButtonTitle: i18n.global.t('Cancel'),
           disableBackup: true,
         }, (secret) => resolve(secret), () => reject());
       });
-      return pin;
+      return secret;
     } catch (err) { /* empty */ }
-  }
-
-  async deviceToken() {
-    try {
-      const options = await this.#request({
-        url: 'api/v4/token/device/platform',
-        method: 'get',
-        id: true,
-      });
-      const authentication = await startAuthentication(options);
-      const res = await this.#request({
-        url: 'api/v4/token/device/platform',
-        method: 'post',
-        data: authentication,
-        id: true,
-      });
-      return res.deviceToken;
-    } catch (err) {
-      console.error(err);
-      return false;
-    }
-  }
-
-  async walletToken() {
-    try {
-      const options = await this.#request({
-        url: 'api/v4/token/wallet/platform',
-        method: 'get',
-        seed: 'device',
-      });
-      const authentication = await startAuthentication(options);
-      const res = await this.#request({
-        url: 'api/v4/token/wallet/platform',
-        method: 'post',
-        data: authentication,
-        seed: 'device',
-      });
-      return res;
-    } catch (err) {
-      console.error(err);
-      return false;
-    }
   }
 }

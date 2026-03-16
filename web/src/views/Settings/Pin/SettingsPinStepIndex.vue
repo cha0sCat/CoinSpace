@@ -60,6 +60,9 @@ export default {
       }
     },
   },
+  deactivated() {
+    this.isLoading = false;
+  },
   methods: {
     async toggleBiometry() {
       this.isLoading = true;

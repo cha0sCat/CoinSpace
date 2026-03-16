@@ -8,6 +8,9 @@ export default [
     symbol: 'BTC',
     decimals: 8,
     logo: 'bitcoin.svg',
+    coingecko: {
+      id: 'bitcoin',
+    },
     meta: {
       rank: 1,
       popular: 1,
@@ -23,6 +26,9 @@ export default [
     symbol: 'ETH',
     decimals: 18,
     logo: 'ethereum.svg',
+    coingecko: {
+      id: 'ethereum',
+    },
     meta: {
       rank: 2,
       popular: 2,
@@ -38,6 +44,9 @@ export default [
     symbol: 'POL',
     decimals: 18,
     logo: 'polygon.svg',
+    coingecko: {
+      id: 'polygon-ecosystem-token',
+    },
     meta: {
       rank: 3,
       popular: 3,
@@ -53,6 +62,9 @@ export default [
     symbol: 'TRX',
     decimals: 6,
     logo: 'tron.svg',
+    coingecko: {
+      id: 'tron',
+    },
     meta: {
       rank: 4,
       popular: 4,
@@ -69,6 +81,9 @@ export default [
     address: '0xdac17f958d2ee523a2206206994597c13d831ec7',
     decimals: 6,
     logo: 'tether.svg',
+    coingecko: {
+      id: 'tether',
+    },
     meta: {
       rank: 5,
     },
@@ -83,6 +98,9 @@ export default [
     address: '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48',
     decimals: 6,
     logo: 'usd-coin.svg',
+    coingecko: {
+      id: 'usd-coin',
+    },
     meta: {
       rank: 6,
     },
@@ -97,6 +115,9 @@ export default [
     address: '0x6b175474e89094c44da98b954eedeac495271d0f',
     decimals: 18,
     logo: 'dai.svg',
+    coingecko: {
+      id: 'dai',
+    },
     meta: {
       rank: 7,
     },
@@ -111,6 +132,9 @@ export default [
     address: '0x2260fac5e5542a773aa44fbcfedf7c193bc2c599',
     decimals: 8,
     logo: 'wrapped-bitcoin.svg',
+    coingecko: {
+      id: 'wrapped-bitcoin',
+    },
     meta: {
       rank: 8,
     },
@@ -125,6 +149,9 @@ export default [
     address: '0x514910771af9ca656af840dff83e8264ecf986ca',
     decimals: 18,
     logo: 'chainlink.svg',
+    coingecko: {
+      id: 'chainlink',
+    },
     meta: {
       rank: 9,
     },
@@ -139,6 +166,9 @@ export default [
     address: '0x1f9840a85d5af5bf1d1762f925bdaddc4201f984',
     decimals: 18,
     logo: 'uniswap.svg',
+    coingecko: {
+      id: 'uniswap',
+    },
     meta: {
       rank: 10,
     },
@@ -153,6 +183,9 @@ export default [
     address: '0xc2132d05d31c914a87c6611c10748aeb04b58e8f',
     decimals: 6,
     logo: 'tether.svg',
+    coingecko: {
+      id: 'tether',
+    },
     meta: {
       rank: 11,
     },
@@ -167,6 +200,9 @@ export default [
     address: '0x3c499c542cef5e3811e1192ce70d8cc03d5c3359',
     decimals: 6,
     logo: 'usd-coin.svg',
+    coingecko: {
+      id: 'usd-coin',
+    },
     meta: {
       rank: 12,
     },
@@ -181,6 +217,9 @@ export default [
     address: '0x8f3cf7ad23cd3cadbd9735aff958023239c6a063',
     decimals: 18,
     logo: 'dai.svg',
+    coingecko: {
+      id: 'dai',
+    },
     meta: {
       rank: 13,
     },
@@ -195,6 +234,9 @@ export default [
     address: '0x53e0bca35ec356bd5dddfebbd1fc0fd03fabad39',
     decimals: 18,
     logo: 'chainlink.svg',
+    coingecko: {
+      id: 'chainlink',
+    },
     meta: {
       rank: 14,
     },
@@ -209,6 +251,9 @@ export default [
     address: '0xb33eaad8d922b1083446dc23f610c2567fb5180f',
     decimals: 18,
     logo: 'uniswap.svg',
+    coingecko: {
+      id: 'uniswap',
+    },
     meta: {
       rank: 15,
     },
@@ -223,6 +268,9 @@ export default [
     address: 'TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t',
     decimals: 6,
     logo: 'tether.svg',
+    coingecko: {
+      id: 'tether',
+    },
     meta: {
       rank: 16,
     },
@@ -237,6 +285,9 @@ export default [
     address: 'TEkxiTehnzSmSe2XqrBj4w32RUN966rdz8',
     decimals: 6,
     logo: 'usd-coin.svg',
+    coingecko: {
+      id: 'usd-coin',
+    },
     meta: {
       rank: 17,
     },
@@ -251,6 +302,9 @@ export default [
     address: 'TXDk8mbtRbXeYuMNS83CfKPaYYT8XWv9Hz',
     decimals: 18,
     logo: 'usdd.svg',
+    coingecko: {
+      id: 'usdd',
+    },
     meta: {
       rank: 18,
     },

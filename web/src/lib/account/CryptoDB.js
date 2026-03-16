@@ -1,9 +1,12 @@
 import { SUPPORTED_PLATFORMS } from '../constants.js';
+
 import { deepFreeze } from '../helpers.js';
+
 import femver from '@suchipi/femver';
 
+import staticCryptos from '../staticCryptos.js';
+
 export default class CryptoDB {
-  #request;
   #db;
   #platforms = new Map();
   #new = [];
@@ -33,23 +36,11 @@ export default class CryptoDB {
     return false;
   }
 
-  constructor({ request, account }) {
-    if (!request) throw new TypeError('request is required');
-    if (!account) throw new TypeError('account is required');
-    this.#request = (config) => {
-      return request({
-        seed: 'device',
-        ...config,
-        baseURL: account.getBaseURL('price'),
-      });
-    };
+  constructor() {
   }
 
   async init() {
-    this.#db = await this.#request({
-      url: 'api/v1/cryptos',
-      method: 'get',
-    });
+    this.#db = staticCryptos.map((item) => ({ ...item }));
     for (const item of this.#db) {
       item.supported = this.#isSupported(item);
       deepFreeze(item);

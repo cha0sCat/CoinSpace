@@ -200,6 +200,41 @@ export default class ClientStorage {
     this.#setItem('_cs_onion', !this.isOnion(), { type: OBJECT });
   }
 
+  /**
+   * Generic stores
+   */
+
+  #storeKey(key) {
+    return `_cs_store_${key}`;
+  }
+
+  getStore(key, options) {
+    if (!key) {
+      throw new TypeError('store key must be set');
+    }
+    return this.#getItem(this.#storeKey(key), options);
+  }
+
+  hasStore(key) {
+    if (!key) {
+      throw new TypeError('store key must be set');
+    }
+    return this.#hasItem(this.#storeKey(key));
+  }
+
+  setStore(key, value, options) {
+    if (!key) {
+      throw new TypeError('store key must be set');
+    }
+    this.#setItem(this.#storeKey(key), value, options);
+  }
+
+  unsetStore(key) {
+    if (!key) {
+      throw new TypeError('store key must be set');
+    }
+    this.#unsetItem(this.#storeKey(key));
+  }
 
   /**
    * Clean All!

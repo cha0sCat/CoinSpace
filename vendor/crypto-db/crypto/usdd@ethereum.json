@@ -1,0 +1,18 @@
+{
+  "_id": "usdd@ethereum",
+  "asset": "usdd",
+  "platform": "ethereum",
+  "type": "token",
+  "name": "USDD",
+  "symbol": "USDD",
+  "address": "0x4f8e5de400de08b164e7421b3ee387f461becd1a",
+  "decimals": 18,
+  "logo": "usdd.svg",
+  "coingecko": {
+    "id": "usdd"
+  },
+  "coinmarketcap": {
+    "id": 19891,
+    "slug": "usdd"
+  }
+}

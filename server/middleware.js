@@ -1,6 +1,5 @@
 import bodyParser from 'body-parser';
 import cors from 'cors';
-import crypto from 'crypto';
 import express from 'express';
 import { fileURLToPath } from 'url';
 import helmet from 'helmet';
@@ -21,15 +20,10 @@ function init(app) {
   }));
   app.use(bodyParser.json({
     limit: '2mb',
-    verify(req, res, buf) {
-      req.bodyHash = req.body ? crypto.createHash('sha256').update(buf).digest('hex') : '';
-    },
   }));
 
   const cacheControl = isProduction() ? { maxAge: dayInMs, setHeaders: setCustomCacheControl } : null;
   app.use(express.static(fileURLToPath(new URL('dist', import.meta.url)), cacheControl));
-  app.use('/assets/crypto/',
-    express.static(fileURLToPath(new URL('node_modules/@coinspace/crypto-db/logo', import.meta.url)), cacheControl));
 }
 
 function setCustomCacheControl(res, path) {

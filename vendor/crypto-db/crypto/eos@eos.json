@@ -1,0 +1,19 @@
+{
+  "deprecated": true,
+  "_id": "eos@eos",
+  "asset": "eos",
+  "platform": "eos",
+  "type": "coin",
+  "name": "EOS",
+  "symbol": "EOS",
+  "decimals": 4,
+  "logo": "eos.svg",
+  "scheme": "eos",
+  "coingecko": {
+    "id": "eos"
+  },
+  "coinmarketcap": {
+    "id": 1765,
+    "slug": "eos"
+  }
+}

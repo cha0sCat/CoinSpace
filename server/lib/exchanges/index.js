@@ -1,7 +1,11 @@
-import * as changelly from './changelly.js';
-import * as changenow from './changenow.js';
+const exchanges = {};
 
-export default {
-  changelly,
-  changenow,
-};
+if (process.env.CHANGELLY_API_SECRET) {
+  exchanges.changelly = await import('./changelly.js');
+}
+
+if (process.env.CHANGENOW_API_KEY) {
+  exchanges.changenow = await import('./changenow.js');
+}
+
+export default exchanges;

@@ -1,0 +1,18 @@
+{
+  "deprecated": true,
+  "_id": "xdai-stake@ethereum",
+  "asset": "xdai-stake",
+  "platform": "ethereum",
+  "type": "token",
+  "name": "STAKE",
+  "symbol": "STAKE",
+  "address": "0x0ae055097c6d159879521c384f1d2123d1f195e6",
+  "decimals": 18,
+  "coingecko": {
+    "id": "xdai-stake"
+  },
+  "coinmarketcap": {
+    "id": 5601,
+    "slug": "xdai"
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "_id": "kava@kava",
+  "asset": "kava",
+  "platform": "kava",
+  "type": "coin",
+  "name": "Kava",
+  "symbol": "KAVA",
+  "decimals": 8,
+  "logo": "kava.svg",
+  "supported": false,
+  "coingecko": {
+    "id": "kava"
+  },
+  "coinmarketcap": {
+    "id": 4846,
+    "slug": "kava"
+  }
+}

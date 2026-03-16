@@ -1,0 +1,18 @@
+{
+  "_id": "vechain@vechain",
+  "asset": "vechain",
+  "platform": "vechain",
+  "type": "coin",
+  "name": "VeChain",
+  "symbol": "VET",
+  "decimals": 2,
+  "logo": "vechain.svg",
+  "supported": false,
+  "coingecko": {
+    "id": "vechain"
+  },
+  "coinmarketcap": {
+    "id": 3077,
+    "slug": "vechain"
+  }
+}

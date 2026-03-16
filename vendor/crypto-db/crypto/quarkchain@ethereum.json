@@ -1,0 +1,18 @@
+{
+  "_id": "quarkchain@ethereum",
+  "asset": "quarkchain",
+  "platform": "ethereum",
+  "type": "token",
+  "name": "QuarkChain",
+  "symbol": "QKC",
+  "address": "0xea26c4ac16d4a5a106820bc8aee85fd0b7b2b664",
+  "decimals": 18,
+  "logo": "quarkchain.svg",
+  "coingecko": {
+    "id": "quark-chain"
+  },
+  "coinmarketcap": {
+    "id": 2840,
+    "slug": "quarkchain"
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "_id": "algorand@algorand",
+  "asset": "algorand",
+  "platform": "algorand",
+  "type": "coin",
+  "name": "Algorand",
+  "symbol": "ALGO",
+  "decimals": 6,
+  "logo": "algorand.svg",
+  "supported": false,
+  "coingecko": {
+    "id": "algorand"
+  },
+  "coinmarketcap": {
+    "id": 4030,
+    "slug": "algorand"
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "deprecated": true,
+  "_id": "syntropy@ethereum",
+  "asset": "syntropy",
+  "platform": "ethereum",
+  "type": "token",
+  "name": "Syntropy",
+  "symbol": "NOIA",
+  "address": "0xa8c8cfb141a3bb59fea1e2ea6b79b5ecbcd7b6ca",
+  "decimals": 18,
+  "coingecko": {
+    "id": "noia-network"
+  },
+  "coinmarketcap": {
+    "id": 4191,
+    "slug": "syntropy"
+  }
+}

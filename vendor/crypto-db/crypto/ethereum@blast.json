@@ -1,0 +1,17 @@
+{
+  "_id": "ethereum@blast",
+  "asset": "ethereum",
+  "platform": "blast",
+  "type": "coin",
+  "name": "Blast",
+  "symbol": "ETH",
+  "logo": "blast.svg",
+  "supported": false,
+  "coingecko": {
+    "id": "ethereum"
+  },
+  "coinmarketcap": {
+    "id": 1027,
+    "slug": "ethereum"
+  }
+}

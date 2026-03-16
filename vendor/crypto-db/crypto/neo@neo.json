@@ -1,0 +1,18 @@
+{
+  "_id": "neo@neo",
+  "asset": "neo",
+  "platform": "neo",
+  "type": "coin",
+  "name": "Neo",
+  "symbol": "NEO",
+  "decimals": 0,
+  "logo": "neo.svg",
+  "supported": false,
+  "coingecko": {
+    "id": "neo"
+  },
+  "coinmarketcap": {
+    "id": 1376,
+    "slug": "neo"
+  }
+}

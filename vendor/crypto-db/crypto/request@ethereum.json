@@ -1,0 +1,18 @@
+{
+  "_id": "request@ethereum",
+  "asset": "request",
+  "platform": "ethereum",
+  "type": "token",
+  "name": "Request",
+  "symbol": "REQ",
+  "address": "0x8f8221afbb33998d8584a2b05749ba73c37a938a",
+  "decimals": 18,
+  "logo": "request.svg",
+  "coingecko": {
+    "id": "request-network"
+  },
+  "coinmarketcap": {
+    "id": 2071,
+    "slug": "request"
+  }
+}

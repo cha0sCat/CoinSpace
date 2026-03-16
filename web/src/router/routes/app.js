@@ -2,13 +2,10 @@ import AppLayout from '../../layouts/AppLayout.vue';
 
 import HomeView from '../../views/HomeView.vue';
 
-import CryptoViewBuy from '../../views/Crypto/CryptoViewBuy.vue';
 import CryptoViewInfo from '../../views/Crypto/CryptoViewInfo.vue';
-import CryptoViewSell from '../../views/Crypto/CryptoViewSell.vue';
 
 import CryptoAddView from '../../views/Crypto/Add/CryptoAddView.vue';
 import CryptoDerivationView from '../../views/Crypto/Derivation/CryptoDerivationView.vue';
-import CryptoEosSetupView from '../../views/Crypto/EosSetup/CryptoEosSetupView.vue';
 import CryptoExchangeView from '../../views/Crypto/Exchange/CryptoExchangeView.vue';
 import CryptoExportView from '../../views/Crypto/Export/CryptoExportView.vue';
 import CryptoHistoryView from '../../views/Crypto/History/CryptoHistoryView.vue';
@@ -16,10 +13,10 @@ import CryptoImportView from '../../views/Crypto/Import/CryptoImportView.vue';
 import CryptoIndexView from '../../views/Crypto/Index/CryptoIndexView.vue';
 import CryptoReceiveView from '../../views/Crypto/Receive/CryptoReceiveView.vue';
 import CryptoSendView from '../../views/Crypto/Send/CryptoSendView.vue';
-import CryptoStakingView from '../../views/Crypto/Staking/CryptoStakingView.vue';
 
 import SettingsAccountView from '../../views/Settings/Account/SettingsAccountView.vue';
-import SettingsHardwareView from '../../views/Settings/Hardware/SettingsHardwareView.vue';
+import SettingsNetworkView from '../../views/Settings/Network/SettingsNetworkView.vue';
+import SettingsNodesView from '../../views/Settings/Nodes/SettingsNodesView.vue';
 import SettingsPinView from '../../views/Settings/Pin/SettingsPinView.vue';
 import SettingsTorView from '../../views/Settings/Tor/SettingsTorView.vue';
 import SettingsView from '../../views/Settings/SettingsView.vue';
@@ -52,9 +49,17 @@ const app = [
         name: 'settings.account',
         component: SettingsAccountView,
       }, {
-        path: 'hardware',
-        name: 'settings.hardware',
-        component: SettingsHardwareView,
+        path: 'connections',
+        name: 'settings.connections',
+        redirect: { name: 'settings.network' },
+      }, {
+        path: 'network',
+        name: 'settings.network',
+        component: SettingsNetworkView,
+      }, {
+        path: 'nodes',
+        name: 'settings.nodes',
+        component: SettingsNodesView,
       }, {
         path: 'pin',
         name: 'settings.pin',
@@ -89,16 +94,6 @@ const app = [
           path: '',
           name: 'crypto',
           component: CryptoIndexView,
-        },
-        {
-          path: 'buy',
-          name: 'crypto.buy',
-          component: CryptoViewBuy,
-        },
-        {
-          path: 'sell',
-          name: 'crypto.sell',
-          component: CryptoViewSell,
         },
         {
           path: 'info',
@@ -144,16 +139,6 @@ const app = [
           path: 'import',
           name: 'crypto.import',
           component: CryptoImportView,
-        },
-        {
-          path: 'eossetup',
-          name: 'crypto.eossetup',
-          component: CryptoEosSetupView,
-        },
-        {
-          path: 'staking',
-          name: 'crypto.staking',
-          component: CryptoStakingView,
         },
       ],
     }, {

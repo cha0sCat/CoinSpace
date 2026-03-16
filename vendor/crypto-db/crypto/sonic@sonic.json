@@ -1,0 +1,17 @@
+{
+  "_id": "sonic@sonic",
+  "asset": "sonic",
+  "platform": "sonic",
+  "type": "coin",
+  "name": "Sonic",
+  "symbol": "S",
+  "decimals": 18,
+  "logo": "sonic.svg",
+  "coingecko": {
+    "id": "sonic-3"
+  },
+  "coinmarketcap": {
+    "id": 32684,
+    "slug": "sonic"
+  }
+}

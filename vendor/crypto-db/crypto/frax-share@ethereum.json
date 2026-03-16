@@ -1,0 +1,18 @@
+{
+  "_id": "frax-share@ethereum",
+  "asset": "frax-share",
+  "platform": "ethereum",
+  "type": "token",
+  "name": "Frax (prev. FXS)",
+  "symbol": "FRAX",
+  "address": "0x3432b6a60d23ca0dfca7761b7ab56459d9c964d0",
+  "decimals": 18,
+  "logo": "frax-share.svg",
+  "coingecko": {
+    "id": "frax-share"
+  },
+  "coinmarketcap": {
+    "id": 6953,
+    "slug": "frax-share"
+  }
+}

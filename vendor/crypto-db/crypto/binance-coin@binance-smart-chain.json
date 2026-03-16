@@ -1,0 +1,17 @@
+{
+  "_id": "binance-coin@binance-smart-chain",
+  "asset": "binance-coin",
+  "platform": "binance-smart-chain",
+  "type": "coin",
+  "name": "Binance Smart Chain",
+  "symbol": "BNB",
+  "decimals": 18,
+  "logo": "binance-smart-chain.svg",
+  "coingecko": {
+    "id": "binancecoin"
+  },
+  "coinmarketcap": {
+    "id": 1839,
+    "slug": "bnb"
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "_id": "terra@terra",
+  "asset": "terra",
+  "platform": "terra",
+  "type": "coin",
+  "name": "Terra Classic",
+  "symbol": "LUNC",
+  "decimals": 6,
+  "logo": "terra.svg",
+  "supported": false,
+  "coingecko": {
+    "id": "terra-luna"
+  },
+  "coinmarketcap": {
+    "id": 4172,
+    "slug": "terra-luna"
+  }
+}

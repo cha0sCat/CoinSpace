@@ -1,49 +1,33 @@
 import mongodb from 'mongodb';
 const { MongoClient } = mongodb;
 
-const client = await MongoClient.connect(process.env.DB_CONNECT, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-});
+let database;
 
-const db = client.db(process.env.DB_NAME);
+if (process.env.DB_CONNECT && process.env.DB_NAME) {
+  const client = await MongoClient.connect(process.env.DB_CONNECT, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  });
 
-await Promise.all([
-  db.collection('mecto').createIndexes([
-    { key: { geometry: '2dsphere' }, background: true },
-    { key: { timestamp: 1 }, background: true, expireAfterSeconds: 60 * 60 }, // 1 hour
-  ]),
-  db.collection('tokens').createIndexes([
-    { key: { symbol: 1 }, background: true, sparse: true },
-    { key: { 'platforms.ethereum': 1 }, background: true, sparse: true },
-    { key: { 'platforms.binance-smart-chain': 1 }, background: true, sparse: true },
-    { key: { synchronized_at: 1 }, background: true },
-  ]),
-  db.collection('details').createIndexes([
-    { key: { username_sha: 1 }, background: true, unique: true, sparse: true },
-  ]),
-  db.collection('wallets').createIndexes([
-    { key: { username_sha: 1 }, background: true, unique: true, sparse: true },
-    { key: { 'devices._id': 1 }, background: true, unique: true, sparse: true },
-  ]),
-  db.collection('releases').createIndexes([
-    {
-      key: {
-        distribution: 1,
-        arch: 1,
-        app: 1,
-      },
-      background: true,
-      unique: true,
-    },
-  ]),
-  db.collection('cache').createIndexes([
+  database = client.db(process.env.DB_NAME);
+
+  await database.collection('cache').createIndexes([
     { key: { expire: 1 }, background: true, expireAfterSeconds: 0 },
-  ]),
-  db.collection('invitations').createIndexes([
-    { key: { timestamp: 1 }, background: true, expireAfterSeconds: 60 * 60 * 24 * 365 }, // 1 month
-  ]),
-]);
+  ]);
+} else {
+  console.warn('DB_CONNECT/DB_NAME not set, using in-memory cache only');
+}
+
+const db = {
+  collection(name) {
+    if (!database) {
+      throw new Error(`Database unavailable for collection '${name}'`);
+    }
+    return database.collection(name);
+  },
+};
+
+const memoryCache = new Map();
 
 export function dbMemoize(target, { key, ttl }) {
   if (!key) throw new TypeError('"key" is required');
@@ -54,7 +38,19 @@ export function dbMemoize(target, { key, ttl }) {
       if (!promise) {
         promise = (async () => {
           try {
-            const value = await db
+            if (!database) {
+              const item = memoryCache.get(key);
+              if (item && item.expire > Date.now()) {
+                return item.value;
+              }
+              const result = await Reflect.apply(target, thisArg, argumentsList);
+              memoryCache.set(key, {
+                value: result,
+                expire: Date.now() + ttl * 1000,
+              });
+              return result;
+            }
+            const value = await database
               .collection('cache')
               .findOne({ _id: `cache-${key}` })
               .then((doc) => doc && JSON.parse(doc.value));
@@ -65,7 +61,7 @@ export function dbMemoize(target, { key, ttl }) {
             try {
               return result;
             } finally {
-              await db
+              await database
                 .collection('cache')
                 .updateOne({
                   _id: `cache-${key}`,

@@ -1,0 +1,18 @@
+{
+  "deprecated": true,
+  "_id": "akropolis@ethereum",
+  "asset": "akropolis",
+  "platform": "ethereum",
+  "type": "token",
+  "name": "Akropolis",
+  "symbol": "AKRO",
+  "address": "0x8ab7404063ec4dbcfd4598215992dc3f8ec853d7",
+  "decimals": 18,
+  "coingecko": {
+    "id": "akropolis"
+  },
+  "coinmarketcap": {
+    "id": 4134,
+    "slug": "akropolis"
+  }
+}

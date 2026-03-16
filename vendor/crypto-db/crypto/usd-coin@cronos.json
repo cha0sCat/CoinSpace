@@ -1,0 +1,18 @@
+{
+  "_id": "usd-coin@cronos",
+  "asset": "usd-coin",
+  "platform": "cronos",
+  "type": "token",
+  "name": "USDC",
+  "symbol": "USDC",
+  "address": "0xc21223249ca28397b4b6541dffaecc539bff0c59",
+  "logo": "usd-coin.svg",
+  "supported": false,
+  "coingecko": {
+    "id": "usd-coin"
+  },
+  "coinmarketcap": {
+    "id": 3408,
+    "slug": "usd-coin"
+  }
+}

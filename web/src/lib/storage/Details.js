@@ -1,14 +1,14 @@
-import ServerStorage from './ServerStorage.js';
+import LocalStorageStore from './LocalStorageStore.js';
 import { deepFreeze } from '../helpers.js';
 import defaultCryptos from '../defaultCryptos.js';
 
-export default class Details extends ServerStorage {
+export default class Details extends LocalStorageStore {
   #cryptoDB;
 
-  constructor({ request, key, cryptoDB }) {
+  constructor({ clientStorage, key, cryptoDB }) {
     super({
-      request,
-      url: 'api/v4/details',
+      clientStorage,
+      keyName: 'details',
       key,
     });
     this.#cryptoDB = cryptoDB;
@@ -36,20 +36,11 @@ export default class Details extends ServerStorage {
       }, {});
       const legacy = {
         'ethereum@ethereum': { bip44: 'm' },
-        'binance-coin@binance-smart-chain': { bip44: "m/44'/714'/0'" },
         'bitcoin@bitcoin': {
           bip84: "m/84'/0'/0'",
           bip49: "m/49'/0'/0'",
           bip44: "m/0'",
         },
-        'litecoin@litecoin': {
-          bip84: "m/84'/2'/0'",
-          bip49: "m/49'/2'/0'",
-          bip44: "m/0'",
-        },
-        'bitcoin-cash@bitcoin-cash': { bip44: "m/0'" },
-        'dogecoin@dogecoin': { bip44: "m/0'" },
-        'dash@dash': { bip44: "m/0'" },
       };
       Object.keys(legacy).forEach((id) => {
         const crypto = this.#cryptoDB.get(id);

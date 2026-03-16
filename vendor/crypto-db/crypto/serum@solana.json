@@ -1,0 +1,18 @@
+{
+  "_id": "serum@solana",
+  "asset": "serum",
+  "platform": "solana",
+  "type": "token",
+  "name": "Serum",
+  "symbol": "SRM",
+  "address": "SRMuApVNdxXokk5GT7XD5cUUgXMBCoAz2LHeuAoKWRt",
+  "decimals": 6,
+  "logo": "serum.svg",
+  "coingecko": {
+    "id": "serum"
+  },
+  "coinmarketcap": {
+    "id": 6187,
+    "slug": "serum"
+  }
+}

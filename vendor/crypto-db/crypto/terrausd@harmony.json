@@ -1,0 +1,18 @@
+{
+  "deprecated": true,
+  "_id": "terrausd@harmony",
+  "asset": "terrausd",
+  "platform": "harmony",
+  "type": "token",
+  "name": "TerraClassicUSD",
+  "symbol": "USTC",
+  "address": "0x224e64ec1bdce3870a6a6c777edd450454068fec",
+  "supported": false,
+  "coingecko": {
+    "id": "terrausd"
+  },
+  "coinmarketcap": {
+    "id": 7129,
+    "slug": "terrausd"
+  }
+}

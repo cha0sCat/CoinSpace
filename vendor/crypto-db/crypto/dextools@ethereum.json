@@ -1,0 +1,18 @@
+{
+  "deprecated": true,
+  "_id": "dextools@ethereum",
+  "asset": "dextools",
+  "platform": "ethereum",
+  "type": "token",
+  "name": "DEXTools",
+  "symbol": "DEXT",
+  "address": "0xfb7b4564402e5500db5bb6d63ae671302777c75a",
+  "decimals": 18,
+  "coingecko": {
+    "id": "dextools"
+  },
+  "coinmarketcap": {
+    "id": 5866,
+    "slug": "dextools"
+  }
+}

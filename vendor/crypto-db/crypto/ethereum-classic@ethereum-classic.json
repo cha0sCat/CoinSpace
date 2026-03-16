@@ -1,0 +1,17 @@
+{
+  "_id": "ethereum-classic@ethereum-classic",
+  "asset": "ethereum-classic",
+  "platform": "ethereum-classic",
+  "type": "coin",
+  "name": "Ethereum Classic",
+  "symbol": "ETC",
+  "decimals": 18,
+  "logo": "ethereum-classic.svg",
+  "coingecko": {
+    "id": "ethereum-classic"
+  },
+  "coinmarketcap": {
+    "id": 1321,
+    "slug": "ethereum-classic"
+  }
+}

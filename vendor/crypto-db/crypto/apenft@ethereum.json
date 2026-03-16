@@ -1,0 +1,18 @@
+{
+  "_id": "apenft@ethereum",
+  "asset": "apenft",
+  "platform": "ethereum",
+  "type": "token",
+  "name": "AINFT",
+  "symbol": "NFT",
+  "address": "0x198d14f2ad9ce69e76ea330b374de4957c3f850a",
+  "decimals": 6,
+  "logo": "apenft.svg",
+  "coingecko": {
+    "id": "apenft"
+  },
+  "coinmarketcap": {
+    "id": 9816,
+    "slug": "apenft"
+  }
+}

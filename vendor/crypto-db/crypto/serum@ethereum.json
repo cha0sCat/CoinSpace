@@ -1,0 +1,18 @@
+{
+  "_id": "serum@ethereum",
+  "asset": "serum",
+  "platform": "ethereum",
+  "type": "token",
+  "name": "Serum",
+  "symbol": "SRM",
+  "address": "0x476c5e26a75bd202a9683ffd34359c0cc15be0ff",
+  "decimals": 6,
+  "logo": "serum.svg",
+  "coingecko": {
+    "id": "serum"
+  },
+  "coinmarketcap": {
+    "id": 6187,
+    "slug": "serum"
+  }
+}

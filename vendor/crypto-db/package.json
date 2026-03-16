@@ -1,0 +1,24 @@
+{
+  "name": "@coinspace/crypto-db",
+  "version": "2.1.31",
+  "description": "Crypto DB",
+  "author": "Coin Crypto Wallet <support@coin.space> (https://coin.space/)",
+  "license": "MIT",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "lint": "eslint --report-unused-disable-directives ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CoinSpace/crypto-db.git"
+  },
+  "keywords": [
+    "crypto",
+    "db"
+  ],
+  "devDependencies": {
+    "eslint": "^9.0.0",
+    "eslint-config-coinspace": "^3.0.0"
+  }
+}

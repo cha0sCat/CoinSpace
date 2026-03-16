@@ -1,0 +1,18 @@
+{
+  "_id": "ethereum@near",
+  "asset": "ethereum",
+  "platform": "near",
+  "type": "token",
+  "name": "Ethereum",
+  "symbol": "ETH",
+  "address": "aurora",
+  "logo": "ethereum.svg",
+  "supported": false,
+  "coingecko": {
+    "id": "ethereum"
+  },
+  "coinmarketcap": {
+    "id": 1027,
+    "slug": "ethereum"
+  }
+}

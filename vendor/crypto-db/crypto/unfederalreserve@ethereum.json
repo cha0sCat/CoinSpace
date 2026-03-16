@@ -1,0 +1,18 @@
+{
+  "deprecated": true,
+  "_id": "unfederalreserve@ethereum",
+  "asset": "unfederalreserve",
+  "platform": "ethereum",
+  "type": "token",
+  "name": "unFederalReserve",
+  "symbol": "ERSDL",
+  "address": "0x5218e472cfcfe0b64a064f055b43b4cdc9efd3a6",
+  "decimals": 18,
+  "coingecko": {
+    "id": "unfederalreserve"
+  },
+  "coinmarketcap": {
+    "id": 7553,
+    "slug": "unfederalreserve"
+  }
+}

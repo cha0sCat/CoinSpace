@@ -1,0 +1,18 @@
+{
+  "_id": "paypal-usd@stellar",
+  "asset": "paypal-usd",
+  "platform": "stellar",
+  "type": "token",
+  "name": "PayPal USD",
+  "symbol": "PYUSD",
+  "address": "CCCRWH6Q3FNP3I2I57BDLM5AFAT7O6OF6GKQOC6SSJNDAVRZ57SPHGU2",
+  "logo": "paypal-usd.svg",
+  "supported": false,
+  "coingecko": {
+    "id": "paypal-usd"
+  },
+  "coinmarketcap": {
+    "id": 27772,
+    "slug": "paypal-usd"
+  }
+}

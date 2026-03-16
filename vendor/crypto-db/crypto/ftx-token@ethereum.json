@@ -1,0 +1,18 @@
+{
+  "_id": "ftx-token@ethereum",
+  "asset": "ftx-token",
+  "platform": "ethereum",
+  "type": "token",
+  "name": "FTX Token",
+  "symbol": "FTT",
+  "address": "0x50d1c9771902476076ecfc8b2a83ad6b9355a4c9",
+  "decimals": 18,
+  "logo": "ftx-token.svg",
+  "coingecko": {
+    "id": "ftx-token"
+  },
+  "coinmarketcap": {
+    "id": 4195,
+    "slug": "ftx-token"
+  }
+}

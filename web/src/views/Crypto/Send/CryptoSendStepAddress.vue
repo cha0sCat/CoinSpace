@@ -8,11 +8,8 @@ import CsFormInput from '../../../components/CsForm/CsFormInput.vue';
 import CsStep from '../../../components/CsStep.vue';
 import MainLayout from '../../../layouts/MainLayout.vue';
 
-import LocationIcon from '../../../assets/svg/location.svg';
 import PasteIcon from '../../../assets/svg/paste.svg';
 import QrIcon from '../../../assets/svg/qr.svg';
-
-import * as TONErrors from '@coinspace/cs-toncoin-wallet/errors';
 
 import { onShowOnHide } from '../../../lib/mixins.js';
 import {
@@ -27,7 +24,6 @@ export default {
     CsButtonGroup,
     CsFormGroup,
     CsFormInput,
-    LocationIcon,
     PasteIcon,
     QrIcon,
   },
@@ -72,10 +68,9 @@ export default {
           if (data) {
             ({ address } = data);
             ({ alias } = data);
-            if (this.$wallet.crypto.platform === 'ripple') {
+            if (data.meta) {
               if (!this.storage.temp.meta) this.storage.temp.meta = {};
-              this.storage.temp.meta.destinationTag = data.destinationTag;
-              this.storage.temp.meta.readonlyDestinationTag = true;
+              Object.assign(this.storage.temp.meta, data.meta);
             }
           }
         }
@@ -112,7 +107,7 @@ export default {
           this.error = this.$t('Invalid address');
           return;
         }
-        if (err instanceof TONErrors.InvalidNetworkAddressError) {
+        if (err?.name === 'InvalidNetworkAddressError') {
           this.error = this.$t('Invalid address');
           return;
         }
@@ -163,15 +158,6 @@ export default {
             <PasteIcon />
           </template>
           {{ $t('Paste') }}
-        </CsButton>
-        <CsButton
-          type="circle"
-          @click="next('mecto')"
-        >
-          <template #circle>
-            <LocationIcon />
-          </template>
-          {{ $t('Mecto') }}
         </CsButton>
         <CsButton
           v-if="isQrScanAvailable"

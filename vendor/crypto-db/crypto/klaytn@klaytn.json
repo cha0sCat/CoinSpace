@@ -1,0 +1,19 @@
+{
+  "deprecated": true,
+  "_id": "klaytn@klaytn",
+  "asset": "klaytn",
+  "platform": "klaytn",
+  "type": "coin",
+  "name": "Klaytn",
+  "symbol": "KLAY",
+  "decimals": 18,
+  "logo": "klaytn.svg",
+  "supported": false,
+  "coingecko": {
+    "id": "klay-token"
+  },
+  "coinmarketcap": {
+    "id": 4256,
+    "slug": "klaytn"
+  }
+}

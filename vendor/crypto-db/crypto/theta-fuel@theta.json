@@ -1,0 +1,18 @@
+{
+  "_id": "theta-fuel@theta",
+  "asset": "theta-fuel",
+  "platform": "theta",
+  "type": "coin",
+  "name": "Theta Fuel",
+  "symbol": "TFUEL",
+  "decimals": 4,
+  "logo": "theta-fuel.svg",
+  "supported": false,
+  "coingecko": {
+    "id": "theta-fuel"
+  },
+  "coinmarketcap": {
+    "id": 3822,
+    "slug": "theta-fuel"
+  }
+}

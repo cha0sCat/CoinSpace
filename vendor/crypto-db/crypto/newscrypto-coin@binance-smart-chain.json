@@ -1,0 +1,18 @@
+{
+  "deprecated": true,
+  "_id": "newscrypto-coin@binance-smart-chain",
+  "asset": "newscrypto-coin",
+  "platform": "binance-smart-chain",
+  "type": "token",
+  "name": "Newscrypto",
+  "symbol": "NWC",
+  "address": "0x968f6f898a6df937fc1859b323ac2f14643e3fed",
+  "decimals": 18,
+  "coingecko": {
+    "id": "newscrypto-coin"
+  },
+  "coinmarketcap": {
+    "id": 4890,
+    "slug": "newscrypto"
+  }
+}

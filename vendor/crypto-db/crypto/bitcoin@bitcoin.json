@@ -1,0 +1,18 @@
+{
+  "_id": "bitcoin@bitcoin",
+  "asset": "bitcoin",
+  "platform": "bitcoin",
+  "type": "coin",
+  "name": "Bitcoin",
+  "symbol": "BTC",
+  "decimals": 8,
+  "logo": "bitcoin.svg",
+  "scheme": "bitcoin",
+  "coingecko": {
+    "id": "bitcoin"
+  },
+  "coinmarketcap": {
+    "id": 1,
+    "slug": "bitcoin"
+  }
+}

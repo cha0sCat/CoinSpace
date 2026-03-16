@@ -13,7 +13,6 @@ import CsStep from '../../../components/CsStep.vue';
 import MainLayout from '../../../layouts/MainLayout.vue';
 
 import EditIcon from '../../../assets/svg/edit.svg';
-import LocationIcon from '../../../assets/svg/location.svg';
 import PasteIcon from '../../../assets/svg/paste.svg';
 import QrIcon from '../../../assets/svg/qr.svg';
 import WalletSmallIcon from '../../../assets/svg/walletSmall.svg';
@@ -35,7 +34,6 @@ export default {
     CsFormTextareaReadonly,
     CsPoweredBy,
     EditIcon,
-    LocationIcon,
     PasteIcon,
     QrIcon,
     WalletSmallIcon,
@@ -91,9 +89,7 @@ export default {
             if (data) {
               ({ address } = data);
               ({ alias } = data);
-              if (this.storage.to.crypto.platform === 'ripple') {
-                extraId = data.destinationTag;
-              }
+              ({ extraId } = data);
             }
           }
 
@@ -203,16 +199,6 @@ export default {
             <PasteIcon />
           </template>
           {{ $t('Paste') }}
-        </CsButton>
-        <CsButton
-          v-if="storage.to.crypto.supported"
-          type="circle"
-          @click="next('mecto')"
-        >
-          <template #circle>
-            <LocationIcon />
-          </template>
-          {{ $t('Mecto') }}
         </CsButton>
         <CsButton
           v-if="isQrScanAvailable"

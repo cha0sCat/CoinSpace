@@ -1,0 +1,18 @@
+{
+  "_id": "filecoin@filecoin",
+  "asset": "filecoin",
+  "platform": "filecoin",
+  "type": "coin",
+  "name": "Filecoin",
+  "symbol": "FIL",
+  "decimals": 4,
+  "logo": "filecoin.svg",
+  "supported": false,
+  "coingecko": {
+    "id": "filecoin"
+  },
+  "coinmarketcap": {
+    "id": 2280,
+    "slug": "filecoin"
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "_id": "bitcoin-cash@bitcoin-cash",
+  "asset": "bitcoin-cash",
+  "platform": "bitcoin-cash",
+  "type": "coin",
+  "name": "Bitcoin Cash",
+  "symbol": "BCH",
+  "decimals": 8,
+  "logo": "bitcoin-cash.svg",
+  "scheme": "bitcoincash",
+  "coingecko": {
+    "id": "bitcoin-cash"
+  },
+  "coinmarketcap": {
+    "id": 1831,
+    "slug": "bitcoin-cash"
+  }
+}

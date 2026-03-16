@@ -1,0 +1,18 @@
+{
+  "_id": "stellar@stellar",
+  "asset": "stellar",
+  "platform": "stellar",
+  "type": "coin",
+  "name": "Stellar",
+  "symbol": "XLM",
+  "decimals": 7,
+  "logo": "stellar.svg",
+  "scheme": "stellar",
+  "coingecko": {
+    "id": "stellar"
+  },
+  "coinmarketcap": {
+    "id": 512,
+    "slug": "stellar"
+  }
+}

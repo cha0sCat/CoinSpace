@@ -1,0 +1,18 @@
+{
+  "_id": "dfi-money@ethereum",
+  "asset": "dfi-money",
+  "platform": "ethereum",
+  "type": "token",
+  "name": "DFI.Money",
+  "symbol": "YFII",
+  "address": "0xa1d0e215a23d7030842fc67ce582a6afa3ccab83",
+  "decimals": 18,
+  "logo": "dfi-money.svg",
+  "coingecko": {
+    "id": "yfii-finance"
+  },
+  "coinmarketcap": {
+    "id": 5957,
+    "slug": "yearn-finance-ii"
+  }
+}

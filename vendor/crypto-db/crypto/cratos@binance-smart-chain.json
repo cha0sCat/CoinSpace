@@ -1,0 +1,18 @@
+{
+  "deprecated": true,
+  "_id": "cratos@binance-smart-chain",
+  "asset": "cratos",
+  "platform": "binance-smart-chain",
+  "type": "token",
+  "name": "Cratos",
+  "symbol": "CRTS",
+  "address": "0x678e840c640f619e17848045d23072844224dd37",
+  "decimals": 18,
+  "coingecko": {
+    "id": "cratos"
+  },
+  "coinmarketcap": {
+    "id": 12064,
+    "slug": "cratos"
+  }
+}

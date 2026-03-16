@@ -1,17 +1,16 @@
-import ServerStorage from './ServerStorage.js';
-import { chunks } from '../helpers.js';
+import LocalStorageStore from './LocalStorageStore.js';
 
-export default class ExchangeStorage extends ServerStorage {
+export default class ExchangeStorage extends LocalStorageStore {
   get defaults() {
     return {
       exchanges: [],
     };
   }
 
-  constructor({ request, name, key }) {
+  constructor({ clientStorage, name, key }) {
     super({
-      request,
-      url: `api/v4/storage/${name}@exchange`,
+      clientStorage,
+      keyName: `exchange:${name}`,
       key,
     });
   }
@@ -20,25 +19,13 @@ export default class ExchangeStorage extends ServerStorage {
     const result = {};
     if (exchanges.length === 0) return result;
 
-    const suffix = '@exchange';
-    const exchangeIds = exchanges.map((exchange) => `${exchange.id}${suffix}`);
-    const exchangeStorages = (await Promise.all(chunks(exchangeIds, 25).map((chunk) => {
-      return account.request({
-        url: `api/v4/storages/${chunk.join()}`,
-        method: 'get',
-        seed: 'device',
-      });
-    }))).flat();
-
     for (const exchange of exchanges) {
       const storage = new ExchangeStorage({
-        request: account.request,
+        clientStorage: account.clientStorage,
         name: exchange.id,
         key: account.clientStorage.getDetailsKey(),
       });
-      const id = `${exchange.id}${suffix}`;
-      const data = exchangeStorages.find((storage) => storage._id === id)?.data || null;
-      await storage.init(data);
+      await storage.init();
       result[exchange.id] = storage;
     }
     return result;

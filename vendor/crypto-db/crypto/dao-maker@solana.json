@@ -1,0 +1,19 @@
+{
+  "deprecated": true,
+  "_id": "dao-maker@solana",
+  "asset": "dao-maker",
+  "platform": "solana",
+  "type": "token",
+  "name": "DAO Maker",
+  "symbol": "DAO",
+  "address": "85aM5XJhdDeUw4MbGKM56zmWnsRyh76zUVut97uPjiCg",
+  "decimals": 8,
+  "logo": "dao-maker.svg",
+  "coingecko": {
+    "id": "dao-maker"
+  },
+  "coinmarketcap": {
+    "id": 8420,
+    "slug": "dao-maker"
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "_id": "waves@waves",
+  "asset": "waves",
+  "platform": "waves",
+  "type": "coin",
+  "name": "Waves",
+  "symbol": "WAVES",
+  "decimals": 8,
+  "logo": "waves.svg",
+  "supported": false,
+  "coingecko": {
+    "id": "waves"
+  },
+  "coinmarketcap": {
+    "id": 1274,
+    "slug": "waves"
+  }
+}

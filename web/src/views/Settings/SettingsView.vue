@@ -72,13 +72,6 @@ export default {
     },
   },
   methods: {
-    support() {
-      if (this.env.VITE_BUILD_TYPE === 'phonegap') {
-        window.Zendesk.showHelpCenter(null, null, null, prettyVersion);
-      } else {
-        this.$safeOpen('https://support.coin.space/hc/en-us/sections/115000511287-FAQ');
-      }
-    },
     logout() {
       this.$account.logout();
       this.$router.replace({ name: 'auth' });
@@ -140,6 +133,14 @@ export default {
 
     <CsListItems :title="$t('Connections')">
       <CsListItem
+        :title="$t('Network')"
+        @click="$router.push({ name: 'settings.network' })"
+      />
+      <CsListItem
+        :title="$t('Nodes')"
+        @click="$router.push({ name: 'settings.nodes' })"
+      />
+      <CsListItem
         :title="$t('WalletConnect')"
         @click="$router.push({ name: 'settings.walletconnect' })"
       />
@@ -149,10 +150,6 @@ export default {
       <CsListItem
         :title="securityPinTitle"
         @click="$router.push({ name: 'settings.pin' })"
-      />
-      <CsListItem
-        :title="$t('Hardware security')"
-        @click="$router.push({ name: 'settings.hardware' })"
       />
     </CsListItems>
 
@@ -166,21 +163,29 @@ export default {
       />
     </CsListItems>
 
-    <CsListItems :title="$t('Support')">
+    <CsListItems
+      v-if="$account.supportUrl"
+      :title="$t('Support')"
+    >
       <CsListItem
         :title="$t('Support (English)')"
-        @click="support"
+        @click="$safeOpen($account.supportUrl)"
       />
     </CsListItems>
 
-    <CsListItems :title="$t('About')">
+    <CsListItems
+      v-if="$account.termsUrl || $account.privacyUrl"
+      :title="$t('About')"
+    >
       <CsListItem
+        v-if="$account.termsUrl"
         :title="$t('Terms of Service')"
-        @click="$safeOpen(`${$account.siteUrl}terms-of-service/`)"
+        @click="$safeOpen($account.termsUrl)"
       />
       <CsListItem
+        v-if="$account.privacyUrl"
         :title="$t('Privacy Policy')"
-        @click="$safeOpen(`${$account.siteUrl}privacy-policy/`)"
+        @click="$safeOpen($account.privacyUrl)"
       />
     </CsListItems>
 

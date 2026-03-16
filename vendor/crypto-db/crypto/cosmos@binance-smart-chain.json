@@ -1,0 +1,18 @@
+{
+  "_id": "cosmos@binance-smart-chain",
+  "asset": "cosmos",
+  "platform": "binance-smart-chain",
+  "type": "token",
+  "name": "Cosmos",
+  "symbol": "ATOM",
+  "address": "0x0eb3a705fc54725037cc9e008bdede697f62f335",
+  "decimals": 18,
+  "logo": "cosmos.svg",
+  "coingecko": {
+    "id": "cosmos"
+  },
+  "coinmarketcap": {
+    "id": 3794,
+    "slug": "cosmos"
+  }
+}

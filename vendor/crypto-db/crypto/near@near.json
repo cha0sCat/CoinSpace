@@ -1,0 +1,18 @@
+{
+  "_id": "near@near",
+  "asset": "near",
+  "platform": "near",
+  "type": "coin",
+  "name": "NEAR Protocol",
+  "symbol": "NEAR",
+  "decimals": 24,
+  "logo": "near.svg",
+  "supported": false,
+  "coingecko": {
+    "id": "near"
+  },
+  "coinmarketcap": {
+    "id": 6535,
+    "slug": "near-protocol"
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "deprecated": true,
+  "_id": "multivac@binance-smart-chain",
+  "asset": "multivac",
+  "platform": "binance-smart-chain",
+  "type": "token",
+  "name": "MultiVAC",
+  "symbol": "MTV",
+  "address": "0x8aa688ab789d1848d131c65d98ceaa8875d97ef1",
+  "decimals": 18,
+  "coingecko": {
+    "id": "multivac"
+  },
+  "coinmarketcap": {
+    "id": 3853,
+    "slug": "multivac"
+  }
+}

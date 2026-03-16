@@ -1,0 +1,18 @@
+{
+  "_id": "zilliqa@zilliqa",
+  "asset": "zilliqa",
+  "platform": "zilliqa",
+  "type": "coin",
+  "name": "Zilliqa",
+  "symbol": "ZIL",
+  "decimals": 8,
+  "logo": "zilliqa.svg",
+  "supported": false,
+  "coingecko": {
+    "id": "zilliqa"
+  },
+  "coinmarketcap": {
+    "id": 2469,
+    "slug": "zilliqa"
+  }
+}

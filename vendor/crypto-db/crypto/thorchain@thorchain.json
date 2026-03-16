@@ -1,0 +1,18 @@
+{
+  "_id": "thorchain@thorchain",
+  "asset": "thorchain",
+  "platform": "thorchain",
+  "type": "coin",
+  "name": "THORChain",
+  "symbol": "RUNE",
+  "decimals": 8,
+  "logo": "thorchain.svg",
+  "supported": false,
+  "coingecko": {
+    "id": "thorchain"
+  },
+  "coinmarketcap": {
+    "id": 4157,
+    "slug": "thorchain"
+  }
+}

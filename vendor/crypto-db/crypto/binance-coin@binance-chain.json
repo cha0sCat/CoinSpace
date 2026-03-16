@@ -1,0 +1,19 @@
+{
+  "deprecated": true,
+  "_id": "binance-coin@binance-chain",
+  "asset": "binance-coin",
+  "platform": "binance-chain",
+  "type": "coin",
+  "name": "Binance Chain",
+  "symbol": "BNB",
+  "decimals": 8,
+  "logo": "binance-chain.svg",
+  "supported": false,
+  "coingecko": {
+    "id": "binancecoin"
+  },
+  "coinmarketcap": {
+    "id": 1839,
+    "slug": "bnb"
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "deprecated": true,
+  "_id": "aion@aion",
+  "asset": "aion",
+  "platform": "aion",
+  "type": "coin",
+  "name": "Aion",
+  "symbol": "AION",
+  "decimals": 16,
+  "supported": false,
+  "coingecko": {
+    "id": "aion"
+  },
+  "coinmarketcap": {
+    "id": 2062,
+    "slug": "aion"
+  }
+}

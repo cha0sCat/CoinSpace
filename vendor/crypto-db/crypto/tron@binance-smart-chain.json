@@ -1,0 +1,18 @@
+{
+  "_id": "tron@binance-smart-chain",
+  "asset": "tron",
+  "platform": "binance-smart-chain",
+  "type": "token",
+  "name": "TRON",
+  "symbol": "TRX",
+  "address": "0xce7de646e7208a4ef112cb6ed5038fa6cc6b12e3",
+  "decimals": 6,
+  "logo": "tron.svg",
+  "coingecko": {
+    "id": "tron"
+  },
+  "coinmarketcap": {
+    "id": 1958,
+    "slug": "tron"
+  }
+}

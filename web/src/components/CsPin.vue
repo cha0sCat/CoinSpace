@@ -1,6 +1,4 @@
 <script>
-import { hex } from '@scure/base';
-
 import CsButton from '../components/CsButton.vue';
 import { TYPES } from '../lib/account/Biometry.js';
 import { onShowOnHide } from '../lib/mixins.js';
@@ -89,33 +87,18 @@ export default {
           case 'setup':
             return await this.onSuccess(pin);
           case 'deviceSeed': {
-            const pinHash = this.$account.pinHash(pin);
-            const { deviceToken } = await this.$account.request({
-              url: '/api/v4/token/device/pin',
-              method: 'post',
-              data: {
-                pinHash,
-              },
-              id: true,
-            });
-            return await this.onSuccess(this.$account.getSeed('device', hex.decode(deviceToken)), pin);
+            try {
+              return await this.onSuccess(this.$account.getDeviceSeedFromPin(pin), pin);
+            } catch {
+              throw { status: 401 };
+            }
           }
           case 'walletSeed': {
-            const pinHash = this.$account.pinHash(pin);
-            const res = await this.$account.request({
-              url: '/api/v4/token/wallet/pin',
-              method: 'post',
-              data: {
-                pinHash,
-              },
-              seed: 'device',
-            });
-            if (res.walletToken) {
-              return await this.onSuccess(this.$account.getSeed('wallet', hex.decode(res.walletToken)), pin);
+            try {
+              return await this.onSuccess(this.$account.getWalletSeedFromPin(pin), pin);
+            } catch {
+              throw { status: 401 };
             }
-            const walletToken = await this.$account.hardware.walletToken(res);
-            if (!walletToken) return this.value = '';
-            return await this.onSuccess(this.$account.getSeed('wallet', hex.decode(walletToken)), pin);
           }
         }
       } catch (err) {
@@ -134,23 +117,6 @@ export default {
           const pin = await this.$account.biometry.phonegap();
           if (!pin) return;
           return await this.confirm(pin);
-        }
-        switch (this.mode) {
-          case 'deviceSeed': {
-            const deviceToken = await this.$account.biometry.deviceToken();
-            if (!deviceToken) return;
-            return await this.onSuccess(this.$account.getSeed('device', hex.decode(deviceToken)));
-          }
-          case 'walletSeed': {
-            const res = await this.$account.biometry.walletToken();
-            if (!res) return;
-            if (res.walletToken) {
-              return await this.onSuccess(this.$account.getSeed('wallet', hex.decode(res.walletToken)));
-            }
-            const walletToken = await this.$account.hardware.walletToken(res);
-            if (!walletToken) return;
-            return await this.onSuccess(this.$account.getSeed('wallet', hex.decode(walletToken)));
-          }
         }
       } catch (err) {
         this._errorHandler(err);

@@ -10,8 +10,6 @@ import {
   isValidUsername,
 } from '../../../lib/helpers.js';
 
-import { RequestError } from '@coinspace/cs-common/errors';
-
 export default {
   components: {
     MainLayout,
@@ -51,10 +49,6 @@ export default {
         this.$account.emit('update', 'user');
         this.$router.up();
       } catch (err) {
-        if (err instanceof RequestError && err.status === 400) {
-          this.errors.username = this.$t('Username already taken');
-          return;
-        }
         console.error(err);
       } finally {
         this.isLoading = false;

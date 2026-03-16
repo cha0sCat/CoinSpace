@@ -1,0 +1,18 @@
+{
+  "deprecated": true,
+  "_id": "proton@ethereum",
+  "asset": "proton",
+  "platform": "ethereum",
+  "type": "token",
+  "name": "Proton",
+  "symbol": "XPR",
+  "address": "0xd7efb00d12c2c13131fd319336fdf952525da2af",
+  "decimals": 4,
+  "coingecko": {
+    "id": "proton"
+  },
+  "coinmarketcap": {
+    "id": 5350,
+    "slug": "proton"
+  }
+}

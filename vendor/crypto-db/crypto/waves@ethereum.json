@@ -1,0 +1,18 @@
+{
+  "_id": "waves@ethereum",
+  "asset": "waves",
+  "platform": "ethereum",
+  "type": "token",
+  "name": "Waves",
+  "symbol": "WAVES",
+  "address": "0x7296eaa225804451a91616b29d040cab05435f0d",
+  "decimals": 8,
+  "logo": "waves.svg",
+  "coingecko": {
+    "id": "waves"
+  },
+  "coinmarketcap": {
+    "id": 1274,
+    "slug": "waves"
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "_id": "komodo@komodo",
+  "asset": "komodo",
+  "platform": "komodo",
+  "type": "coin",
+  "name": "Komodo",
+  "symbol": "KMD",
+  "decimals": 8,
+  "logo": "komodo.svg",
+  "supported": false,
+  "coingecko": {
+    "id": "komodo"
+  },
+  "coinmarketcap": {
+    "id": 1521,
+    "slug": "komodo"
+  }
+}

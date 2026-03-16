@@ -96,7 +96,8 @@ export default {
       <CsWarning
         v-if="token.custom === true"
         class="&__warning"
-        @click="$safeOpen('https://support.coin.space/hc/en-us/articles/37103058738708')"
+        :class="{ '&__warning--clickable': $account.customTokenHelpUrl }"
+        @click="$account.customTokenHelpUrl && $safeOpen($account.customTokenHelpUrl)"
       >
         {{ $t('Adding unknown tokens can be risky, so only add tokens you trust. Learn more.') }}
       </CsWarning>
@@ -153,7 +154,7 @@ export default {
       flex-grow: 1;
     }
 
-    &__warning {
+    &__warning--clickable {
       cursor: pointer;
     }
   }

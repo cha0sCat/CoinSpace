@@ -1,0 +1,18 @@
+{
+  "deprecated": true,
+  "_id": "swarm@ethereum",
+  "asset": "swarm",
+  "platform": "ethereum",
+  "type": "token",
+  "name": "Swarm",
+  "symbol": "BZZ",
+  "address": "0x19062190b1925b5b6689d7073fdfc8c2976ef8cb",
+  "decimals": 16,
+  "coingecko": {
+    "id": "swarm-bzz"
+  },
+  "coinmarketcap": {
+    "id": 10293,
+    "slug": "ethereum-swarm"
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "deprecated": true,
+  "_id": "tether@omni",
+  "asset": "tether",
+  "platform": "omni",
+  "type": "token",
+  "name": "Tether",
+  "symbol": "USDT",
+  "decimals": 8,
+  "logo": "tether.svg",
+  "supported": false,
+  "coingecko": {
+    "id": "tether"
+  },
+  "coinmarketcap": {
+    "id": 825,
+    "slug": "tether"
+  }
+}

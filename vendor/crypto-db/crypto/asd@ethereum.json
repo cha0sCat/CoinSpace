@@ -1,0 +1,18 @@
+{
+  "deprecated": true,
+  "_id": "asd@ethereum",
+  "asset": "asd",
+  "platform": "ethereum",
+  "type": "token",
+  "name": "ASD",
+  "symbol": "ASD",
+  "address": "0xff742d05420b6aca4481f635ad8341f81a6300c2",
+  "decimals": 18,
+  "coingecko": {
+    "id": "asd"
+  },
+  "coinmarketcap": {
+    "id": 3673,
+    "slug": "bitmax-token"
+  }
+}

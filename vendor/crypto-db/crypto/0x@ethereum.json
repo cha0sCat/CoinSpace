@@ -1,0 +1,18 @@
+{
+  "_id": "0x@ethereum",
+  "asset": "0x",
+  "platform": "ethereum",
+  "type": "token",
+  "name": "0x Protocol",
+  "symbol": "ZRX",
+  "address": "0xe41d2489571d322189246dafa5ebde1f4699f498",
+  "decimals": 18,
+  "logo": "0x.svg",
+  "coingecko": {
+    "id": "0x"
+  },
+  "coinmarketcap": {
+    "id": 1896,
+    "slug": "0x"
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "_id": "bifrost@ethereum",
+  "asset": "bifrost",
+  "platform": "ethereum",
+  "type": "token",
+  "name": "Bifrost",
+  "symbol": "BFC",
+  "address": "0x0c7d5ae016f806603cb1782bea29ac69471cab9c",
+  "decimals": 18,
+  "logo": "bifrost.svg",
+  "coingecko": {
+    "id": "bifrost"
+  },
+  "coinmarketcap": {
+    "id": 7817,
+    "slug": "bifrost"
+  }
+}

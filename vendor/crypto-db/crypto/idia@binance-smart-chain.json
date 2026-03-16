@@ -1,0 +1,18 @@
+{
+  "deprecated": true,
+  "_id": "idia@binance-smart-chain",
+  "asset": "idia",
+  "platform": "binance-smart-chain",
+  "type": "token",
+  "name": "Impossible Finance Launchpad",
+  "symbol": "IDIA",
+  "address": "0x0b15ddf19d47e6a86a56148fb4afffc6929bcb89",
+  "decimals": 18,
+  "coingecko": {
+    "id": "idia"
+  },
+  "coinmarketcap": {
+    "id": 10933,
+    "slug": "impossible-decentralized-incubator-access"
+  }
+}

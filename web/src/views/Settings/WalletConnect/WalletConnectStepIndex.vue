@@ -133,8 +133,9 @@ export default {
         {{ $t('Connect') }}
       </CsButton>
       <CsButton
+        v-if="$account.walletConnectHelpUrl"
         type="primary-link"
-        @click="$safeOpen('https://support.coin.space/hc/en-us/articles/27563411040404')"
+        @click="$safeOpen($account.walletConnectHelpUrl)"
       >
         {{ $t('What is WalletConnect?') }}
       </CsButton>

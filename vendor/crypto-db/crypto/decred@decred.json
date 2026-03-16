@@ -1,0 +1,18 @@
+{
+  "_id": "decred@decred",
+  "asset": "decred",
+  "platform": "decred",
+  "type": "coin",
+  "name": "Decred",
+  "symbol": "DCR",
+  "decimals": 8,
+  "logo": "decred.svg",
+  "supported": false,
+  "coingecko": {
+    "id": "decred"
+  },
+  "coinmarketcap": {
+    "id": 1168,
+    "slug": "decred"
+  }
+}

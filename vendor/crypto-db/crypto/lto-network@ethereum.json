@@ -1,0 +1,19 @@
+{
+  "deprecated": true,
+  "_id": "lto-network@ethereum",
+  "asset": "lto-network",
+  "platform": "ethereum",
+  "type": "token",
+  "name": "LTO Network",
+  "symbol": "LTO",
+  "address": "0xd01409314acb3b245cea9500ece3f6fd4d70ea30",
+  "decimals": 8,
+  "logo": "lto-network.svg",
+  "coingecko": {
+    "id": "lto-network"
+  },
+  "coinmarketcap": {
+    "id": 3714,
+    "slug": "lto-network"
+  }
+}

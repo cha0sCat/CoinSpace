@@ -1,0 +1,18 @@
+{
+  "deprecated": true,
+  "_id": "wabi@ethereum",
+  "asset": "wabi",
+  "platform": "ethereum",
+  "type": "token",
+  "name": "Wabi",
+  "symbol": "WABI",
+  "address": "0x286bda1413a2df81731d4930ce2f862a35a609fe",
+  "decimals": 18,
+  "coingecko": {
+    "id": "wabi"
+  },
+  "coinmarketcap": {
+    "id": 2267,
+    "slug": "wabi"
+  }
+}

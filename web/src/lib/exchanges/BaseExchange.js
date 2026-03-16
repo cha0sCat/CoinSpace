@@ -3,7 +3,9 @@ import {
   errors,
 } from '@coinspace/cs-common';
 
-import { areAddressesEqual as areTonAddressesEqual } from '@coinspace/cs-toncoin-wallet/helpers';
+function areTonAddressesEqual(left, right) {
+  return left?.toLowerCase?.() === right?.toLowerCase?.();
+}
 
 export class ExchangeDisabledError extends Error {
   name = 'ExchangeDisabledError';
@@ -62,11 +64,6 @@ export default class BaseExchange {
   static STATUS_HOLD = Symbol('HOLD');
 
   static EXTRA_ID = [
-    'xrp@ripple',
-    'stellar@stellar',
-    'eos@eos',
-    'stacks@stacks',
-    'iost@iost',
   ];
 
   get id() {
@@ -77,7 +74,7 @@ export default class BaseExchange {
     return {
       ...this.#info,
       logo: new URL(
-        `/logo/${this.#info.logo}?ver=${import.meta.env.VITE_VERSION}`,
+        `logo/${this.#info.logo}?ver=${import.meta.env.VITE_VERSION}`,
         this.#account.getBaseURL('swap')
       ).toString(),
     };
@@ -127,7 +124,6 @@ export default class BaseExchange {
         params: {
           transactions: ids.join(','),
         },
-        seed: 'device',
       });
       this.#exchanges = this.#exchanges.map((exchange) => {
         const update = updates.find((update) => update.id === exchange.id);
@@ -151,7 +147,6 @@ export default class BaseExchange {
       params: {
         transactions: id,
       },
-      seed: 'device',
     });
     const index = this.#exchanges.findIndex((exchange) => exchange.id === id);
     if (update) {
@@ -177,7 +172,6 @@ export default class BaseExchange {
           extraId,
           refundAddress,
         },
-        seed: 'device',
       });
       return exchange;
     } catch (err) {
@@ -216,7 +210,6 @@ export default class BaseExchange {
           address,
           extraId,
         },
-        seed: 'device',
       });
       if (data.isValid) {
         return true;
@@ -319,9 +312,9 @@ export default class BaseExchange {
   }
 
   #isRequiredToAccept({ internal, cryptoTo, payoutHash = '' }) {
-    if (cryptoTo !== 'monero@monero') return false;
-    if (!internal) return false;
-    const txsIds = this.#account.wallet('monero@monero')?.storage?.get('txIds') || [];
-    return !txsIds.includes(payoutHash.toLowerCase());
+    void internal;
+    void cryptoTo;
+    void payoutHash;
+    return false;
   }
 }

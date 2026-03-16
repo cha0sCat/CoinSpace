@@ -1,0 +1,18 @@
+{
+  "_id": "tether@cronos",
+  "asset": "tether",
+  "platform": "cronos",
+  "type": "token",
+  "name": "Tether",
+  "symbol": "USDT",
+  "address": "0x66e428c3f67a68878562e79a0234c1f83c208770",
+  "logo": "tether.svg",
+  "supported": false,
+  "coingecko": {
+    "id": "tether"
+  },
+  "coinmarketcap": {
+    "id": 825,
+    "slug": "tether"
+  }
+}

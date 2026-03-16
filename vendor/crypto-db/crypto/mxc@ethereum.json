@@ -1,0 +1,19 @@
+{
+  "deprecated": true,
+  "_id": "mxc@ethereum",
+  "asset": "mxc",
+  "platform": "ethereum",
+  "type": "token",
+  "name": "MXC",
+  "symbol": "MXC",
+  "address": "0x5ca381bbfb58f0092df149bd3d243b08b9a8386e",
+  "decimals": 18,
+  "logo": "mxc.svg",
+  "coingecko": {
+    "id": "mxc"
+  },
+  "coinmarketcap": {
+    "id": 3628,
+    "slug": "mxc"
+  }
+}

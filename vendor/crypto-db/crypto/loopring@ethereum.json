@@ -1,0 +1,18 @@
+{
+  "_id": "loopring@ethereum",
+  "asset": "loopring",
+  "platform": "ethereum",
+  "type": "token",
+  "name": "Loopring",
+  "symbol": "LRC",
+  "address": "0xbbbbca6a901c926f240b89eacb641d8aec7aeafd",
+  "decimals": 18,
+  "logo": "loopring.svg",
+  "coingecko": {
+    "id": "loopring"
+  },
+  "coinmarketcap": {
+    "id": 1934,
+    "slug": "loopring"
+  }
+}

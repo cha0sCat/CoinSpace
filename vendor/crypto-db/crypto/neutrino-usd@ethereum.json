@@ -1,0 +1,18 @@
+{
+  "deprecated": true,
+  "_id": "neutrino-usd@ethereum",
+  "asset": "neutrino-usd",
+  "platform": "ethereum",
+  "type": "token",
+  "name": "Neutrino Index",
+  "symbol": "XTN",
+  "address": "0x674c6ad92fd080e4004b2312b45f796a192d27a0",
+  "decimals": 18,
+  "coingecko": {
+    "id": "neutrino"
+  },
+  "coinmarketcap": {
+    "id": 5068,
+    "slug": "neutrino-usd"
+  }
+}

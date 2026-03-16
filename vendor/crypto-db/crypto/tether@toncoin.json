@@ -1,0 +1,18 @@
+{
+  "_id": "tether@toncoin",
+  "asset": "tether",
+  "platform": "toncoin",
+  "type": "token",
+  "name": "Tether",
+  "symbol": "USDT",
+  "address": "EQCxE6mUtQJKFnGfaROTKOt1lZbDiiX1kCixRv7Nw2Id_sDs",
+  "decimals": 6,
+  "logo": "tether.svg",
+  "coingecko": {
+    "id": "tether"
+  },
+  "coinmarketcap": {
+    "id": 825,
+    "slug": "tether"
+  }
+}

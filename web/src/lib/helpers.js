@@ -1,4 +1,3 @@
-import { prettyVersion } from './version.js';
 import stringify from 'fast-json-stable-stringify';
 import {
   Amount,
@@ -24,9 +23,6 @@ export function cryptoSubtitleWithSymbol(wallet) {
 }
 
 export function safeOpen(url) {
-  if (url.startsWith('https://support.coin.space/')) {
-    url = `${url}?tf_24464158=${encodeURIComponent(prettyVersion)}`;
-  }
   const win = window.open(url, '_blank');
   if (win) {
     win.opener = null;
@@ -79,12 +75,13 @@ export function registerProtocolHandler(crypto, account) {
   if (!navigator.registerProtocolHandler) return;
   if (crypto.scheme && !account.clientStorage.hasProtocolHandler(crypto.scheme)) {
     account.clientStorage.setProtocolHandler(crypto.scheme);
-    const handler = new URL(`${import.meta.env.BASE_URL}bip21/%s`, import.meta.env.VITE_SITE_URL);
+    const handler = new URL(`${import.meta.env.BASE_URL}bip21/%s`, window.location.origin);
+    const appName = import.meta.env.VITE_NAME || 'Wallet';
     try {
-      navigator.registerProtocolHandler(crypto.scheme, handler, 'Coin Wallet');
+      navigator.registerProtocolHandler(crypto.scheme, handler, appName);
     } catch (e) {
       try {
-        navigator.registerProtocolHandler(`web+${crypto.scheme}`, handler, 'Coin Wallet');
+        navigator.registerProtocolHandler(`web+${crypto.scheme}`, handler, appName);
         // eslint-disable-next-line
       } catch (e) {}
     }

@@ -1,0 +1,18 @@
+{
+  "_id": "usd-coin@solana",
+  "asset": "usd-coin",
+  "platform": "solana",
+  "type": "token",
+  "name": "USDC",
+  "symbol": "USDC",
+  "address": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+  "decimals": 6,
+  "logo": "usd-coin.svg",
+  "coingecko": {
+    "id": "usd-coin"
+  },
+  "coinmarketcap": {
+    "id": 3408,
+    "slug": "usd-coin"
+  }
+}

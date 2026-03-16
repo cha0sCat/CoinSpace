@@ -1,7 +1,5 @@
 import i18n from '../i18n/i18n.js';
-import os from '../detectOs.js';
 import {
-  platformAuthenticatorIsAvailable,
   startAuthentication,
   startRegistration,
 } from '@simplewebauthn/browser';
@@ -57,10 +55,8 @@ export default class Biometry {
           );
         });
         isAvailable = !!type;
-      } else if (import.meta.env.VITE_BUILD_TYPE === 'electron') {
-        isAvailable = false;
       } else {
-        isAvailable = await platformAuthenticatorIsAvailable();
+        isAvailable = false;
       }
     } catch (err) {
       isAvailable = false;
@@ -76,11 +72,7 @@ export default class Biometry {
           type = TYPES.BIOMETRICS;
         }
       } else {
-        if (os === 'macos') {
-          type = TYPES.TOUCH_ID;
-        } else {
-          type = TYPES.BIOMETRICS;
-        }
+        type = TYPES.BIOMETRICS;
       }
     }
 

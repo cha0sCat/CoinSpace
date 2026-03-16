@@ -1,0 +1,18 @@
+{
+  "deprecated": true,
+  "_id": "rarible@ethereum",
+  "asset": "rarible",
+  "platform": "ethereum",
+  "type": "token",
+  "name": "Rarible",
+  "symbol": "RARI",
+  "address": "0xfca59cd816ab1ead66534d82bc21e7515ce441cf",
+  "decimals": 18,
+  "coingecko": {
+    "id": "rarible"
+  },
+  "coinmarketcap": {
+    "id": 5877,
+    "slug": "rarible"
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "_id": "dai@cronos",
+  "asset": "dai",
+  "platform": "cronos",
+  "type": "token",
+  "name": "Dai",
+  "symbol": "DAI",
+  "address": "0xf2001b145b43032aaf5ee2884e456ccd805f677d",
+  "logo": "dai.svg",
+  "supported": false,
+  "coingecko": {
+    "id": "dai"
+  },
+  "coinmarketcap": {
+    "id": 4943,
+    "slug": "multi-collateral-dai"
+  }
+}

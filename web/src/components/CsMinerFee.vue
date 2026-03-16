@@ -4,8 +4,6 @@ import CsFormGroup from '../components/CsForm/CsFormGroup.vue';
 import CsFormSelect from '../components/CsForm/CsFormSelect.vue';
 
 import * as BitcoinSymbols from '@coinspace/cs-bitcoin-wallet/symbols';
-import * as KaspaSymbols from '@coinspace/cs-kaspa-wallet/symbols';
-import * as MoneroSymbols from '@coinspace/cs-monero-wallet/symbols';
 import { CsWallet } from '@coinspace/cs-common';
 
 export default {
@@ -26,47 +24,23 @@ export default {
   data() {
     const options = this.feeRates.map((feeRate) => {
       if (feeRate === CsWallet.FEE_RATE_DEFAULT) {
-        let time;
-        if (this.$wallet.crypto._id === 'monero@monero') {
-          time = (10 * this.$wallet.blocktime / 60).toFixed();
-        } else if (this.$wallet.crypto._id === 'kaspa@kaspa') {
-          time = '1';
-        } else {
-          time = (6 * this.$wallet.blocktime / 60).toFixed();
-        }
+        const time = (6 * this.$wallet.blocktime / 60).toFixed();
         return {
           name: `${this.$t('default')} (${this.$t('~{time} min', { time })})`,
           value: 'default',
           feeRate,
         };
       }
-      if (feeRate === BitcoinSymbols.FEE_RATE_FASTEST
-        || feeRate === MoneroSymbols.FEE_RATE_FASTEST
-        || feeRate === KaspaSymbols.FEE_RATE_FASTEST
-      ) {
-        let time;
-        if (this.$wallet.crypto._id === 'monero@monero') {
-          time = (5 * this.$wallet.blocktime / 60).toFixed();
-        } else if (this.$wallet.crypto._id === 'kaspa@kaspa') {
-          time = '0';
-        } else {
-          time = (2 * this.$wallet.blocktime / 60).toFixed();
-        }
+      if (feeRate === BitcoinSymbols.FEE_RATE_FASTEST) {
+        const time = (2 * this.$wallet.blocktime / 60).toFixed();
         return {
           name: `${this.$t('fast')} (${this.$t('~{time} min', { time })})`,
           value: 'fast',
           feeRate,
         };
       }
-      if (feeRate === BitcoinSymbols.FEE_RATE_MINIMUM
-        || feeRate === KaspaSymbols.FEE_RATE_MINIMUM
-      ) {
-        let time;
-        if (this.$wallet.crypto._id === 'kaspa@kaspa') {
-          time = '60';
-        } else {
-          time = (12 * this.$wallet.blocktime / 60).toFixed();
-        }
+      if (feeRate === BitcoinSymbols.FEE_RATE_MINIMUM) {
+        const time = (12 * this.$wallet.blocktime / 60).toFixed();
         return {
           name: `${this.$t('slow')} (${this.$t('~{time} min', { time })})`,
           value: 'minimum',

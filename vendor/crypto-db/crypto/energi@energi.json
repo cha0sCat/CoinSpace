@@ -1,0 +1,18 @@
+{
+  "deprecated": true,
+  "_id": "energi@energi",
+  "asset": "energi",
+  "platform": "energi",
+  "type": "coin",
+  "name": "Energi",
+  "symbol": "NRG",
+  "decimals": 18,
+  "supported": false,
+  "coingecko": {
+    "id": "energi"
+  },
+  "coinmarketcap": {
+    "id": 3218,
+    "slug": "energi"
+  }
+}

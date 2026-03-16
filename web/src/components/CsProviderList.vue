@@ -11,36 +11,17 @@ export default {
       required: true,
     },
     type: {
-      // buy, sell, or select
       type: String,
-      required: true,
+      default: 'select',
     },
   },
   emits: ['click'],
   computed: {
     buttonType() {
-      if (this.type === 'buy') {
-        return 'primary-light';
-      }
-      if (this.type === 'sell') {
-        return 'danger-light';
-      }
-      if (this.type === 'select') {
-        return 'primary-light';
-      }
-      return '';
+      return this.type === 'select' ? 'primary-light' : '';
     },
     buttonLabel() {
-      if (this.type === 'buy') {
-        return this.$t('Buy');
-      }
-      if (this.type === 'sell') {
-        return this.$t('Sell');
-      }
-      if (this.type === 'select') {
-        return this.$t('Select');
-      }
-      return '';
+      return this.type === 'select' ? this.$t('Select') : '';
     },
   },
 };

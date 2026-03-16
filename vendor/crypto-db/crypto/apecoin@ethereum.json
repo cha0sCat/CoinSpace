@@ -1,0 +1,18 @@
+{
+  "_id": "apecoin@ethereum",
+  "asset": "apecoin",
+  "platform": "ethereum",
+  "type": "token",
+  "name": "ApeCoin",
+  "symbol": "APE",
+  "address": "0x4d224452801aced8b2f0aebe155379bb5d594381",
+  "decimals": 18,
+  "logo": "apecoin.svg",
+  "coingecko": {
+    "id": "apecoin"
+  },
+  "coinmarketcap": {
+    "id": 18876,
+    "slug": "apecoin-ape"
+  }
+}

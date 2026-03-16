@@ -1,8 +1,6 @@
-import ChangeHeroExchange from './ChangeHeroExchange.js';
 import ChangeNOWExchange from './ChangeNOWExchange.js';
 import ChangellyExchange from './ChangellyExchange.js';
 import ExchangeStorage from '../storage/ExchangeStorage.js';
-import LetsExchange from './LetsExchange.js';
 
 import {
   Amount,
@@ -25,24 +23,30 @@ export default class Exchanges {
   constructor({ request, account }) {
     this.#account = account;
     this.#request = (config) => request({
+      public: true,
       ...config,
+      params: {
+        walletId: this.#account.clientStorage.getId(),
+        ...config.params,
+      },
       baseURL: this.#account.getBaseURL('swap'),
     });
-    for (const Exchange of [ChangellyExchange, ChangeNOWExchange, ChangeHeroExchange, LetsExchange]) {
+    for (const Exchange of [ChangellyExchange, ChangeNOWExchange]) {
       this.#exchanges.push(new Exchange({ request: this.#request, account }));
     }
   }
 
   isSupported(from, to) {
+    if (!this.#account.isSwapEnabled) return false;
     return !from.custom && !to.custom;
   }
 
   async init() {
+    if (!this.#account.isSwapEnabled) return;
     const exchangeStorages = await ExchangeStorage.initMany(this.#account, this.#exchanges);
     const infos = await this.#request({
       url: 'api/v1/providers',
       method: 'get',
-      seed: 'device',
     });
     for (const exchange of this.#exchanges) {
       const storage = exchangeStorages[exchange.id];
@@ -60,12 +64,16 @@ export default class Exchanges {
   }
 
   async loadExchanges() {
+    if (!this.#account.isSwapEnabled) return;
     for (const exchange of this.#exchanges) {
       await exchange.loadExchanges();
     }
   }
 
   async estimateExchange({ from, to, amount }) {
+    if (!this.#account.isSwapEnabled) {
+      throw new ExchangeDisabledError('Exchange disabled');
+    }
     if (amount.value <= 0n) {
       throw new ExchangeAmountError('Invalid amount');
     }
@@ -79,7 +87,6 @@ export default class Exchanges {
           to,
           amount: amount.toString(),
         },
-        seed: 'device',
       }));
       if (Array.isArray(estimations)) {
         estimations = estimations.filter(({ provider }) => this.#exchanges.find((item) => item.id === provider));
@@ -116,18 +123,28 @@ export default class Exchanges {
   }
 
   createExchange({ provider, ...opts }) {
+    if (!this.#account.isSwapEnabled) {
+      throw new ExchangeDisabledError('Exchange disabled');
+    }
     return this.#getExchange(provider).createExchange(opts);
   }
 
   saveExchange({ provider, ...opts }) {
+    if (!this.#account.isSwapEnabled) {
+      throw new ExchangeDisabledError('Exchange disabled');
+    }
     return this.#getExchange(provider).saveExchange(opts);
   }
 
   validateAddress({ provider, ...opts }) {
+    if (!this.#account.isSwapEnabled) {
+      throw new ExchangeDisabledError('Exchange disabled');
+    }
     return this.#getExchange(provider).validateAddress(opts);
   }
 
   exchangifyTransactions(transactions, crypto) {
+    if (!this.#account.isSwapEnabled) return transactions;
     for (const exchange of this.#exchanges) {
       exchange.exchangifyTransactions(transactions, crypto);
     }
@@ -135,6 +152,7 @@ export default class Exchanges {
   }
 
   async reexchangifyTransaction(transaction) {
+    if (!this.#account.isSwapEnabled) return transaction;
     return this.#getExchange(transaction.exchange.providerInfo.id).reexchangifyTransaction(transaction);
   }
 }

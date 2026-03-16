@@ -1,0 +1,18 @@
+{
+  "deprecated": true,
+  "_id": "ramp@binance-smart-chain",
+  "asset": "ramp",
+  "platform": "binance-smart-chain",
+  "type": "token",
+  "name": "RAMP",
+  "symbol": "RAMP",
+  "address": "0x8519ea49c997f50ceffa444d240fb655e89248aa",
+  "decimals": 18,
+  "coingecko": {
+    "id": "ramp"
+  },
+  "coinmarketcap": {
+    "id": 7463,
+    "slug": "ramp"
+  }
+}

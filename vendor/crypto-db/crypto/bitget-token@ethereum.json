@@ -1,0 +1,18 @@
+{
+  "_id": "bitget-token@ethereum",
+  "asset": "bitget-token",
+  "platform": "ethereum",
+  "type": "token",
+  "name": "Bitget Token",
+  "symbol": "BGB",
+  "address": "0x54d2252757e1672eead234d27b1270728ff90581",
+  "decimals": 18,
+  "logo": "bitget-token.svg",
+  "coingecko": {
+    "id": "bitget-token"
+  },
+  "coinmarketcap": {
+    "id": 11092,
+    "slug": "bitget-token-new"
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "_id": "superfarm@binance-smart-chain",
+  "asset": "superfarm",
+  "platform": "binance-smart-chain",
+  "type": "token",
+  "name": "SuperVerse",
+  "symbol": "SUPER",
+  "address": "0x51ba0b044d96c3abfca52b64d733603ccc4f0d4d",
+  "decimals": 18,
+  "logo": "superfarm.svg",
+  "coingecko": {
+    "id": "superfarm"
+  },
+  "coinmarketcap": {
+    "id": 8290,
+    "slug": "superverse"
+  }
+}

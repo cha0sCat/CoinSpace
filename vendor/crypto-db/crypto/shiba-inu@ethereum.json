@@ -1,0 +1,18 @@
+{
+  "_id": "shiba-inu@ethereum",
+  "asset": "shiba-inu",
+  "platform": "ethereum",
+  "type": "token",
+  "name": "Shiba Inu",
+  "symbol": "SHIB",
+  "address": "0x95ad61b0a150d79219dcf64e1e6cc01f0b64c4ce",
+  "decimals": 18,
+  "logo": "shiba-inu.svg",
+  "coingecko": {
+    "id": "shiba-inu"
+  },
+  "coinmarketcap": {
+    "id": 5994,
+    "slug": "shiba-inu"
+  }
+}

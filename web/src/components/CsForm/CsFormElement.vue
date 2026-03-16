@@ -20,7 +20,7 @@ export default {
       default: undefined,
     },
     error: {
-      type: [Boolean, String],
+      type: [String, Boolean],
       default: false,
     },
     small: {
@@ -41,6 +41,14 @@ export default {
       showInfo: false,
     };
   },
+  computed: {
+    hasError() {
+      return typeof this.error === 'string' && this.error.length > 0;
+    },
+    errorText() {
+      return typeof this.error === 'string' ? this.error : '';
+    },
+  },
 };
 </script>
 
@@ -50,7 +58,7 @@ export default {
     :class="{
       '&--small': small,
       '&--writable': writable,
-      '&--has-error': error,
+      '&--has-error': hasError,
     }"
   >
     <div
@@ -94,10 +102,10 @@ export default {
       <slot name="button" />
     </div>
     <div
-      v-if="error"
+      v-if="errorText"
       class="&__error"
     >
-      {{ error }}
+      {{ errorText }}
     </div>
     <CsModal
       v-if="info !== false"

@@ -1,0 +1,17 @@
+{
+  "_id": "kaspa@kaspa",
+  "asset": "kaspa",
+  "platform": "kaspa",
+  "type": "coin",
+  "name": "Kaspa",
+  "symbol": "KAS",
+  "decimals": 8,
+  "logo": "kaspa.svg",
+  "coingecko": {
+    "id": "kaspa"
+  },
+  "coinmarketcap": {
+    "id": 20396,
+    "slug": "kaspa"
+  }
+}

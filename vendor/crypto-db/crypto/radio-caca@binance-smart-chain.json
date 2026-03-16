@@ -1,0 +1,18 @@
+{
+  "_id": "radio-caca@binance-smart-chain",
+  "asset": "radio-caca",
+  "platform": "binance-smart-chain",
+  "type": "token",
+  "name": "RACA",
+  "symbol": "RACA",
+  "address": "0x12bb890508c125661e03b09ec06e404bc9289040",
+  "decimals": 18,
+  "logo": "radio-caca.svg",
+  "coingecko": {
+    "id": "radio-caca"
+  },
+  "coinmarketcap": {
+    "id": 11346,
+    "slug": "radio-caca"
+  }
+}

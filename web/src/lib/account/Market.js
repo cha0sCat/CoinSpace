@@ -13,6 +13,7 @@ export const currencies = [
 ];
 
 export default class Market {
+  #account;
   #cryptoDB;
   #priceAPI;
   #cryptoIds = [];
@@ -21,11 +22,16 @@ export default class Market {
     if (!cryptoDB) {
       throw new TypeError('cryptoDB is required');
     }
+    this.#account = account;
     this.#cryptoDB = cryptoDB;
     this.#priceAPI = new PriceAPI({ request, account });
   }
 
   async init({ cryptos, currency }) {
+    if (!this.#account.isMarketEnabled) {
+      this.#cryptoIds = [];
+      return;
+    }
     this.#cryptoIds = [...new Set(cryptos
       .filter((crypto) => crypto.coingecko?.id)
       .map((crypto) => crypto._id)
@@ -42,6 +48,7 @@ export default class Market {
   }
 
   async getMarket(id, currency) {
+    if (!this.#account.isMarketEnabled) return;
     const crypto = this.#cryptoDB.get(id);
     if (!crypto || !crypto.coingecko?.id) return;
     if (!currencies.includes(currency)) return;
@@ -64,6 +71,9 @@ export default class Market {
   }
 
   async getChartData(id, period, currency) {
+    if (!this.#account.isMarketEnabled) {
+      return [];
+    }
     const crypto = this.#cryptoDB.get(id);
     if (!crypto || !crypto.coingecko?.id) {
       return [];

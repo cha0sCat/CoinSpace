@@ -1,0 +1,18 @@
+{
+  "_id": "lido-staked-ether@ethereum",
+  "asset": "lido-staked-ether",
+  "platform": "ethereum",
+  "type": "token",
+  "name": "Lido Staked ETH",
+  "symbol": "STETH",
+  "address": "0xae7ab96520de3a18e5e111b5eaab095312d7fe84",
+  "decimals": 18,
+  "logo": "lido-staked-ether.svg",
+  "coingecko": {
+    "id": "staked-ether"
+  },
+  "coinmarketcap": {
+    "id": 8085,
+    "slug": "steth"
+  }
+}

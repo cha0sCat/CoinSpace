@@ -1,0 +1,18 @@
+{
+  "_id": "brett-based@base",
+  "asset": "brett-based",
+  "platform": "base",
+  "type": "token",
+  "name": "Brett (Based)",
+  "symbol": "BRETT",
+  "address": "0x532f27101965dd16442e59d40670faf5ebb142e4",
+  "decimals": 18,
+  "logo": "brett-based.svg",
+  "coingecko": {
+    "id": "based-brett"
+  },
+  "coinmarketcap": {
+    "id": 29743,
+    "slug": "based-brett"
+  }
+}

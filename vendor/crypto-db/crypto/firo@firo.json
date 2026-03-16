@@ -1,0 +1,18 @@
+{
+  "_id": "firo@firo",
+  "asset": "firo",
+  "platform": "firo",
+  "type": "coin",
+  "name": "Firo",
+  "symbol": "FIRO",
+  "decimals": 8,
+  "logo": "firo.svg",
+  "supported": false,
+  "coingecko": {
+    "id": "zcoin"
+  },
+  "coinmarketcap": {
+    "id": 1414,
+    "slug": "firo"
+  }
+}

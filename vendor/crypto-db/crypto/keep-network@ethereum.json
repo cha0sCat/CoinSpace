@@ -1,0 +1,19 @@
+{
+  "deprecated": true,
+  "_id": "keep-network@ethereum",
+  "asset": "keep-network",
+  "platform": "ethereum",
+  "type": "token",
+  "name": "Keep Network",
+  "symbol": "KEEP",
+  "address": "0x85eee30c52b0b379b046fb0f85f4f3dc3009afec",
+  "decimals": 18,
+  "logo": "keep-network.svg",
+  "coingecko": {
+    "id": "keep-network"
+  },
+  "coinmarketcap": {
+    "id": 5566,
+    "slug": "keep-network"
+  }
+}

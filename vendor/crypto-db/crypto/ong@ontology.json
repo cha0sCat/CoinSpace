@@ -1,0 +1,19 @@
+{
+  "_id": "ong@ontology",
+  "asset": "ong",
+  "platform": "ontology",
+  "type": "token",
+  "name": "Ontology Gas",
+  "symbol": "ONG",
+  "address": "0200000000000000000000000000000000000000",
+  "decimals": 9,
+  "logo": "ong.svg",
+  "supported": false,
+  "coingecko": {
+    "id": "ong"
+  },
+  "coinmarketcap": {
+    "id": 3217,
+    "slug": "ontology-gas"
+  }
+}

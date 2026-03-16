@@ -1,0 +1,20 @@
+{
+  "deprecated": true,
+  "_id": "binance-usd@binance-chain",
+  "asset": "binance-usd",
+  "platform": "binance-chain",
+  "type": "token",
+  "name": "BUSD",
+  "symbol": "BUSD",
+  "address": "BUSD-BD1",
+  "decimals": 18,
+  "logo": "binance-usd.svg",
+  "supported": false,
+  "coingecko": {
+    "id": "binance-usd"
+  },
+  "coinmarketcap": {
+    "id": 4687,
+    "slug": "binance-usd"
+  }
+}

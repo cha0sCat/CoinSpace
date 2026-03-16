@@ -1,0 +1,18 @@
+{
+  "_id": "ergo@ergo",
+  "asset": "ergo",
+  "platform": "ergo",
+  "type": "coin",
+  "name": "Ergo",
+  "symbol": "ERG",
+  "decimals": 9,
+  "logo": "ergo.svg",
+  "supported": false,
+  "coingecko": {
+    "id": "ergo"
+  },
+  "coinmarketcap": {
+    "id": 1762,
+    "slug": "ergo"
+  }
+}

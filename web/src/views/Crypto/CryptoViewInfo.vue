@@ -17,9 +17,12 @@ export default {
   },
   data() {
     return {
-      url: this.$wallet.tokenUrl,
+      url: undefined,
       subtitleWithSymbol: cryptoSubtitleWithSymbol(this.$wallet),
     };
+  },
+  async mounted() {
+    this.url = await this.$account.getTokenUrl(this.$wallet.crypto.platform, this.$wallet.crypto.address);
   },
 };
 </script>

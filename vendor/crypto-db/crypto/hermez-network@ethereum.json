@@ -1,0 +1,18 @@
+{
+  "deprecated": true,
+  "_id": "hermez-network@ethereum",
+  "asset": "hermez-network",
+  "platform": "ethereum",
+  "type": "token",
+  "name": "Hermez Network",
+  "symbol": "HEZ",
+  "address": "0xeef9f339514298c6a857efcfc1a762af84438dee",
+  "decimals": 18,
+  "coingecko": {
+    "id": "hermez-network-token"
+  },
+  "coinmarketcap": {
+    "id": 7424,
+    "slug": "hermez-network"
+  }
+}

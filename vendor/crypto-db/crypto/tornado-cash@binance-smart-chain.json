@@ -1,0 +1,18 @@
+{
+  "deprecated": true,
+  "_id": "tornado-cash@binance-smart-chain",
+  "asset": "tornado-cash",
+  "platform": "binance-smart-chain",
+  "type": "token",
+  "name": "Tornado Cash",
+  "symbol": "TORN",
+  "address": "0x1ba8d3c4c219b124d351f603060663bd1bcd9bbf",
+  "decimals": 18,
+  "coingecko": {
+    "id": "tornado-cash"
+  },
+  "coinmarketcap": {
+    "id": 8049,
+    "slug": "torn"
+  }
+}

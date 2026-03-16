@@ -1,0 +1,18 @@
+{
+  "_id": "verasity@ethereum",
+  "asset": "verasity",
+  "platform": "ethereum",
+  "type": "token",
+  "name": "Verasity",
+  "symbol": "VRA",
+  "address": "0xf411903cbc70a74d22900a5de66a2dda66507255",
+  "decimals": 18,
+  "logo": "verasity.svg",
+  "coingecko": {
+    "id": "verasity"
+  },
+  "coinmarketcap": {
+    "id": 3816,
+    "slug": "verasity"
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "deprecated": true,
+  "_id": "clover-finance@ethereum",
+  "asset": "clover-finance",
+  "platform": "ethereum",
+  "type": "token",
+  "name": "CLV",
+  "symbol": "CLV",
+  "address": "0x80c62fe4487e1351b47ba49809ebd60ed085bf52",
+  "decimals": 18,
+  "coingecko": {
+    "id": "clover-finance"
+  },
+  "coinmarketcap": {
+    "id": 8384,
+    "slug": "clover"
+  }
+}

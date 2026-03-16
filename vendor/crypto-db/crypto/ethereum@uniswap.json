@@ -1,0 +1,17 @@
+{
+  "_id": "ethereum@uniswap",
+  "asset": "ethereum",
+  "platform": "uniswap",
+  "type": "coin",
+  "name": "Uniswap",
+  "symbol": "ETH",
+  "logo": "uniswap.svg",
+  "supported": false,
+  "coingecko": {
+    "id": "ethereum"
+  },
+  "coinmarketcap": {
+    "id": 1027,
+    "slug": "ethereum"
+  }
+}

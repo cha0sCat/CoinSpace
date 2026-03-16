@@ -1,0 +1,18 @@
+{
+  "_id": "chainlink@cronos",
+  "asset": "chainlink",
+  "platform": "cronos",
+  "type": "token",
+  "name": "Chainlink",
+  "symbol": "LINK",
+  "address": "0x8c80a01f461f297df7f9da3a4f740d7297c8ac85",
+  "logo": "chainlink.svg",
+  "supported": false,
+  "coingecko": {
+    "id": "chainlink"
+  },
+  "coinmarketcap": {
+    "id": 1975,
+    "slug": "chainlink"
+  }
+}

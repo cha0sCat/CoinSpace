@@ -1,0 +1,35 @@
+{
+  "name": "@coinspace/cs-evm-wallet",
+  "version": "1.9.4",
+  "description": "EVM Wallet for Coin Wallet",
+  "author": "Coin Wallet <support@coin.space> (https://coin.space/)",
+  "license": "MIT",
+  "type": "module",
+  "main": "index.js",
+  "exports": {
+    ".": "./index.js",
+    "./errors": "./lib/errors.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/CoinSpace/cs-evm-wallet.git"
+  },
+  "scripts": {
+    "lint": "eslint --report-unused-disable-directives .",
+    "test": "mocha test --reporter spec"
+  },
+  "dependencies": {
+    "@noble/hashes": "^1.5.0",
+    "@scure/bip32": "^1.5.0",
+    "micro-eth-signer": "^0.15.0"
+  },
+  "peerDependencies": {
+    "@coinspace/cs-common": "^1.1.6"
+  },
+  "devDependencies": {
+    "eslint": "^9.27.0",
+    "eslint-config-coinspace": "^3.0.1",
+    "mocha": "^11.4.0",
+    "sinon": "^20.0.0"
+  }
+}

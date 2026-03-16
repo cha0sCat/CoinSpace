@@ -1,0 +1,18 @@
+{
+  "_id": "power-ledger@ethereum",
+  "asset": "power-ledger",
+  "platform": "ethereum",
+  "type": "token",
+  "name": "Powerledger",
+  "symbol": "POWR",
+  "address": "0x595832f8fc6bf59c85c527fec3740a1b7a361269",
+  "decimals": 6,
+  "logo": "power-ledger.svg",
+  "coingecko": {
+    "id": "power-ledger"
+  },
+  "coinmarketcap": {
+    "id": 2132,
+    "slug": "power-ledger"
+  }
+}

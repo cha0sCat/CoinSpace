@@ -1,0 +1,19 @@
+{
+  "deprecated": true,
+  "_id": "dydx@solana",
+  "asset": "dydx",
+  "platform": "solana",
+  "type": "token",
+  "name": "dYdX (ethDYDX)",
+  "symbol": "ETHDYDX",
+  "address": "4Hx6Bj56eGyw8EJrrheM6LBQAvVYRikYCWsALeTrwyRU",
+  "decimals": 8,
+  "logo": "dydx.svg",
+  "coingecko": {
+    "id": "dydx"
+  },
+  "coinmarketcap": {
+    "id": 11156,
+    "slug": "dydx-ethdydx"
+  }
+}

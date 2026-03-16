@@ -1,0 +1,17 @@
+{
+  "_id": "tron@tron",
+  "asset": "tron",
+  "platform": "tron",
+  "type": "coin",
+  "name": "TRON",
+  "symbol": "TRX",
+  "decimals": 6,
+  "logo": "tron.svg",
+  "coingecko": {
+    "id": "tron"
+  },
+  "coinmarketcap": {
+    "id": 1958,
+    "slug": "tron"
+  }
+}

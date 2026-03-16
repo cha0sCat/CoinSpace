@@ -1,0 +1,18 @@
+{
+  "_id": "aave@ethereum",
+  "asset": "aave",
+  "platform": "ethereum",
+  "type": "token",
+  "name": "Aave",
+  "symbol": "AAVE",
+  "address": "0x7fc66500c84a76ad7e9c93437bfc5ac33e2ddae9",
+  "decimals": 18,
+  "logo": "aave.svg",
+  "coingecko": {
+    "id": "aave"
+  },
+  "coinmarketcap": {
+    "id": 7278,
+    "slug": "aave"
+  }
+}

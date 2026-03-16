@@ -310,7 +310,6 @@ jobs:
           VITE_SENTRY_ENVIRONMENT: ${{ github.ref == 'refs/heads/master' && 'production' || 'development' }}
           VITE_CHANGELLY_REF: ${{ secrets.CHANGELLY_REF }}
           VITE_CHANGENOW_REF: ${{ secrets.CHANGENOW_REF }}
-          VITE_MOONPAY_API_KEY: ${{ secrets.MOONPAY_API_KEY }}
           VITE_ZENDESK_APP_ID: ${{ secrets.ZENDESK_APP_ID }}
           VITE_ZENDESK_CLIENT_ID: ${{ secrets.ZENDESK_CLIENT_ID }}
           VITE_ZENDESK_URL: ${{ secrets.ZENDESK_URL }}

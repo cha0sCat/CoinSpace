@@ -1,0 +1,18 @@
+{
+  "_id": "tether@tezos",
+  "asset": "tether",
+  "platform": "tezos",
+  "type": "token",
+  "name": "Tether",
+  "symbol": "USDT",
+  "address": "KT1XnTn74bUtxHfDtBmm2bGZAQfhPbvKWR8o",
+  "logo": "tether.svg",
+  "supported": false,
+  "coingecko": {
+    "id": "tether"
+  },
+  "coinmarketcap": {
+    "id": 825,
+    "slug": "tether"
+  }
+}

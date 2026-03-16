@@ -1,0 +1,18 @@
+{
+  "deprecated": true,
+  "_id": "fio-protocol@fio-protocol",
+  "asset": "fio-protocol",
+  "platform": "fio-protocol",
+  "type": "coin",
+  "name": "FIO Protocol",
+  "symbol": "FIO",
+  "decimals": 9,
+  "supported": false,
+  "coingecko": {
+    "id": "fio-protocol"
+  },
+  "coinmarketcap": {
+    "id": 5865,
+    "slug": "fio-protocol"
+  }
+}

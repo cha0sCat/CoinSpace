@@ -1,0 +1,18 @@
+{
+  "_id": "swissborg@ethereum",
+  "asset": "swissborg",
+  "platform": "ethereum",
+  "type": "token",
+  "name": "SwissBorg",
+  "symbol": "BORG",
+  "address": "0x64d0f55cd8c7133a9d7102b13987235f486f2224",
+  "decimals": 18,
+  "logo": "swissborg.svg",
+  "coingecko": {
+    "id": "swissborg"
+  },
+  "coinmarketcap": {
+    "id": 2499,
+    "slug": "swissborg"
+  }
+}

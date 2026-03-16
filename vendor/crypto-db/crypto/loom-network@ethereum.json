@@ -1,0 +1,18 @@
+{
+  "_id": "loom-network@ethereum",
+  "asset": "loom-network",
+  "platform": "ethereum",
+  "type": "token",
+  "name": "Loom Network",
+  "symbol": "LOOM",
+  "address": "0x42476f744292107e34519f9c357927074ea3f75d",
+  "decimals": 18,
+  "logo": "loom-network.svg",
+  "coingecko": {
+    "id": "loom-network-new"
+  },
+  "coinmarketcap": {
+    "id": 2588,
+    "slug": "loom-network"
+  }
+}

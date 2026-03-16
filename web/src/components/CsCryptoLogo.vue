@@ -19,11 +19,15 @@ export default {
   },
   data() {
     return {
-      baseUrl: this.$account.getBaseURL('price'),
       version: this.env.VITE_VERSION,
       cryptoLogoError: false,
       platformLogoError: false,
     };
+  },
+  computed: {
+    baseUrl() {
+      return '/assets/crypto/';
+    },
   },
 };
 </script>
@@ -34,7 +38,7 @@ export default {
       v-if="crypto.logo && !cryptoLogoError"
       loading="lazy"
       class="&__crypto"
-      :src="`${baseUrl}logo/${crypto.logo}?ver=${version}`"
+      :src="`${baseUrl}${crypto.logo}?ver=${version}`"
       :alt="crypto.name"
       @error="cryptoLogoError = true"
     >
@@ -51,7 +55,7 @@ export default {
         v-if="platform?.logo && !platformLogoError"
         loading="lazy"
         class="&__platform"
-        :src="`${baseUrl}logo/${platform.logo}?ver=${version}`"
+        :src="`${baseUrl}${platform.logo}?ver=${version}`"
         :alt="platform.name"
         @error="platformLogoError = true"
       >

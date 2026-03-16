@@ -1,0 +1,19 @@
+{
+  "_id": "paypal-usd@solana",
+  "asset": "paypal-usd",
+  "platform": "solana",
+  "type": "token",
+  "name": "PayPal USD",
+  "symbol": "PYUSD",
+  "address": "2b1kV6DkPAnxd5ixfnxCpjxmKwqjjaYmCZfHsFu24GXo",
+  "decimals": 6,
+  "logo": "paypal-usd.svg",
+  "supported": "6.12.0",
+  "coingecko": {
+    "id": "paypal-usd"
+  },
+  "coinmarketcap": {
+    "id": 27772,
+    "slug": "paypal-usd"
+  }
+}

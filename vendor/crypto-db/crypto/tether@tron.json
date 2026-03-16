@@ -1,0 +1,18 @@
+{
+  "_id": "tether@tron",
+  "asset": "tether",
+  "platform": "tron",
+  "type": "token",
+  "name": "Tether",
+  "symbol": "USDT",
+  "address": "TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t",
+  "decimals": 6,
+  "logo": "tether.svg",
+  "coingecko": {
+    "id": "tether"
+  },
+  "coinmarketcap": {
+    "id": 825,
+    "slug": "tether"
+  }
+}

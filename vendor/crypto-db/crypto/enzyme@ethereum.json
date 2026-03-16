@@ -1,0 +1,18 @@
+{
+  "_id": "enzyme@ethereum",
+  "asset": "enzyme",
+  "platform": "ethereum",
+  "type": "token",
+  "name": "Enzyme",
+  "symbol": "MLN",
+  "address": "0xec67005c4e498ec7f55e092bd1d35cbc47c91892",
+  "decimals": 18,
+  "logo": "enzyme.svg",
+  "coingecko": {
+    "id": "melon"
+  },
+  "coinmarketcap": {
+    "id": 1552,
+    "slug": "enzyme"
+  }
+}

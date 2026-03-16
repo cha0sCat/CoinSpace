@@ -1,0 +1,18 @@
+{
+  "deprecated": true,
+  "_id": "peakdefi@ethereum",
+  "asset": "peakdefi",
+  "platform": "ethereum",
+  "type": "token",
+  "name": "PEAKDEFI",
+  "symbol": "PEAK",
+  "address": "0x630d98424efe0ea27fb1b3ab7741907dffeaad78",
+  "decimals": 8,
+  "coingecko": {
+    "id": "marketpeak"
+  },
+  "coinmarketcap": {
+    "id": 5354,
+    "slug": "peakdefi"
+  }
+}

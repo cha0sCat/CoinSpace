@@ -1,0 +1,18 @@
+{
+  "deprecated": true,
+  "_id": "atari@ethereum",
+  "asset": "atari",
+  "platform": "ethereum",
+  "type": "token",
+  "name": "Atari Token",
+  "symbol": "ATRI",
+  "address": "0xdacd69347de42babfaecd09dc88958378780fb62",
+  "decimals": 0,
+  "coingecko": {
+    "id": "atari"
+  },
+  "coinmarketcap": {
+    "id": 7395,
+    "slug": "atari-token"
+  }
+}

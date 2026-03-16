@@ -1,0 +1,18 @@
+{
+  "_id": "truefi@ethereum",
+  "asset": "truefi",
+  "platform": "ethereum",
+  "type": "token",
+  "name": "TrueFi",
+  "symbol": "TRU",
+  "address": "0x4c19596f5aaff459fa38b0f7ed92f11ae6543784",
+  "decimals": 8,
+  "logo": "truefi.svg",
+  "coingecko": {
+    "id": "truefi"
+  },
+  "coinmarketcap": {
+    "id": 7725,
+    "slug": "truefi-token"
+  }
+}

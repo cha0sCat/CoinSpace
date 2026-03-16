@@ -1,0 +1,18 @@
+{
+  "_id": "polkadot@polkadot",
+  "asset": "polkadot",
+  "platform": "polkadot",
+  "type": "coin",
+  "name": "Polkadot",
+  "symbol": "DOT",
+  "decimals": 10,
+  "logo": "polkadot.svg",
+  "supported": false,
+  "coingecko": {
+    "id": "polkadot"
+  },
+  "coinmarketcap": {
+    "id": 6636,
+    "slug": "polkadot-new"
+  }
+}

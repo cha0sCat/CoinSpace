@@ -1,0 +1,17 @@
+{
+  "_id": "polygon@polygon",
+  "asset": "polygon",
+  "platform": "polygon",
+  "type": "coin",
+  "name": "Polygon",
+  "symbol": "POL",
+  "decimals": 18,
+  "logo": "polygon.svg",
+  "coingecko": {
+    "id": "polygon-ecosystem-token"
+  },
+  "coinmarketcap": {
+    "id": 28321,
+    "slug": "polygon-ecosystem-token"
+  }
+}

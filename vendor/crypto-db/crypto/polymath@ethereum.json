@@ -1,0 +1,19 @@
+{
+  "deprecated": true,
+  "_id": "polymath@ethereum",
+  "asset": "polymath",
+  "platform": "ethereum",
+  "type": "token",
+  "name": "Polymath",
+  "symbol": "POLY",
+  "address": "0x9992ec3cf6a55b00978cddf2b27bc6882d88d1ec",
+  "decimals": 18,
+  "logo": "polymath.svg",
+  "coingecko": {
+    "id": "polymath"
+  },
+  "coinmarketcap": {
+    "id": 2496,
+    "slug": "polymath-network"
+  }
+}

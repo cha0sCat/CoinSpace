@@ -1,0 +1,18 @@
+{
+  "deprecated": true,
+  "_id": "frontier@binance-smart-chain",
+  "asset": "frontier",
+  "platform": "binance-smart-chain",
+  "type": "token",
+  "name": "Frontier",
+  "symbol": "FRONT",
+  "address": "0x928e55dab735aa8260af3cedada18b5f70c72f1b",
+  "decimals": 18,
+  "coingecko": {
+    "id": "frontier-token"
+  },
+  "coinmarketcap": {
+    "id": 5893,
+    "slug": "frontier"
+  }
+}

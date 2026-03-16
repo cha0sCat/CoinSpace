@@ -1,0 +1,20 @@
+{
+  "deprecated": true,
+  "_id": "thorchain@binance-chain",
+  "asset": "thorchain",
+  "platform": "binance-chain",
+  "type": "token",
+  "name": "THORChain",
+  "symbol": "RUNE",
+  "address": "RUNE-B1A",
+  "decimals": 8,
+  "logo": "thorchain.svg",
+  "supported": false,
+  "coingecko": {
+    "id": "thorchain"
+  },
+  "coinmarketcap": {
+    "id": 4157,
+    "slug": "thorchain"
+  }
+}

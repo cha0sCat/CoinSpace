@@ -1,0 +1,18 @@
+{
+  "_id": "chiliz@ethereum",
+  "asset": "chiliz",
+  "platform": "ethereum",
+  "type": "token",
+  "name": "Chiliz",
+  "symbol": "CHZ",
+  "address": "0x3506424f91fd33084466f402d5d97f05f8e3b4af",
+  "decimals": 18,
+  "logo": "chiliz.svg",
+  "coingecko": {
+    "id": "chiliz"
+  },
+  "coinmarketcap": {
+    "id": 4066,
+    "slug": "chiliz"
+  }
+}

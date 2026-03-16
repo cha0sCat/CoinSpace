@@ -1,0 +1,18 @@
+{
+  "_id": "usd-coin@polygon",
+  "asset": "usd-coin",
+  "platform": "polygon",
+  "type": "token",
+  "name": "USDC",
+  "symbol": "USDC",
+  "address": "0x3c499c542cef5e3811e1192ce70d8cc03d5c3359",
+  "decimals": 6,
+  "logo": "usd-coin.svg",
+  "coingecko": {
+    "id": "usd-coin"
+  },
+  "coinmarketcap": {
+    "id": 3408,
+    "slug": "usd-coin"
+  }
+}

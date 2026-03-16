@@ -1,0 +1,18 @@
+{
+  "_id": "axie-infinity@ethereum",
+  "asset": "axie-infinity",
+  "platform": "ethereum",
+  "type": "token",
+  "name": "Axie Infinity",
+  "symbol": "AXS",
+  "address": "0xbb0e17ef65f82ab018d8edd776e8dd940327b28b",
+  "decimals": 18,
+  "logo": "axie-infinity.svg",
+  "coingecko": {
+    "id": "axie-infinity"
+  },
+  "coinmarketcap": {
+    "id": 6783,
+    "slug": "axie-infinity"
+  }
+}

@@ -55,14 +55,38 @@ export async function setLanguage(language = defaultLanguage()) {
     language = languages.find((item) => item.value === short)?.value || 'en';
   }
 
+  const fallbackLanguage = 'en';
+  const fallbackMessages = await ensureLocaleAssets(fallbackLanguage);
+
+  if (language !== fallbackLanguage) {
+    const messages = await ensureLocaleAssets(language);
+    i18n.global.setLocaleMessage(language, mergeMessages(messages, fallbackMessages));
+  }
+
+  i18n.global.locale = language;
+  localStorage.setItem('_cs_language', language);
+}
+
+async function ensureLocaleAssets(language) {
   if (!Object.keys(i18n.global.messages[language] || {}).length) {
     const messages = await import(`./messages/${language}.json`);
     i18n.global.setLocaleMessage(language, messages.default);
     i18n.global.setNumberFormat(language, i18n.global.numberFormats.en);
     i18n.global.setDateTimeFormat(language, i18n.global.datetimeFormats.en);
   }
-  i18n.global.locale = language;
-  localStorage.setItem('_cs_language', language);
+  return i18n.global.messages[language];
+}
+
+function mergeMessages(messages, fallbackMessages) {
+  return {
+    ...fallbackMessages,
+    ...Object.fromEntries(Object.entries(messages).map(([key, value]) => {
+      if (typeof value === 'string' && value.length === 0) {
+        return [key, fallbackMessages[key] ?? value];
+      }
+      return [key, value];
+    })),
+  };
 }
 
 function defaultLanguage() {

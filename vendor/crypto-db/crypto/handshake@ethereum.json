@@ -1,0 +1,18 @@
+{
+  "deprecated": true,
+  "_id": "handshake@ethereum",
+  "asset": "handshake",
+  "platform": "ethereum",
+  "type": "token",
+  "name": "Handshake",
+  "symbol": "HNS",
+  "address": "0xa771b49064da011df051052848477f18dba1d2ac",
+  "decimals": 6,
+  "coingecko": {
+    "id": "handshake"
+  },
+  "coinmarketcap": {
+    "id": 5221,
+    "slug": "handshake"
+  }
+}

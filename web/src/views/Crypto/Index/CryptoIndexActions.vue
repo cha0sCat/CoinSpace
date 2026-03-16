@@ -46,7 +46,7 @@ export default {
       {{ $t('Receive') }}
     </CsButton>
     <CsButton
-      v-if="$showRampsAndExchangeAndStaking"
+      v-if="$showSwapFeature && $isSwapEnabled"
       type="circle"
       :disabled="$walletState === $STATE_LOADING"
       @click="$router.push({ name: 'crypto.swap', params: { cryptoId: $wallet.crypto._id }})"

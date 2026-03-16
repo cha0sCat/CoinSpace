@@ -1,0 +1,18 @@
+{
+  "_id": "dash@dash",
+  "asset": "dash",
+  "platform": "dash",
+  "type": "coin",
+  "name": "Dash",
+  "symbol": "DASH",
+  "decimals": 8,
+  "logo": "dash.svg",
+  "scheme": "dash",
+  "coingecko": {
+    "id": "dash"
+  },
+  "coinmarketcap": {
+    "id": 131,
+    "slug": "dash"
+  }
+}

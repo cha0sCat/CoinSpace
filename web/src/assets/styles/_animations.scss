@@ -121,18 +121,6 @@
   }
 }
 
-@keyframes mecto-icon {
-  from {
-    opacity: 1;
-    transform: scale(0.5);
-  }
-
-  to {
-    opacity: 0;
-    transform: translateY(-$spacing-xl * 3) scale(2);
-  }
-}
-
 @keyframes status-success-path {
   to {
     stroke-dashoffset: 0;

@@ -1,0 +1,19 @@
+{
+  "deprecated": true,
+  "_id": "playdapp@ethereum",
+  "asset": "playdapp",
+  "platform": "ethereum",
+  "type": "token",
+  "name": "PlayDapp",
+  "symbol": "PDA",
+  "address": "0x0d3cbed3f69ee050668adf3d9ea57241cba33a2b",
+  "decimals": 18,
+  "logo": "playdapp.svg",
+  "coingecko": {
+    "id": "playdapp"
+  },
+  "coinmarketcap": {
+    "id": 7461,
+    "slug": "playdapp"
+  }
+}

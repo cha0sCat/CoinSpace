@@ -1,0 +1,18 @@
+{
+  "_id": "waves@solana",
+  "asset": "waves",
+  "platform": "solana",
+  "type": "token",
+  "name": "Waves",
+  "symbol": "WAVES",
+  "address": "4XEjo9GZkKom3E26NQiidJLawwM9kbt76gUMDdGe1meQ",
+  "decimals": 8,
+  "logo": "waves.svg",
+  "coingecko": {
+    "id": "waves"
+  },
+  "coinmarketcap": {
+    "id": 1274,
+    "slug": "waves"
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "deprecated": true,
+  "_id": "everipedia@binance-smart-chain",
+  "asset": "everipedia",
+  "platform": "binance-smart-chain",
+  "type": "token",
+  "name": "IQ",
+  "symbol": "IQ",
+  "address": "0x0e37d70b51ffa2b98b4d34a5712c5291115464e3",
+  "decimals": 18,
+  "logo": "everipedia.svg",
+  "coingecko": {
+    "id": "everipedia"
+  },
+  "coinmarketcap": {
+    "id": 2930,
+    "slug": "iq"
+  }
+}

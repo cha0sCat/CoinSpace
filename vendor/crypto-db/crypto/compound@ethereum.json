@@ -1,0 +1,18 @@
+{
+  "_id": "compound@ethereum",
+  "asset": "compound",
+  "platform": "ethereum",
+  "type": "token",
+  "name": "Compound",
+  "symbol": "COMP",
+  "address": "0xc00e94cb662c3520282e6f5717214004a7f26888",
+  "decimals": 18,
+  "logo": "compound.svg",
+  "coingecko": {
+    "id": "compound-governance-token"
+  },
+  "coinmarketcap": {
+    "id": 5692,
+    "slug": "compound"
+  }
+}

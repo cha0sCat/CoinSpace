@@ -10,8 +10,6 @@ import BaseExchange, {
   InternalExchangeError,
 } from '../../../lib/exchanges/BaseExchange.js';
 
-import * as EOSErrors from '@coinspace/cs-eos-wallet/errors';
-
 export default {
   components: {
     MainLayout,
@@ -58,15 +56,6 @@ export default {
           if (this.$wallet.isGasLimitSupported) {
             options.gasLimit = this.$wallet.gasLimit;
           }
-          if (this.$wallet.crypto._id === 'xrp@ripple') {
-            options.meta = { destinationTag: exchange.extraId };
-          }
-          if (this.$wallet.crypto._id === 'stellar@stellar') {
-            options.meta = { memo: exchange.extraId };
-          }
-          if (this.$wallet.crypto._id === 'eos@eos') {
-            options.meta = { memo: exchange.extraId };
-          }
           const id = await this.$wallet.createTransaction(options, walletSeed);
           this.$account.emit('update');
           this.updateStorage({ status: true });
@@ -85,15 +74,15 @@ export default {
             }) });
             return;
           }
-          if (err instanceof EOSErrors.DestinationAccountError) {
+          if (err?.name === 'DestinationAccountError') {
             this.updateStorage({ status: false, message: this.$t("Destination account doesn't exist.") });
             return;
           }
-          if (err instanceof EOSErrors.ExpiredTransactionError) {
+          if (err?.name === 'ExpiredTransactionError') {
             this.updateStorage({ status: false, message: this.$t('Transaction has been expired. Please try again.') });
             return;
           }
-          if (err instanceof EOSErrors.CPUExceededError) {
+          if (err?.name === 'CPUExceededError') {
             this.updateStorage({
               status: false,
               // eslint-disable-next-line max-len
@@ -101,7 +90,7 @@ export default {
             });
             return;
           }
-          if (err instanceof EOSErrors.NETExceededError) {
+          if (err?.name === 'NETExceededError') {
             this.updateStorage({
               status: false,
               // eslint-disable-next-line max-len

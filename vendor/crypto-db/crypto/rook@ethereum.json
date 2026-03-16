@@ -1,0 +1,18 @@
+{
+  "deprecated": true,
+  "_id": "rook@ethereum",
+  "asset": "rook",
+  "platform": "ethereum",
+  "type": "token",
+  "name": "Rook",
+  "symbol": "ROOK",
+  "address": "0xfa5047c9c78b8877af97bdcb85db743fd7313d4a",
+  "decimals": 18,
+  "coingecko": {
+    "id": "rook"
+  },
+  "coinmarketcap": {
+    "id": 7678,
+    "slug": "keeperdao"
+  }
+}

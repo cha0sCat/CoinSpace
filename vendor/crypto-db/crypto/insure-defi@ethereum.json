@@ -1,0 +1,18 @@
+{
+  "deprecated": true,
+  "_id": "insure-defi@ethereum",
+  "asset": "insure-defi",
+  "platform": "ethereum",
+  "type": "token",
+  "name": "inSure DeFi",
+  "symbol": "SURE",
+  "address": "0xcb86c6a22cb56b6cf40cafedb06ba0df188a416e",
+  "decimals": 18,
+  "coingecko": {
+    "id": "insure"
+  },
+  "coinmarketcap": {
+    "id": 5113,
+    "slug": "insure"
+  }
+}

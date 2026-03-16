@@ -18,7 +18,7 @@ export default {
       default: undefined,
     },
     error: {
-      type: [Boolean, String],
+      type: [String, Boolean],
       default: false,
     },
     placeholder: {
@@ -37,6 +37,10 @@ export default {
       type: [Boolean, String],
       default: false,
     },
+    readonly: {
+      type: Boolean,
+      default: false,
+    },
   },
   emits: ['update:modelValue'],
 };
@@ -46,6 +50,7 @@ export default {
   <CsFormElement
     class="&"
     v-bind="$props"
+    :writable="!readonly"
   >
     <div
       v-if="$slots.before"
@@ -63,6 +68,7 @@ export default {
       autocomplete="off"
       spellcheck="false"
       :placeholder="placeholder"
+      :readonly="readonly"
       @input="$emit('update:modelValue', $event.target.value.trim())"
     >
     <div

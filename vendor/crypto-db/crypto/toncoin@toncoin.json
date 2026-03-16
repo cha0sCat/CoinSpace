@@ -1,0 +1,17 @@
+{
+  "_id": "toncoin@toncoin",
+  "asset": "toncoin",
+  "platform": "toncoin",
+  "type": "coin",
+  "name": "Toncoin",
+  "symbol": "TON",
+  "decimals": 9,
+  "logo": "toncoin.svg",
+  "coingecko": {
+    "id": "the-open-network"
+  },
+  "coinmarketcap": {
+    "id": 11419,
+    "slug": "toncoin"
+  }
+}

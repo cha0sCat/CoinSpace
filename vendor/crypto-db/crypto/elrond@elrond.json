@@ -1,0 +1,18 @@
+{
+  "_id": "elrond@elrond",
+  "asset": "elrond",
+  "platform": "elrond",
+  "type": "coin",
+  "name": "MultiversX",
+  "symbol": "EGLD",
+  "decimals": 18,
+  "logo": "elrond.svg",
+  "supported": false,
+  "coingecko": {
+    "id": "elrond-erd-2"
+  },
+  "coinmarketcap": {
+    "id": 6892,
+    "slug": "multiversx-egld"
+  }
+}

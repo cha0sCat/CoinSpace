@@ -1,0 +1,18 @@
+{
+  "deprecated": true,
+  "_id": "ambrosus@ambrosus",
+  "asset": "ambrosus",
+  "platform": "ambrosus",
+  "type": "coin",
+  "name": "AirDAO",
+  "symbol": "AMB",
+  "decimals": 5,
+  "supported": false,
+  "coingecko": {
+    "id": "amber"
+  },
+  "coinmarketcap": {
+    "id": 2081,
+    "slug": "airdao"
+  }
+}

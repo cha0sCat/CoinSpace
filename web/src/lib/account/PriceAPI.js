@@ -16,7 +16,7 @@ export default class PriceAPI {
   constructor({ request, account }) {
     this.#request = pMemoize(async (config) => {
       return await request({
-        seed: 'device',
+        public: true,
         ...config,
         baseURL: account.getBaseURL('price'),
       });

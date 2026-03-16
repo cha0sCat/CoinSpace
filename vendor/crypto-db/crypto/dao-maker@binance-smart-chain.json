@@ -1,0 +1,19 @@
+{
+  "deprecated": true,
+  "_id": "dao-maker@binance-smart-chain",
+  "asset": "dao-maker",
+  "platform": "binance-smart-chain",
+  "type": "token",
+  "name": "DAO Maker",
+  "symbol": "DAO",
+  "address": "0x4d2d32d8652058bf98c772953e1df5c5c85d9f45",
+  "decimals": 18,
+  "logo": "dao-maker.svg",
+  "coingecko": {
+    "id": "dao-maker"
+  },
+  "coinmarketcap": {
+    "id": 8420,
+    "slug": "dao-maker"
+  }
+}

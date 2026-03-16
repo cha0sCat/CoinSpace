@@ -1,0 +1,18 @@
+{
+  "_id": "zcash@zcash",
+  "asset": "zcash",
+  "platform": "zcash",
+  "type": "coin",
+  "name": "Zcash",
+  "symbol": "ZEC",
+  "decimals": 8,
+  "logo": "zcash.svg",
+  "supported": false,
+  "coingecko": {
+    "id": "zcash"
+  },
+  "coinmarketcap": {
+    "id": 1437,
+    "slug": "zcash"
+  }
+}

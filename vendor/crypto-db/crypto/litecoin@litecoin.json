@@ -1,0 +1,18 @@
+{
+  "_id": "litecoin@litecoin",
+  "asset": "litecoin",
+  "platform": "litecoin",
+  "type": "coin",
+  "name": "Litecoin",
+  "symbol": "LTC",
+  "decimals": 8,
+  "logo": "litecoin.svg",
+  "scheme": "litecoin",
+  "coingecko": {
+    "id": "litecoin"
+  },
+  "coinmarketcap": {
+    "id": 2,
+    "slug": "litecoin"
+  }
+}

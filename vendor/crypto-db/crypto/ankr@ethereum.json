@@ -1,0 +1,18 @@
+{
+  "_id": "ankr@ethereum",
+  "asset": "ankr",
+  "platform": "ethereum",
+  "type": "token",
+  "name": "Ankr",
+  "symbol": "ANKR",
+  "address": "0x8290333cef9e6d528dd5618fb97a76f268f3edd4",
+  "decimals": 18,
+  "logo": "ankr.svg",
+  "coingecko": {
+    "id": "ankr"
+  },
+  "coinmarketcap": {
+    "id": 3783,
+    "slug": "ankr"
+  }
+}

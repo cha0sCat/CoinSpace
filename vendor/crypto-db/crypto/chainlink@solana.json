@@ -1,0 +1,18 @@
+{
+  "_id": "chainlink@solana",
+  "asset": "chainlink",
+  "platform": "solana",
+  "type": "token",
+  "name": "Chainlink",
+  "symbol": "LINK",
+  "address": "LinkhB3afbBKb2EQQu7s7umdZceV3wcvAUJhQAfQ23L",
+  "decimals": 9,
+  "logo": "chainlink.svg",
+  "coingecko": {
+    "id": "chainlink"
+  },
+  "coinmarketcap": {
+    "id": 1975,
+    "slug": "chainlink"
+  }
+}

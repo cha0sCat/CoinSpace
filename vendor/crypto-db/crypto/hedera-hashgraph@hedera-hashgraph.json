@@ -1,0 +1,18 @@
+{
+  "_id": "hedera-hashgraph@hedera-hashgraph",
+  "asset": "hedera-hashgraph",
+  "platform": "hedera-hashgraph",
+  "type": "coin",
+  "name": "Hedera",
+  "symbol": "HBAR",
+  "decimals": 8,
+  "logo": "hedera-hashgraph.svg",
+  "supported": false,
+  "coingecko": {
+    "id": "hedera-hashgraph"
+  },
+  "coinmarketcap": {
+    "id": 4642,
+    "slug": "hedera"
+  }
+}

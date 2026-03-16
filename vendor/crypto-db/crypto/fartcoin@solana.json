@@ -1,0 +1,18 @@
+{
+  "_id": "fartcoin@solana",
+  "asset": "fartcoin",
+  "platform": "solana",
+  "type": "token",
+  "name": "Fartcoin",
+  "symbol": "FARTCOIN",
+  "address": "9BB6NFEcjBCtnNLFko2FqVQBq8HHM13kCyYcdQbgpump",
+  "decimals": 6,
+  "logo": "fartcoin.svg",
+  "coingecko": {
+    "id": "fartcoin"
+  },
+  "coinmarketcap": {
+    "id": 33597,
+    "slug": "fartcoin"
+  }
+}

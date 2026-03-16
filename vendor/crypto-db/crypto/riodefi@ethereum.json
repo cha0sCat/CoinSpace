@@ -1,0 +1,18 @@
+{
+  "deprecated": true,
+  "_id": "riodefi@ethereum",
+  "asset": "riodefi",
+  "platform": "ethereum",
+  "type": "token",
+  "name": "RioDeFi",
+  "symbol": "RFUEL",
+  "address": "0xaf9f549774ecedbd0966c52f250acc548d3f36e5",
+  "decimals": 18,
+  "coingecko": {
+    "id": "rio-defi"
+  },
+  "coinmarketcap": {
+    "id": 6537,
+    "slug": "rio-defi"
+  }
+}

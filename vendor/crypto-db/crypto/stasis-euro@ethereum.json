@@ -1,0 +1,19 @@
+{
+  "deprecated": true,
+  "_id": "stasis-euro@ethereum",
+  "asset": "stasis-euro",
+  "platform": "ethereum",
+  "type": "token",
+  "name": "STASIS EURO",
+  "symbol": "EURS",
+  "address": "0xdb25f211ab05b1c97d595516f45794528a807ad8",
+  "decimals": 2,
+  "logo": "stasis-euro.svg",
+  "coingecko": {
+    "id": "stasis-eurs"
+  },
+  "coinmarketcap": {
+    "id": 2989,
+    "slug": "stasis-euro"
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "deprecated": true,
+  "_id": "hedgetrade@ethereum",
+  "asset": "hedgetrade",
+  "platform": "ethereum",
+  "type": "token",
+  "name": "HedgeTrade",
+  "symbol": "HEDG",
+  "address": "0xf1290473e210b2108a85237fbcd7b6eb42cc654f",
+  "decimals": 18,
+  "coingecko": {
+    "id": "hedgetrade"
+  },
+  "coinmarketcap": {
+    "id": 3662,
+    "slug": "hedgetrade"
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "_id": "raydium@solana",
+  "asset": "raydium",
+  "platform": "solana",
+  "type": "token",
+  "name": "Raydium",
+  "symbol": "RAY",
+  "address": "4k3Dyjzvzp8eMZWUXbBCjEvwSkkk59S5iCNLY3QrkX6R",
+  "decimals": 6,
+  "logo": "raydium.svg",
+  "coingecko": {
+    "id": "raydium"
+  },
+  "coinmarketcap": {
+    "id": 8526,
+    "slug": "raydium"
+  }
+}

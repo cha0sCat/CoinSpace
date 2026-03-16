@@ -1,0 +1,18 @@
+{
+  "deprecated": true,
+  "_id": "hifi-finance@ethereum",
+  "asset": "hifi-finance",
+  "platform": "ethereum",
+  "type": "token",
+  "name": "Hifi Finance",
+  "symbol": "MFT",
+  "address": "0xdf2c7238198ad8b389666574f2d8bc411a4b7428",
+  "decimals": 18,
+  "coingecko": {
+    "id": "mainframe"
+  },
+  "coinmarketcap": {
+    "id": 2896,
+    "slug": "mainframe"
+  }
+}

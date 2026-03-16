@@ -1,0 +1,18 @@
+{
+  "_id": "horizen@horizen",
+  "asset": "horizen",
+  "platform": "horizen",
+  "type": "coin",
+  "name": "Horizen",
+  "symbol": "ZEN",
+  "decimals": 8,
+  "logo": "horizen.svg",
+  "supported": false,
+  "coingecko": {
+    "id": "zencash"
+  },
+  "coinmarketcap": {
+    "id": 1698,
+    "slug": "horizen"
+  }
+}

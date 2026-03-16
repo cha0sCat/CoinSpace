@@ -1,0 +1,18 @@
+{
+  "_id": "orchid-protocol@ethereum",
+  "asset": "orchid-protocol",
+  "platform": "ethereum",
+  "type": "token",
+  "name": "Orchid",
+  "symbol": "OXT",
+  "address": "0x4575f41308ec1483f3d399aa9a2826d74da13deb",
+  "decimals": 18,
+  "logo": "orchid-protocol.svg",
+  "coingecko": {
+    "id": "orchid-protocol"
+  },
+  "coinmarketcap": {
+    "id": 5026,
+    "slug": "orchid"
+  }
+}

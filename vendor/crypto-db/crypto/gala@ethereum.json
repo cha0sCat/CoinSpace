@@ -1,0 +1,18 @@
+{
+  "_id": "gala@ethereum",
+  "asset": "gala",
+  "platform": "ethereum",
+  "type": "token",
+  "name": "Gala",
+  "symbol": "GALA",
+  "address": "0xd1d2eb1b1e90b638588728b4130137d262c87cae",
+  "decimals": 8,
+  "logo": "gala.svg",
+  "coingecko": {
+    "id": "gala"
+  },
+  "coinmarketcap": {
+    "id": 7080,
+    "slug": "gala"
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "deprecated": true,
+  "_id": "phoenix@binance-chain",
+  "asset": "phoenix",
+  "platform": "binance-chain",
+  "type": "token",
+  "name": "Phoenix Global",
+  "symbol": "PHB",
+  "address": "PHB-2DF",
+  "decimals": 8,
+  "supported": false,
+  "coingecko": {
+    "id": "red-pulse"
+  },
+  "coinmarketcap": {
+    "id": 2112,
+    "slug": "phoenix-global"
+  }
+}

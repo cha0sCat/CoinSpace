@@ -2,7 +2,6 @@
 import QRCode from 'qrcode-svg';
 
 import * as BitcoinSymbols from '@coinspace/cs-bitcoin-wallet/symbols';
-import * as MoneroSymbols from '@coinspace/cs-monero-wallet/symbols';
 
 import CsButton from '../../../components/CsButton.vue';
 import CsButtonGroup from '../../../components/CsButtonGroup.vue';
@@ -12,10 +11,7 @@ import MainLayout from '../../../layouts/MainLayout.vue';
 
 import ChevronLeftIcon from '../../../assets/svg/chevronLeft.svg';
 import ChevronRightIcon from '../../../assets/svg/chevronRight.svg';
-import CoinsIcon from '../../../assets/svg/coins.svg';
 import CopyIcon from '../../../assets/svg/copy.svg';
-import LocationFillIcon from '../../../assets/svg/locationFill.svg';
-import LocationIcon from '../../../assets/svg/location.svg';
 import ShareIcon from '../../../assets/svg/share.svg';
 
 import { cryptoSubtitle } from '../../../lib/helpers.js';
@@ -29,10 +25,7 @@ export default {
     CsFormTextareaReadonly,
     ChevronLeftIcon,
     ChevronRightIcon,
-    CoinsIcon,
     CopyIcon,
-    LocationFillIcon,
-    LocationIcon,
     ShareIcon,
   },
   extends: CsStep,
@@ -45,14 +38,8 @@ export default {
       isAddressChangeSupported: this.$wallet.isAddressChangeSupported,
       addressType: this.$wallet.addressType,
       addressTypes: this.$wallet.addressTypes,
-      isMectoEnabled: false,
-      isMectoLoading: false,
       isCopied: false,
     };
-  },
-  async onHide() {
-    await this.$options.mecto;
-    this.disableMecto();
   },
   computed: {
     qr() {
@@ -73,10 +60,6 @@ export default {
           return this.$t('P2SH');
         case BitcoinSymbols.ADDRESS_TYPE_P2WPKH:
           return this.$t('Bech32');
-        case MoneroSymbols.ADDRESS_TYPE_ADDRESS:
-          return this.$t('Standard');
-        case MoneroSymbols.ADDRESS_TYPE_SUBADDRESS:
-          return this.$t('Subaddress');
         default:
           return '';
       }
@@ -105,36 +88,6 @@ export default {
         }, 1000);
       }, () => {});
     },
-    async enableMecto() {
-      if (this.isMectoLoading) return;
-      if (!this.$account.mecto.isAccountSetup) {
-        this.next('account');
-        return;
-      }
-      this.isMectoLoading = true;
-      try {
-        this.$options.mecto = this.$account.mecto.enable(this.$wallet.address);
-        await this.$options.mecto;
-        this.isMectoEnabled = true;
-      } catch (err) {
-        console.error(err);
-      } finally {
-        this.isMectoLoading = false;
-      }
-    },
-    async disableMecto() {
-      if (this.isMectoLoading) return;
-      if (!this.isMectoEnabled) return;
-      this.isMectoLoading = true;
-      try {
-        await this.$account.mecto.disable();
-        this.isMectoEnabled = false;
-      } catch (err) {
-        console.error(err);
-      } finally {
-        this.isMectoLoading = false;
-      }
-    },
     async share() {
       if (this.env.VITE_BUILD_TYPE === 'phonegap') {
         return window.plugins.socialsharing.shareWithOptions({
@@ -148,7 +101,12 @@ export default {
             text: this.address,
           });
         } else {
-          const body = encodeURIComponent(`${this.address}\n\nSent from Coin Wallet\nhttps://coin.space`);
+          const body = encodeURIComponent([
+            this.address,
+            '',
+            `Sent from ${this.$account.appName}`,
+            this.$account.shareUrl,
+          ].filter(Boolean).join('\n'));
           this.$safeOpen(`mailto:?body=${body}`);
         }
       } catch (err) { /* empty */ }
@@ -223,29 +181,6 @@ export default {
         {{ isCopied ? $t('Copied!') : $t('Copy') }}
       </CsButton>
       <CsButton
-        v-if="!isMectoEnabled"
-        type="circle"
-        :class="{ '&__mecto': isMectoLoading }"
-        @click="enableMecto"
-      >
-        <template #circle>
-          <LocationIcon />
-        </template>
-        {{ $t('Enable') + ' Mecto' }}
-      </CsButton>
-      <CsButton
-        v-if="isMectoEnabled"
-        type="circle"
-        class="&__mecto"
-        @click="disableMecto"
-      >
-        <template #circle>
-          <LocationFillIcon />
-          <LocationFillIcon class="&__location" />
-        </template>
-        {{ $t('Disable') + ' Mecto' }}
-      </CsButton>
-      <CsButton
         type="circle"
         @click="share"
       >
@@ -253,16 +188,6 @@ export default {
           <ShareIcon />
         </template>
         {{ $t('Share') }}
-      </CsButton>
-      <CsButton
-        v-if="$wallet.crypto._id === 'monero@monero'"
-        type="circle"
-        @click="next('moneroAccept')"
-      >
-        <template #circle>
-          <CoinsIcon />
-        </template>
-        {{ $t('Accept') }}
       </CsButton>
     </CsButtonGroup>
   </MainLayout>
@@ -276,11 +201,6 @@ export default {
       display: flex;
       align-items: center;
       justify-content: center;
-    }
-
-    &__location {
-      position: absolute;
-      animation: mecto-icon 2s ease-out infinite;
     }
 
     &__qr {
@@ -317,20 +237,6 @@ export default {
       width: 100%;
       max-width: 25rem;
       align-self: center;
-    }
-
-    &__mecto {
-      .cs-button__circle {
-        background-color: $primary-brand;
-
-        @include hover {
-          background-color: darker($primary-brand, 5%);
-        }
-
-        &:active {
-          background-color: darker($primary-brand, 10%);
-        }
-      }
     }
   }
 </style>

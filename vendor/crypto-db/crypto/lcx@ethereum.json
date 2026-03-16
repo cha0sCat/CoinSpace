@@ -1,0 +1,18 @@
+{
+  "_id": "lcx@ethereum",
+  "asset": "lcx",
+  "platform": "ethereum",
+  "type": "token",
+  "name": "LCX",
+  "symbol": "LCX",
+  "address": "0x8cd41041505885ef0ad3858181d66f17be8aae7e",
+  "decimals": 18,
+  "logo": "lcx.svg",
+  "coingecko": {
+    "id": "lcx"
+  },
+  "coinmarketcap": {
+    "id": 4950,
+    "slug": "lcx"
+  }
+}

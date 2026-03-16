@@ -1,0 +1,18 @@
+{
+  "_id": "qtum@qtum",
+  "asset": "qtum",
+  "platform": "qtum",
+  "type": "coin",
+  "name": "Qtum",
+  "symbol": "QTUM",
+  "decimals": 8,
+  "logo": "qtum.svg",
+  "supported": false,
+  "coingecko": {
+    "id": "qtum"
+  },
+  "coinmarketcap": {
+    "id": 1684,
+    "slug": "qtum"
+  }
+}

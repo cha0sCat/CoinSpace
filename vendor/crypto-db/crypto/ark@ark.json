@@ -1,0 +1,18 @@
+{
+  "_id": "ark@ark",
+  "asset": "ark",
+  "platform": "ark",
+  "type": "coin",
+  "name": "Ark",
+  "symbol": "ARK",
+  "decimals": 8,
+  "logo": "ark.svg",
+  "supported": false,
+  "coingecko": {
+    "id": "ark"
+  },
+  "coinmarketcap": {
+    "id": 1586,
+    "slug": "ark"
+  }
+}

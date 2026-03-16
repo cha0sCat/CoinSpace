@@ -1,0 +1,18 @@
+{
+  "_id": "pax-dollar@ethereum",
+  "asset": "pax-dollar",
+  "platform": "ethereum",
+  "type": "token",
+  "name": "Pax Dollar",
+  "symbol": "USDP",
+  "address": "0x8e870d67f660d95d5be530380d0ec0bd388289e1",
+  "decimals": 18,
+  "logo": "pax-dollar.svg",
+  "coingecko": {
+    "id": "paxos-standard"
+  },
+  "coinmarketcap": {
+    "id": 3330,
+    "slug": "paxos-standard"
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "_id": "polygon@ethereum",
+  "asset": "polygon",
+  "platform": "ethereum",
+  "type": "token",
+  "name": "Polygon",
+  "symbol": "POL",
+  "address": "0x455e53cbb86018ac2b8092fdcd39d8444affc3f6",
+  "decimals": 18,
+  "logo": "polygon.svg",
+  "coingecko": {
+    "id": "polygon-ecosystem-token"
+  },
+  "coinmarketcap": {
+    "id": 28321,
+    "slug": "polygon-ecosystem-token"
+  }
+}

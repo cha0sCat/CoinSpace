@@ -1,0 +1,19 @@
+{
+  "deprecated": true,
+  "_id": "bitcoin-diamond@bitcoin-diamond",
+  "asset": "bitcoin-diamond",
+  "platform": "bitcoin-diamond",
+  "type": "coin",
+  "name": "Bitcoin Diamond",
+  "symbol": "BCD",
+  "decimals": 7,
+  "logo": "bitcoin-diamond.svg",
+  "supported": false,
+  "coingecko": {
+    "id": "bitcoin-diamond"
+  },
+  "coinmarketcap": {
+    "id": 2222,
+    "slug": "bitcoin-diamond"
+  }
+}

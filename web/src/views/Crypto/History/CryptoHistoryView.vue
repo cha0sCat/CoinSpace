@@ -5,8 +5,6 @@ import CsSteps from '../../../components/CsSteps.vue';
 import CryptoHistoryStepAccelerate from './CryptoHistoryStepAccelerate.vue';
 import CryptoHistoryStepAccelerateStatus from './CryptoHistoryStepAccelerateStatus.vue';
 import CryptoHistoryStepList from './CryptoHistoryStepList.vue';
-import CryptoHistoryStepMoneroAccept from './CryptoHistoryStepMoneroAccept.vue';
-import CryptoHistoryStepMoneroStatus from './CryptoHistoryStepMoneroStatus.vue';
 import CryptoHistoryStepTransaction from './CryptoHistoryStepTransaction.vue';
 
 export default {
@@ -18,8 +16,6 @@ export default {
     accelerate: CryptoHistoryStepAccelerate,
     accelerateStatus: CryptoHistoryStepAccelerateStatus,
     transaction: CryptoHistoryStepTransaction,
-    moneroAccept: CryptoHistoryStepMoneroAccept,
-    moneroStatus: CryptoHistoryStepMoneroStatus,
     pin: CsPinStep,
   },
 };

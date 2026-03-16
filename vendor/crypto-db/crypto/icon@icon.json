@@ -1,0 +1,18 @@
+{
+  "_id": "icon@icon",
+  "asset": "icon",
+  "platform": "icon",
+  "type": "coin",
+  "name": "ICON",
+  "symbol": "ICX",
+  "decimals": 4,
+  "logo": "icon.svg",
+  "supported": false,
+  "coingecko": {
+    "id": "icon"
+  },
+  "coinmarketcap": {
+    "id": 2099,
+    "slug": "icon"
+  }
+}

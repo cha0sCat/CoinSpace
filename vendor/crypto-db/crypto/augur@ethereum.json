@@ -1,0 +1,19 @@
+{
+  "deprecated": true,
+  "_id": "augur@ethereum",
+  "asset": "augur",
+  "platform": "ethereum",
+  "type": "token",
+  "name": "Augur",
+  "symbol": "REP",
+  "address": "0x221657776846890989a759ba2973e427dff5c9bb",
+  "decimals": 18,
+  "logo": "augur.svg",
+  "coingecko": {
+    "id": "augur"
+  },
+  "coinmarketcap": {
+    "id": 1104,
+    "slug": "augur"
+  }
+}

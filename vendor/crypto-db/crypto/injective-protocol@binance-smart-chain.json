@@ -1,0 +1,18 @@
+{
+  "_id": "injective-protocol@binance-smart-chain",
+  "asset": "injective-protocol",
+  "platform": "binance-smart-chain",
+  "type": "token",
+  "name": "Injective",
+  "symbol": "INJ",
+  "address": "0xa2b726b1145a4773f68593cf171187d8ebe4d495",
+  "decimals": 18,
+  "logo": "injective-protocol.svg",
+  "coingecko": {
+    "id": "injective-protocol"
+  },
+  "coinmarketcap": {
+    "id": 7226,
+    "slug": "injective"
+  }
+}

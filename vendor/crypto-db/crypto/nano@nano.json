@@ -1,0 +1,18 @@
+{
+  "_id": "nano@nano",
+  "asset": "nano",
+  "platform": "nano",
+  "type": "coin",
+  "name": "Nano",
+  "symbol": "XNO",
+  "decimals": 30,
+  "logo": "nano.svg",
+  "supported": false,
+  "coingecko": {
+    "id": "nano"
+  },
+  "coinmarketcap": {
+    "id": 1567,
+    "slug": "nano"
+  }
+}

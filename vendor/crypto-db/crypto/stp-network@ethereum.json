@@ -1,0 +1,19 @@
+{
+  "deprecated": true,
+  "_id": "stp-network@ethereum",
+  "asset": "stp-network",
+  "platform": "ethereum",
+  "type": "token",
+  "name": "AWE Network",
+  "symbol": "AWE",
+  "address": "0xde7d85157d9714eadf595045cc12ca4a5f3e2adb",
+  "decimals": 18,
+  "logo": "stp-network.svg",
+  "coingecko": {
+    "id": "stp-network"
+  },
+  "coinmarketcap": {
+    "id": 4006,
+    "slug": "awe-network"
+  }
+}

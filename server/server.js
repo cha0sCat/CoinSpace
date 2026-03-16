@@ -3,11 +3,10 @@ import Sentry from '@sentry/node';
 import express from 'express';
 import { isHttpError } from 'http-errors';
 import middleware from './middleware.js';
-
-import apiV1 from './lib/v1/api.js';
-import apiV2 from './lib/v2/api.js';
-import apiV3 from './lib/v3/api.js';
-import apiV4 from './lib/v4/api.js';
+import {
+  priceApi,
+  swapApi,
+} from './lib/public/api.js';
 
 const app = express();
 
@@ -25,24 +24,12 @@ app.use(Sentry.Handlers.requestHandler());
 
 middleware.init(app);
 
-// API routes
-app.use('/api/v1', apiV1);
-app.use('/api/v2', apiV2);
-app.use('/api/v3', apiV3);
-app.use('/api/v4', apiV4);
-app.set('views', './views');
-app.set('view engine', 'ejs');
-
-if (process.env.IS_TOR !== 'true') {
-  app.get('/.well-known/webauthn', (req, res) => {
-    return res.json({
-      origins: [
-        new URL(process.env.SITE_URL).origin,
-        new URL(process.env.SITE_URL_TOR).origin,
-      ],
-    });
-  });
-}
+// Public API routes
+app.use('/price', priceApi);
+app.use('/swap', swapApi);
+app.get('/price/logo/*', (req, res) => {
+  res.status(404).send({ error: 'Crypto logos are served from frontend assets.' });
+});
 
 app.get('*', (req, res, next) => {
   if (isAssetsPath(req.path)) return next();

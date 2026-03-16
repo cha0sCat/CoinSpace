@@ -1,0 +1,18 @@
+{
+  "_id": "reef-finance@ethereum",
+  "asset": "reef-finance",
+  "platform": "ethereum",
+  "type": "token",
+  "name": "Reef",
+  "symbol": "REEF",
+  "address": "0xfe3e6a25e6b192a42a44ecddcd13796471735acf",
+  "decimals": 18,
+  "logo": "reef-finance.svg",
+  "coingecko": {
+    "id": "reef"
+  },
+  "coinmarketcap": {
+    "id": 6951,
+    "slug": "reef"
+  }
+}

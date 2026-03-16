@@ -1,0 +1,18 @@
+{
+  "deprecated": true,
+  "_id": "trustswap@ethereum",
+  "asset": "trustswap",
+  "platform": "ethereum",
+  "type": "token",
+  "name": "TrustSwap",
+  "symbol": "SWAP",
+  "address": "0xcc4304a31d09258b0029ea7fe63d032f52e44efe",
+  "decimals": 18,
+  "coingecko": {
+    "id": "trustswap"
+  },
+  "coinmarketcap": {
+    "id": 5829,
+    "slug": "trustswap"
+  }
+}

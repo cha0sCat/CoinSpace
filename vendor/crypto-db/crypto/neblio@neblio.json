@@ -1,0 +1,18 @@
+{
+  "deprecated": true,
+  "_id": "neblio@neblio",
+  "asset": "neblio",
+  "platform": "neblio",
+  "type": "coin",
+  "name": "Neblio",
+  "symbol": "NEBL",
+  "decimals": 8,
+  "supported": false,
+  "coingecko": {
+    "id": "neblio"
+  },
+  "coinmarketcap": {
+    "id": 1955,
+    "slug": "neblio"
+  }
+}

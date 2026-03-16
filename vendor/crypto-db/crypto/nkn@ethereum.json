@@ -1,0 +1,19 @@
+{
+  "deprecated": true,
+  "_id": "nkn@ethereum",
+  "asset": "nkn",
+  "platform": "ethereum",
+  "type": "token",
+  "name": "NKN",
+  "symbol": "NKN",
+  "address": "0x5cf04716ba20127f1e2297addcf4b5035000c9eb",
+  "decimals": 18,
+  "logo": "nkn.svg",
+  "coingecko": {
+    "id": "nkn"
+  },
+  "coinmarketcap": {
+    "id": 2780,
+    "slug": "nkn"
+  }
+}

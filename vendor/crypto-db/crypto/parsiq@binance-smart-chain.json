@@ -1,0 +1,18 @@
+{
+  "deprecated": true,
+  "_id": "parsiq@binance-smart-chain",
+  "asset": "parsiq",
+  "platform": "binance-smart-chain",
+  "type": "token",
+  "name": "PARSIQ",
+  "symbol": "PRQ",
+  "address": "0xd21d29b38374528675c34936bf7d5dd693d2a577",
+  "decimals": 18,
+  "coingecko": {
+    "id": "parsiq"
+  },
+  "coinmarketcap": {
+    "id": 5410,
+    "slug": "parsiq"
+  }
+}

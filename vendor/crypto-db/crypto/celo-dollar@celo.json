@@ -1,0 +1,19 @@
+{
+  "_id": "celo-dollar@celo",
+  "asset": "celo-dollar",
+  "platform": "celo",
+  "type": "token",
+  "name": "Celo Dollar",
+  "symbol": "CUSD",
+  "address": "0x765de816845861e75a25fca122bb6898b8b1282a",
+  "decimals": 18,
+  "logo": "celo-dollar.svg",
+  "supported": false,
+  "coingecko": {
+    "id": "celo-dollar"
+  },
+  "coinmarketcap": {
+    "id": 7236,
+    "slug": "celo-dollar"
+  }
+}

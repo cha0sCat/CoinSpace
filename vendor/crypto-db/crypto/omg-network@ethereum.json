@@ -1,0 +1,18 @@
+{
+  "_id": "omg-network@ethereum",
+  "asset": "omg-network",
+  "platform": "ethereum",
+  "type": "token",
+  "name": "OMG Network",
+  "symbol": "OMG",
+  "address": "0xd26114cd6ee289accf82350c8d8487fedb8a0c07",
+  "decimals": 18,
+  "logo": "omg-network.svg",
+  "coingecko": {
+    "id": "omisego"
+  },
+  "coinmarketcap": {
+    "id": 1808,
+    "slug": "omg"
+  }
+}

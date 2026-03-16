@@ -1,0 +1,18 @@
+{
+  "_id": "dogecoin@dogecoin",
+  "asset": "dogecoin",
+  "platform": "dogecoin",
+  "type": "coin",
+  "name": "Dogecoin",
+  "symbol": "DOGE",
+  "decimals": 8,
+  "logo": "dogecoin.svg",
+  "scheme": "dogecoin",
+  "coingecko": {
+    "id": "dogecoin"
+  },
+  "coinmarketcap": {
+    "id": 74,
+    "slug": "dogecoin"
+  }
+}

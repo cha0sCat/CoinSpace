@@ -1,0 +1,18 @@
+{
+  "_id": "nem@nem",
+  "asset": "nem",
+  "platform": "nem",
+  "type": "coin",
+  "name": "NEM",
+  "symbol": "XEM",
+  "decimals": 6,
+  "logo": "nem.svg",
+  "supported": false,
+  "coingecko": {
+    "id": "nem"
+  },
+  "coinmarketcap": {
+    "id": 873,
+    "slug": "nem"
+  }
+}

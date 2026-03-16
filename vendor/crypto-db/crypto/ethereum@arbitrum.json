@@ -1,0 +1,17 @@
+{
+  "_id": "ethereum@arbitrum",
+  "asset": "ethereum",
+  "platform": "arbitrum",
+  "type": "coin",
+  "name": "Arbitrum",
+  "symbol": "ETH",
+  "decimals": 18,
+  "logo": "arbitrum.svg",
+  "coingecko": {
+    "id": "ethereum"
+  },
+  "coinmarketcap": {
+    "id": 1027,
+    "slug": "ethereum"
+  }
+}

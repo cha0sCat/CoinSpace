@@ -1,0 +1,18 @@
+{
+  "_id": "lisk@lisk",
+  "asset": "lisk",
+  "platform": "lisk",
+  "type": "coin",
+  "name": "Lisk",
+  "symbol": "LSK",
+  "decimals": 4,
+  "logo": "lisk.svg",
+  "supported": false,
+  "coingecko": {
+    "id": "lisk"
+  },
+  "coinmarketcap": {
+    "id": 1214,
+    "slug": "lisk"
+  }
+}

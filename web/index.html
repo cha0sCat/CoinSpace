@@ -1,6 +1,15 @@
 <!DOCTYPE html>
 <html lang="en" class="platform--<%= env.VITE_PLATFORM %>">
   <head>
+    <%
+      function apiOrigin(host) {
+        if (!host) return '';
+        if (/^https?:\/\//.test(host)) return new URL(host).origin;
+        return `https://${host}`;
+      }
+      const apiHost = apiOrigin(env.VITE_API_HOST);
+      const apiHostTor = apiOrigin(env.VITE_API_HOST_TOR);
+    %>
     <title>Coin Wallet</title>
     <meta charset="UTF-8" />
     <% if (env.VITE_PLATFORM === 'android') { %>
@@ -12,12 +21,12 @@
       style-src 'self' 'unsafe-inline';
       connect-src
         'self'
+        https:
+        wss:
         <% if (NODE_ENV === 'development') { %>http://localhost:*/<% } %>
-        <%= env.VITE_SITE_URL %>
-        <%= env.VITE_API_CSP %>
         <% if (['phonegap', 'electron'].includes(env.VITE_BUILD_TYPE)) { %>
-        <%= env.VITE_SITE_URL_TOR %>
-        <%= env.VITE_API_CSP_TOR %>
+        http:
+        ws:
         <% } %>
         wss://*.walletconnect.org/
         wss://*.walletconnect.com/
@@ -32,16 +41,16 @@
         'self'
         <% if (NODE_ENV === 'development') { %>http://localhost:*/<% } %>
         <%= env.VITE_SITE_URL %>
-        <%= env.VITE_API_CSP %>
+        <%= apiHost %>
         <% if (['phonegap', 'electron'].includes(env.VITE_BUILD_TYPE)) { %>
         <%= env.VITE_SITE_URL_TOR %>
-        <%= env.VITE_API_CSP_TOR %>
+        <%= apiHostTor %>
         <% } %>
         https://www.gravatar.com/
         data:;
     "/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=0, viewport-fit=cover">
-    <meta name="description" content="Coin Wallet works with any ERC20 / BEP20 / ARC20 / TRC20 tokens and supports the most popular cryptocurrencies — Bitcoin, Bitcoin Cash, Ethereum, Litecoin, XRP, Stellar, EOS, Dogecoin, Dash, Monero, Cardano, Solana and Binance Smart Chain.">
+    <meta name="description" content="Coin Wallet supports Bitcoin, Ethereum, Polygon and Tron with local key custody and optional server-side market and swap services.">
     <meta name="format-detection" content="telephone=no"/>
     <meta name="format-detection" content="address=no"/>
     <meta name="apple-itunes-app" content="app-id=980719434"/>

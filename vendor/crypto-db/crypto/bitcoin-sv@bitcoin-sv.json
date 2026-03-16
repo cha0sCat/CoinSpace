@@ -1,0 +1,19 @@
+{
+  "_id": "bitcoin-sv@bitcoin-sv",
+  "asset": "bitcoin-sv",
+  "platform": "bitcoin-sv",
+  "type": "coin",
+  "name": "Bitcoin SV",
+  "symbol": "BSV",
+  "decimals": 8,
+  "logo": "bitcoin-sv.svg",
+  "scheme": "bitcoinsv",
+  "supported": false,
+  "coingecko": {
+    "id": "bitcoin-cash-sv"
+  },
+  "coinmarketcap": {
+    "id": 3602,
+    "slug": "bitcoin-sv"
+  }
+}

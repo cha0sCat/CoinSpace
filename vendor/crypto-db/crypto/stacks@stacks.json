@@ -1,0 +1,18 @@
+{
+  "_id": "stacks@stacks",
+  "asset": "stacks",
+  "platform": "stacks",
+  "type": "coin",
+  "name": "Stacks",
+  "symbol": "STX",
+  "decimals": 6,
+  "logo": "stacks.svg",
+  "supported": false,
+  "coingecko": {
+    "id": "blockstack"
+  },
+  "coinmarketcap": {
+    "id": 4847,
+    "slug": "stacks"
+  }
+}

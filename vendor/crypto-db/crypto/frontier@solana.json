@@ -1,0 +1,18 @@
+{
+  "deprecated": true,
+  "_id": "frontier@solana",
+  "asset": "frontier",
+  "platform": "solana",
+  "type": "token",
+  "name": "Frontier",
+  "symbol": "FRONT",
+  "address": "9S4t2NEAiJVMvPdRYKVrfJpBafPBLtvbvyS3DecojQHw",
+  "decimals": 6,
+  "coingecko": {
+    "id": "frontier-token"
+  },
+  "coinmarketcap": {
+    "id": 5893,
+    "slug": "frontier"
+  }
+}

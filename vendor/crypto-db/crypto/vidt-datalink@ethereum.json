@@ -1,0 +1,18 @@
+{
+  "deprecated": true,
+  "_id": "vidt-datalink@ethereum",
+  "asset": "vidt-datalink",
+  "platform": "ethereum",
+  "type": "token",
+  "name": "VIDT Datalink",
+  "symbol": "VIDT",
+  "address": "0xfef4185594457050cc9c23980d301908fe057bb1",
+  "decimals": 18,
+  "coingecko": {
+    "id": "vidt-dao"
+  },
+  "coinmarketcap": {
+    "id": 3845,
+    "slug": "vidt-datalink"
+  }
+}

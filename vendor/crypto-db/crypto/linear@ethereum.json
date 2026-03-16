@@ -1,0 +1,18 @@
+{
+  "_id": "linear@ethereum",
+  "asset": "linear",
+  "platform": "ethereum",
+  "type": "token",
+  "name": "Linear Finance",
+  "symbol": "LINA",
+  "address": "0x3e9bc21c9b189c09df3ef1b824798658d5011937",
+  "decimals": 18,
+  "logo": "linear.svg",
+  "coingecko": {
+    "id": "linear"
+  },
+  "coinmarketcap": {
+    "id": 7102,
+    "slug": "linear"
+  }
+}

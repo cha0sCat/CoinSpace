@@ -1,0 +1,19 @@
+{
+  "deprecated": true,
+  "_id": "pirate-chain@pirate-chain",
+  "asset": "pirate-chain",
+  "platform": "pirate-chain",
+  "type": "coin",
+  "name": "Pirate Chain",
+  "symbol": "ARRR",
+  "decimals": 8,
+  "logo": "pirate-chain.svg",
+  "supported": false,
+  "coingecko": {
+    "id": "pirate-chain"
+  },
+  "coinmarketcap": {
+    "id": 3951,
+    "slug": "pirate-chain"
+  }
+}

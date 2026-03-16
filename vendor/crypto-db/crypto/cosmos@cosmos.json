@@ -1,0 +1,18 @@
+{
+  "_id": "cosmos@cosmos",
+  "asset": "cosmos",
+  "platform": "cosmos",
+  "type": "coin",
+  "name": "Cosmos",
+  "symbol": "ATOM",
+  "decimals": 8,
+  "logo": "cosmos.svg",
+  "supported": false,
+  "coingecko": {
+    "id": "cosmos"
+  },
+  "coinmarketcap": {
+    "id": 3794,
+    "slug": "cosmos"
+  }
+}

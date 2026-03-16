@@ -8,7 +8,6 @@ import CryptoSendStepAddress from './CryptoSendStepAddress.vue';
 import CryptoSendStepAmount from './CryptoSendStepAmount.vue';
 import CryptoSendStepConfirm from './CryptoSendStepConfirm.vue';
 import CryptoSendStepGas from './CryptoSendStepGas.vue';
-import CryptoSendStepMecto from './CryptoSendStepMecto.vue';
 import CryptoSendStepMeta from './CryptoSendStepMeta.vue';
 import CryptoSendStepMinerFee from './CryptoSendStepMinerFee.vue';
 import CryptoSendStepPoor from './CryptoSendStepPoor.vue';
@@ -32,7 +31,6 @@ export default {
     amount: CryptoSendStepAmount,
     confirm: CryptoSendStepConfirm,
     status: CryptoSendStepStatus,
-    mecto: CryptoSendStepMecto,
     pin: CsPinStep,
     qr: CryptoSendStepQr,
     poor: CryptoSendStepPoor,
@@ -49,11 +47,6 @@ export default {
         } catch (err) {
           console.error(err);
         }
-      }
-      if (route.query.destinationTag && this.$wallet.crypto._id === 'xrp@ripple') {
-        temp.meta = {
-          destinationTag: route.query.destinationTag,
-        };
       }
       return temp;
     },

@@ -1,0 +1,19 @@
+{
+  "deprecated": true,
+  "_id": "hex@ethereum",
+  "asset": "hex",
+  "platform": "ethereum",
+  "type": "token",
+  "name": "HEX",
+  "symbol": "HEX",
+  "address": "0x2b591e99afe9f32eaa6214f7b7629768c40eeb39",
+  "decimals": 8,
+  "logo": "hex.svg",
+  "coingecko": {
+    "id": "hex"
+  },
+  "coinmarketcap": {
+    "id": 5015,
+    "slug": "hex"
+  }
+}

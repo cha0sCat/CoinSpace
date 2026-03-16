@@ -1,0 +1,18 @@
+{
+  "deprecated": true,
+  "_id": "digitex@ethereum",
+  "asset": "digitex",
+  "platform": "ethereum",
+  "type": "token",
+  "name": "Digitex",
+  "symbol": "DGTX",
+  "address": "0xc666081073e8dff8d3d1c2292a29ae1a2153ec09",
+  "decimals": 18,
+  "coingecko": {
+    "id": "digitex-futures-exchange"
+  },
+  "coinmarketcap": {
+    "id": 2772,
+    "slug": "digitex"
+  }
+}

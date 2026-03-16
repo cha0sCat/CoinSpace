@@ -1,0 +1,18 @@
+{
+  "_id": "radicle@ethereum",
+  "asset": "radicle",
+  "platform": "ethereum",
+  "type": "token",
+  "name": "Radworks",
+  "symbol": "RAD",
+  "address": "0x31c8eacbffdd875c74b94b077895bd78cf1e64a3",
+  "decimals": 18,
+  "logo": "radicle.svg",
+  "coingecko": {
+    "id": "radicle"
+  },
+  "coinmarketcap": {
+    "id": 6843,
+    "slug": "radworks"
+  }
+}

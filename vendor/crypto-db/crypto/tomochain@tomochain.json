@@ -1,0 +1,19 @@
+{
+  "deprecated": true,
+  "_id": "tomochain@tomochain",
+  "asset": "tomochain",
+  "platform": "tomochain",
+  "type": "coin",
+  "name": "Viction",
+  "symbol": "VIC",
+  "decimals": 8,
+  "logo": "tomochain.svg",
+  "supported": false,
+  "coingecko": {
+    "id": "tomochain"
+  },
+  "coinmarketcap": {
+    "id": 2570,
+    "slug": "viction"
+  }
+}

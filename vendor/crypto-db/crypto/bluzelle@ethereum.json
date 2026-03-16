@@ -1,0 +1,18 @@
+{
+  "_id": "bluzelle@ethereum",
+  "asset": "bluzelle",
+  "platform": "ethereum",
+  "type": "token",
+  "name": "Bluzelle",
+  "symbol": "BLZ",
+  "address": "0x5732046a883704404f284ce41ffadd5b007fd668",
+  "decimals": 18,
+  "logo": "bluzelle.svg",
+  "coingecko": {
+    "id": "bluzelle"
+  },
+  "coinmarketcap": {
+    "id": 2505,
+    "slug": "bluzelle"
+  }
+}

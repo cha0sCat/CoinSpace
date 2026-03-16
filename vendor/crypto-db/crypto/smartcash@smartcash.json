@@ -1,0 +1,18 @@
+{
+  "deprecated": true,
+  "_id": "smartcash@smartcash",
+  "asset": "smartcash",
+  "platform": "smartcash",
+  "type": "coin",
+  "name": "SmartCash",
+  "symbol": "SMART",
+  "decimals": 8,
+  "supported": false,
+  "coingecko": {
+    "id": "smartcash"
+  },
+  "coinmarketcap": {
+    "id": 1828,
+    "slug": "smartcash"
+  }
+}

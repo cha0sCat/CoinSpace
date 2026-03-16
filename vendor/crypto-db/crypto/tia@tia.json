@@ -1,0 +1,18 @@
+{
+  "_id": "tia@tia",
+  "asset": "tia",
+  "platform": "tia",
+  "type": "coin",
+  "name": "Celestia",
+  "symbol": "TIA",
+  "decimals": 6,
+  "logo": "tia.svg",
+  "supported": false,
+  "coingecko": {
+    "id": "celestia"
+  },
+  "coinmarketcap": {
+    "id": 22861,
+    "slug": "celestia"
+  }
+}

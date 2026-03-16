@@ -1,0 +1,17 @@
+{
+  "_id": "fantom@fantom",
+  "asset": "fantom",
+  "platform": "fantom",
+  "type": "coin",
+  "name": "Fantom",
+  "symbol": "FTM",
+  "decimals": 18,
+  "logo": "fantom.svg",
+  "coingecko": {
+    "id": "fantom"
+  },
+  "coinmarketcap": {
+    "id": 3513,
+    "slug": "fantom"
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "_id": "alchemy-pay@ethereum",
+  "asset": "alchemy-pay",
+  "platform": "ethereum",
+  "type": "token",
+  "name": "Alchemy Pay",
+  "symbol": "ACH",
+  "address": "0xed04915c23f00a313a544955524eb7dbd823143d",
+  "decimals": 8,
+  "logo": "alchemy-pay.svg",
+  "coingecko": {
+    "id": "alchemy-pay"
+  },
+  "coinmarketcap": {
+    "id": 6958,
+    "slug": "alchemy-pay"
+  }
+}

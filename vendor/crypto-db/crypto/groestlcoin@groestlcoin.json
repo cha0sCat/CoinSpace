@@ -1,0 +1,18 @@
+{
+  "deprecated": true,
+  "_id": "groestlcoin@groestlcoin",
+  "asset": "groestlcoin",
+  "platform": "groestlcoin",
+  "type": "coin",
+  "name": "Groestlcoin",
+  "symbol": "GRS",
+  "decimals": 8,
+  "supported": false,
+  "coingecko": {
+    "id": "groestlcoin"
+  },
+  "coinmarketcap": {
+    "id": 258,
+    "slug": "groestlcoin"
+  }
+}

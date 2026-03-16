@@ -1,4 +1,3 @@
-import * as EOSSymbols from '@coinspace/cs-eos-wallet/symbols';
 import Account from './account/Account.js';
 import { ref } from 'vue';
 import { release } from './version.js';
@@ -6,6 +5,8 @@ import { setLanguage } from './i18n/i18n.js';
 import { Amount, CsWallet } from '@coinspace/cs-common';
 import { cryptoSubtitle, cryptoToFiat, defineAppProperty, roundCrypto } from './helpers.js';
 import { setSentryConnection, setSentryUser } from './sentry.js';
+
+const STATE_NEED_ACTIVATION = Symbol('STATE_NEED_ACTIVATION');
 
 export async function createAccount({ app, router }) {
   const account = new Account({
@@ -25,30 +26,30 @@ export async function createAccount({ app, router }) {
   const cryptos = ref([]);
   const isHiddenBalance = ref(false);
   const isOnion = ref(account.isOnion);
+  const isOfflineMode = ref(false);
+  const isMarketEnabled = ref(true);
+  const isSwapEnabled = ref(true);
 
   defineAppProperty(app, '$wallet', undefined);
   defineAppProperty(app, '$walletState', undefined);
   defineAppProperty(app, '$STATE_LOADING', CsWallet.STATE_LOADING);
   defineAppProperty(app, '$STATE_LOADED', CsWallet.STATE_LOADED);
-  defineAppProperty(app, '$STATE_NEED_ACTIVATION', EOSSymbols.STATE_NEED_ACTIVATION);
+  defineAppProperty(app, '$STATE_NEED_ACTIVATION', STATE_NEED_ACTIVATION);
   defineAppProperty(app, '$STATE_ERROR', CsWallet.STATE_ERROR);
   defineAppProperty(app, '$currency', currency);
   defineAppProperty(app, '$user', user);
   defineAppProperty(app, '$cryptos', cryptos);
   defineAppProperty(app, '$isHiddenBalance', isHiddenBalance);
   defineAppProperty(app, '$isOnion', isOnion);
+  defineAppProperty(app, '$isOfflineMode', isOfflineMode);
+  defineAppProperty(app, '$isMarketEnabled', isMarketEnabled);
+  defineAppProperty(app, '$isSwapEnabled', isSwapEnabled);
 
   const dummyBalances = {
     'bitcoin@bitcoin': '0.5',
     'ethereum@ethereum': '0.5',
-    'tether@ethereum': '100',
-    'xrp@ripple': '2300',
-    'monero@monero': '69',
-    'dogecoin@dogecoin': '400',
-    'cardano@cardano': '220',
-    'litecoin@litecoin': '50',
-    'dash@dash': '1',
-    'toncoin@toncoin': '900',
+    'polygon@polygon': '1200',
+    'tron@tron': '9000',
   };
 
   account.on('update', async (context) => {
@@ -68,6 +69,11 @@ export async function createAccount({ app, router }) {
       case 'isOnion':
         isOnion.value = account.isOnion;
         setSentryConnection();
+        break;
+      case 'settings':
+        isOfflineMode.value = account.isOfflineMode;
+        isMarketEnabled.value = account.isMarketEnabled;
+        isSwapEnabled.value = account.isSwapEnabled;
         break;
       default: {
         const result = [];

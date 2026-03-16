@@ -27,11 +27,6 @@ export default {
             console.error(err);
           }
         }
-        if (parsed.destinationTag && this.$wallet.crypto._id === 'xrp@ripple') {
-          temp.meta = {
-            destinationTag: parsed.destinationTag,
-          };
-        }
         this.updateStorage({ temp });
         this.back();
       } catch (error) {

@@ -1,0 +1,18 @@
+{
+  "_id": "flow@flow",
+  "asset": "flow",
+  "platform": "flow",
+  "type": "coin",
+  "name": "Flow",
+  "symbol": "FLOW",
+  "decimals": 8,
+  "logo": "flow.svg",
+  "supported": false,
+  "coingecko": {
+    "id": "flow"
+  },
+  "coinmarketcap": {
+    "id": 4558,
+    "slug": "flow"
+  }
+}

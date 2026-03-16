@@ -1,0 +1,18 @@
+{
+  "_id": "usd-coin@arbitrum",
+  "asset": "usd-coin",
+  "platform": "arbitrum",
+  "type": "token",
+  "name": "USDC",
+  "symbol": "USDC",
+  "address": "0xaf88d065e77c8cc2239327c5edb3a432268e5831",
+  "decimals": 6,
+  "logo": "usd-coin.svg",
+  "coingecko": {
+    "id": "usd-coin"
+  },
+  "coinmarketcap": {
+    "id": 3408,
+    "slug": "usd-coin"
+  }
+}

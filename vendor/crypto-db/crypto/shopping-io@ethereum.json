@@ -1,0 +1,18 @@
+{
+  "deprecated": true,
+  "_id": "shopping-io@ethereum",
+  "asset": "shopping-io",
+  "platform": "ethereum",
+  "type": "token",
+  "name": "Shopping",
+  "symbol": "SPI",
+  "address": "0x9b02dd390a603add5c07f9fd9175b7dabe8d63b7",
+  "decimals": 18,
+  "coingecko": {
+    "id": "shopping-io"
+  },
+  "coinmarketcap": {
+    "id": 8161,
+    "slug": "shopping"
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "_id": "solana@solana",
+  "asset": "solana",
+  "platform": "solana",
+  "type": "coin",
+  "name": "Solana",
+  "symbol": "SOL",
+  "decimals": 9,
+  "logo": "solana.svg",
+  "scheme": "solana",
+  "coingecko": {
+    "id": "solana"
+  },
+  "coinmarketcap": {
+    "id": 5426,
+    "slug": "solana"
+  }
+}

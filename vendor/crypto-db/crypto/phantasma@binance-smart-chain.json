@@ -1,0 +1,18 @@
+{
+  "deprecated": true,
+  "_id": "phantasma@binance-smart-chain",
+  "asset": "phantasma",
+  "platform": "binance-smart-chain",
+  "type": "token",
+  "name": "Phantasma",
+  "symbol": "SOUL",
+  "address": "0x298eff8af1ecebbb2c034eaa3b9a5d0cc56c59cd",
+  "decimals": 8,
+  "coingecko": {
+    "id": "phantasma"
+  },
+  "coinmarketcap": {
+    "id": 2827,
+    "slug": "phantasma"
+  }
+}

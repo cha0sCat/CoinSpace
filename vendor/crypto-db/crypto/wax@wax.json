@@ -1,0 +1,18 @@
+{
+  "_id": "wax@wax",
+  "asset": "wax",
+  "platform": "wax",
+  "type": "coin",
+  "name": "WAX",
+  "symbol": "WAXP",
+  "decimals": 8,
+  "logo": "wax.svg",
+  "supported": false,
+  "coingecko": {
+    "id": "wax"
+  },
+  "coinmarketcap": {
+    "id": 2300,
+    "slug": "wax"
+  }
+}

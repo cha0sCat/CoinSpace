@@ -127,8 +127,9 @@ export default {
       {{ $t('Confirm') }}
     </CsButton>
     <CsButton
+      v-if="$account.passphraseHelpUrl"
       type="primary-link"
-      @click="$safeOpen('https://support.coin.space/hc/en-us/articles/115001633527')"
+      @click="$safeOpen($account.passphraseHelpUrl)"
     >
       {{ $t('What is a passphrase?') }}
     </CsButton>

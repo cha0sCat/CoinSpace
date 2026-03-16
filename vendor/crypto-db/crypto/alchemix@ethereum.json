@@ -1,0 +1,18 @@
+{
+  "deprecated": true,
+  "_id": "alchemix@ethereum",
+  "asset": "alchemix",
+  "platform": "ethereum",
+  "type": "token",
+  "name": "Alchemix",
+  "symbol": "ALCX",
+  "address": "0xdbdb4d16eda451d0503b854cf79d55697f90c8df",
+  "decimals": 18,
+  "coingecko": {
+    "id": "alchemix"
+  },
+  "coinmarketcap": {
+    "id": 8613,
+    "slug": "alchemix"
+  }
+}

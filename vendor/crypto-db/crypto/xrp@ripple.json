@@ -1,0 +1,18 @@
+{
+  "_id": "xrp@ripple",
+  "asset": "xrp",
+  "platform": "ripple",
+  "type": "coin",
+  "name": "XRP",
+  "symbol": "XRP",
+  "decimals": 6,
+  "logo": "xrp.svg",
+  "scheme": "ripple",
+  "coingecko": {
+    "id": "ripple"
+  },
+  "coinmarketcap": {
+    "id": 52,
+    "slug": "xrp"
+  }
+}

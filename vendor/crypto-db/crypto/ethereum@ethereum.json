@@ -1,0 +1,19 @@
+{
+  "_id": "ethereum@ethereum",
+  "asset": "ethereum",
+  "platform": "ethereum",
+  "type": "coin",
+  "name": "Ethereum",
+  "symbol": "ETH",
+  "decimals": 18,
+  "logo": "ethereum.svg",
+  "scheme": "ethereum",
+  "original": true,
+  "coingecko": {
+    "id": "ethereum"
+  },
+  "coinmarketcap": {
+    "id": 1027,
+    "slug": "ethereum"
+  }
+}

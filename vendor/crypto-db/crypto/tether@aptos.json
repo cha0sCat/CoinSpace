@@ -1,0 +1,18 @@
+{
+  "_id": "tether@aptos",
+  "asset": "tether",
+  "platform": "aptos",
+  "type": "token",
+  "name": "Tether",
+  "symbol": "USDT",
+  "address": "0x357b0b74bc833e95a115ad22604854d6b0fca151cecd94111770e5d6ffc9dc2b",
+  "logo": "tether.svg",
+  "supported": false,
+  "coingecko": {
+    "id": "tether"
+  },
+  "coinmarketcap": {
+    "id": 825,
+    "slug": "tether"
+  }
+}

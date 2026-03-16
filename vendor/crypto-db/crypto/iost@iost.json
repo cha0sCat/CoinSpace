@@ -1,0 +1,18 @@
+{
+  "_id": "iost@iost",
+  "asset": "iost",
+  "platform": "iost",
+  "type": "coin",
+  "name": "IOST",
+  "symbol": "IOST",
+  "decimals": 8,
+  "logo": "iost.svg",
+  "supported": false,
+  "coingecko": {
+    "id": "iostoken"
+  },
+  "coinmarketcap": {
+    "id": 2405,
+    "slug": "iostoken"
+  }
+}

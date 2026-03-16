@@ -1,0 +1,18 @@
+{
+  "_id": "ardor@ardor",
+  "asset": "ardor",
+  "platform": "ardor",
+  "type": "coin",
+  "name": "Ardor",
+  "symbol": "ARDR",
+  "decimals": 8,
+  "logo": "ardor.svg",
+  "supported": false,
+  "coingecko": {
+    "id": "ardor"
+  },
+  "coinmarketcap": {
+    "id": 1320,
+    "slug": "ardor"
+  }
+}

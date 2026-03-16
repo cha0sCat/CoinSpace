@@ -1,0 +1,18 @@
+{
+  "_id": "pudgy-penguins@solana",
+  "asset": "pudgy-penguins",
+  "platform": "solana",
+  "type": "token",
+  "name": "Pudgy Penguins",
+  "symbol": "PENGU",
+  "address": "2zMMhcVQEXDtdE6vsFS7S7D5oUodfJHE8vd1gnBouauv",
+  "decimals": 6,
+  "logo": "pudgy-penguins.svg",
+  "coingecko": {
+    "id": "pudgy-penguins"
+  },
+  "coinmarketcap": {
+    "id": 34466,
+    "slug": "pudgy-penguins"
+  }
+}

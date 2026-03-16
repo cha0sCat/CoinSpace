@@ -1,0 +1,18 @@
+{
+  "_id": "stormx@ethereum",
+  "asset": "stormx",
+  "platform": "ethereum",
+  "type": "token",
+  "name": "StormX",
+  "symbol": "STMX",
+  "address": "0xa62cc35625b0c8dc1faea39d33625bb4c15bd71c",
+  "decimals": 18,
+  "logo": "stormx.svg",
+  "coingecko": {
+    "id": "storm"
+  },
+  "coinmarketcap": {
+    "id": 2297,
+    "slug": "stormx"
+  }
+}

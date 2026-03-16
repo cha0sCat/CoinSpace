@@ -1,0 +1,18 @@
+{
+  "deprecated": true,
+  "_id": "circuits-of-value@binance-smart-chain",
+  "asset": "circuits-of-value",
+  "platform": "binance-smart-chain",
+  "type": "token",
+  "name": "Circuits of Value",
+  "symbol": "COVAL",
+  "address": "0xd15cee1deafbad6c0b3fd7489677cc102b141464",
+  "decimals": 8,
+  "coingecko": {
+    "id": "circuits-of-value"
+  },
+  "coinmarketcap": {
+    "id": 788,
+    "slug": "circuits-of-value"
+  }
+}

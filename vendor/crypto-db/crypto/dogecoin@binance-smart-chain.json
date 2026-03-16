@@ -1,0 +1,18 @@
+{
+  "_id": "dogecoin@binance-smart-chain",
+  "asset": "dogecoin",
+  "platform": "binance-smart-chain",
+  "type": "token",
+  "name": "Dogecoin",
+  "symbol": "DOGE",
+  "address": "0xba2ae424d960c26247dd6c32edc70b295c744c43",
+  "decimals": 8,
+  "logo": "dogecoin.svg",
+  "coingecko": {
+    "id": "dogecoin"
+  },
+  "coinmarketcap": {
+    "id": 74,
+    "slug": "dogecoin"
+  }
+}

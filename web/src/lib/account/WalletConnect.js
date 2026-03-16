@@ -1,6 +1,9 @@
 import { Core } from '@walletconnect/core';
+
 import { EventEmitter } from 'events';
+
 import { Web3Wallet } from '@walletconnect/web3wallet';
+
 import { buildApprovedNamespaces, getSdkError } from '@walletconnect/utils';
 import { formatJsonRpcError, formatJsonRpcResult } from '@walletconnect/jsonrpc-utils';
 
@@ -15,15 +18,17 @@ export class WalletConnect extends EventEmitter {
   }
 
   async init() {
+    const { origin } = window.location;
+    const { appName } = this.#account;
     this.#web3wallet = await Web3Wallet.init({
       core: new Core({
         projectId: import.meta.env.VITE_WALLETCONNECT_ID,
         logger: 'fatal',
       }),
       metadata: {
-        name: 'Coin Wallet',
-        description: 'Coin Wallet is a non-custodial multicurrency wallet for multiple platforms.',
-        url: 'https://coin.space/',
+        name: appName,
+        description: `${appName} is a non-custodial multicurrency wallet for multiple platforms.`,
+        url: origin,
         icons: [],
       },
     });

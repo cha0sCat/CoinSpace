@@ -1,0 +1,18 @@
+{
+  "_id": "bonfida@solana",
+  "asset": "bonfida",
+  "platform": "solana",
+  "type": "token",
+  "name": "Solana Name Service",
+  "symbol": "FIDA",
+  "address": "EchesyfXePKdLtoiZSL8pBe8Myagyy8ZRqsACNCFGnvp",
+  "decimals": 6,
+  "logo": "bonfida.svg",
+  "coingecko": {
+    "id": "bonfida"
+  },
+  "coinmarketcap": {
+    "id": 7978,
+    "slug": "bonfida-sns"
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "deprecated": true,
+  "_id": "nimiq@nimiq",
+  "asset": "nimiq",
+  "platform": "nimiq",
+  "type": "coin",
+  "name": "Nimiq",
+  "symbol": "NIM",
+  "decimals": 5,
+  "logo": "nimiq.svg",
+  "supported": false,
+  "coingecko": {
+    "id": "nimiq-2"
+  },
+  "coinmarketcap": {
+    "id": 2916,
+    "slug": "nimiq"
+  }
+}

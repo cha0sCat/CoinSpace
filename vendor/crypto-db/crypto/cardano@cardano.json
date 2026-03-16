@@ -1,0 +1,18 @@
+{
+  "_id": "cardano@cardano",
+  "asset": "cardano",
+  "platform": "cardano",
+  "type": "coin",
+  "name": "Cardano",
+  "symbol": "ADA",
+  "decimals": 6,
+  "logo": "cardano.svg",
+  "scheme": "cardano",
+  "coingecko": {
+    "id": "cardano"
+  },
+  "coinmarketcap": {
+    "id": 2010,
+    "slug": "cardano"
+  }
+}

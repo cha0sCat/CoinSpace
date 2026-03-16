@@ -94,9 +94,15 @@ export default {
           tag="span"
         >
           <template #terms>
-            <a @click.prevent="$safeOpen(`${$account.siteUrl}terms-of-service/`)">
+            <a
+              v-if="$account.termsUrl"
+              @click.prevent="$safeOpen($account.termsUrl)"
+            >
               {{ agreementLinkTexts?.at(0) }}
             </a>
+            <span v-else>
+              {{ agreementLinkTexts?.at(0) }}
+            </span>
           </template>
         </i18n-t>
       </label>

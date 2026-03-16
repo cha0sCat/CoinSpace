@@ -1,0 +1,18 @@
+{
+  "deprecated": true,
+  "_id": "cvault-finance@ethereum",
+  "asset": "cvault-finance",
+  "platform": "ethereum",
+  "type": "token",
+  "name": "cVault.finance",
+  "symbol": "CORE",
+  "address": "0x62359ed7505efc61ff1d56fef82158ccaffa23d7",
+  "decimals": 18,
+  "coingecko": {
+    "id": "cvault-finance"
+  },
+  "coinmarketcap": {
+    "id": 7242,
+    "slug": "cvault-finance"
+  }
+}

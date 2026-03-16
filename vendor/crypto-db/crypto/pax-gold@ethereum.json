@@ -1,0 +1,18 @@
+{
+  "_id": "pax-gold@ethereum",
+  "asset": "pax-gold",
+  "platform": "ethereum",
+  "type": "token",
+  "name": "PAX Gold",
+  "symbol": "PAXG",
+  "address": "0x45804880de22913dafe09f4980848ece6ecbaf78",
+  "decimals": 18,
+  "logo": "pax-gold.svg",
+  "coingecko": {
+    "id": "pax-gold"
+  },
+  "coinmarketcap": {
+    "id": 4705,
+    "slug": "pax-gold"
+  }
+}

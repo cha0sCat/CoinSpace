@@ -1,0 +1,19 @@
+{
+  "deprecated": true,
+  "_id": "swipe@ethereum",
+  "asset": "swipe",
+  "platform": "ethereum",
+  "type": "token",
+  "name": "Solar",
+  "symbol": "SXP",
+  "address": "0x8ce9137d39326ad0cd6491fb5cc0cba0e089b6a9",
+  "decimals": 18,
+  "logo": "swipe.svg",
+  "coingecko": {
+    "id": "swipe"
+  },
+  "coinmarketcap": {
+    "id": 4279,
+    "slug": "sxp"
+  }
+}

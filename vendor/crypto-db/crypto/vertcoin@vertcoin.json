@@ -1,0 +1,18 @@
+{
+  "deprecated": true,
+  "_id": "vertcoin@vertcoin",
+  "asset": "vertcoin",
+  "platform": "vertcoin",
+  "type": "coin",
+  "name": "Vertcoin",
+  "symbol": "VTC",
+  "decimals": 8,
+  "supported": false,
+  "coingecko": {
+    "id": "vertcoin"
+  },
+  "coinmarketcap": {
+    "id": 99,
+    "slug": "vertcoin"
+  }
+}

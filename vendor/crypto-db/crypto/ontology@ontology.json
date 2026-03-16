@@ -1,0 +1,18 @@
+{
+  "_id": "ontology@ontology",
+  "asset": "ontology",
+  "platform": "ontology",
+  "type": "coin",
+  "name": "Ontology",
+  "symbol": "ONT",
+  "decimals": 0,
+  "logo": "ontology.svg",
+  "supported": false,
+  "coingecko": {
+    "id": "ontology"
+  },
+  "coinmarketcap": {
+    "id": 2566,
+    "slug": "ontology"
+  }
+}

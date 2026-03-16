@@ -1,0 +1,18 @@
+{
+  "_id": "tellor@polygon",
+  "asset": "tellor",
+  "platform": "polygon",
+  "type": "token",
+  "name": "Tellor",
+  "symbol": "TRB",
+  "address": "0xe3322702bedaaed36cddab233360b939775ae5f1",
+  "decimals": 18,
+  "logo": "tellor.svg",
+  "coingecko": {
+    "id": "tellor"
+  },
+  "coinmarketcap": {
+    "id": 4944,
+    "slug": "tellor"
+  }
+}

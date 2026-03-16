@@ -1,0 +1,18 @@
+{
+  "deprecated": true,
+  "_id": "nxt@nxt",
+  "asset": "nxt",
+  "platform": "nxt",
+  "type": "coin",
+  "name": "Nxt",
+  "symbol": "NXT",
+  "decimals": 8,
+  "supported": false,
+  "coingecko": {
+    "id": "nxt"
+  },
+  "coinmarketcap": {
+    "id": 66,
+    "slug": "nxt"
+  }
+}

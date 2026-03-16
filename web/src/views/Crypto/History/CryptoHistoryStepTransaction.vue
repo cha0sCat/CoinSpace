@@ -1,5 +1,4 @@
 <script>
-import * as MoneroSymbols from '@coinspace/cs-monero-wallet/symbols';
 import { Transaction, errors } from '@coinspace/cs-common';
 
 import BaseExchange from '../../../lib/exchanges/BaseExchange.js';
@@ -15,7 +14,6 @@ import CsStep from '../../../components/CsStep.vue';
 import MainLayout from '../../../layouts/MainLayout.vue';
 
 import ArrowDownIcon from '../../../assets/svg/arrowDown.svg';
-import CoinsIcon from '../../../assets/svg/coins.svg';
 
 export default {
   components: {
@@ -26,7 +24,6 @@ export default {
     CsFormTextareaReadonly,
     CsPoweredBy,
     ArrowDownIcon,
-    CoinsIcon,
   },
   extends: CsStep,
   mixins: [onShowOnHide],
@@ -48,15 +45,11 @@ export default {
   },
   computed: {
     from() {
-      return this.transaction.from === MoneroSymbols.HIDDEN_ADDRESS
-        ? this.$t('Stealth address')
-        : this.transaction.from;
+      return this.transaction.from;
     },
     to() {
       if (this.exchange) return this.transaction.exchange.to;
-      return this.transaction.to === MoneroSymbols.HIDDEN_ADDRESS
-        ? this.$t('Stealth address')
-        : this.transaction.to;
+      return this.transaction.to;
     },
     amount() {
       return `${this.transaction.incoming ? '+' : '-'}${this.transaction.amount} ${this.$wallet.crypto.symbol}`;
@@ -107,8 +100,11 @@ export default {
           BaseExchange.STATUS_REFUNDED,
           BaseExchange.STATUS_HOLD,
         ].includes(status),
-        hasAcceptButton: status === BaseExchange.STATUS_REQUIRED_TO_ACCEPT,
       };
+    },
+    transactionUrl() {
+      return this.$account.getTransactionUrl(this.$wallet.crypto.platform, this.transaction.id)
+        || this.transaction.url;
     },
   },
   methods: {
@@ -136,12 +132,6 @@ export default {
       } finally {
         this.isLoading = false;
       }
-    },
-    accept() {
-      this.updateStorage({
-        payoutHash: this.transaction.exchange.payoutHash,
-      });
-      this.next('moneroAccept');
     },
   },
 };
@@ -191,21 +181,6 @@ export default {
       </template>
     </div>
 
-    <div
-      v-if="exchange?.hasAcceptButton"
-      class="&__accept"
-    >
-      <CsButton
-        type="circle"
-        @click="accept"
-      >
-        <template #circle>
-          <CoinsIcon />
-        </template>
-        {{ $t('Accept') }}
-      </CsButton>
-    </div>
-
     <CsFormGroup class="&__info">
       <template v-if="exchange && !transaction.incoming">
         <CsFormTextareaReadonly
@@ -233,8 +208,7 @@ export default {
         v-if="!transaction.incoming && transaction.fee !== undefined"
         :label="$t('Fee')"
         :value="`${transaction.fee} ${$wallet.crypto.type === 'coin'
-          ? $wallet.crypto.symbol : $wallet.platform.symbol}`
-          + `${['ethereum@optimism', 'ethereum@base'].includes($wallet.platform._id) ? ' + L1' : ''}`"
+          ? $wallet.crypto.symbol : $wallet.platform.symbol}`"
       />
       <CsFormTextareaReadonly
         v-if="transaction.meta?.txKey"
@@ -246,8 +220,9 @@ export default {
         :value="transaction.id"
       />
       <CsButton
+        v-if="transactionUrl"
         type="primary-link"
-        @click="$safeOpen(transaction.url)"
+        @click="$safeOpen(transactionUrl)"
       >
         {{ $t('View in Block Explorer') }}
       </CsButton>

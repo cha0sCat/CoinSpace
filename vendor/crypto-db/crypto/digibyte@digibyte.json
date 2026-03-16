@@ -1,0 +1,18 @@
+{
+  "_id": "digibyte@digibyte",
+  "asset": "digibyte",
+  "platform": "digibyte",
+  "type": "coin",
+  "name": "DigiByte",
+  "symbol": "DGB",
+  "decimals": 8,
+  "logo": "digibyte.svg",
+  "supported": false,
+  "coingecko": {
+    "id": "digibyte"
+  },
+  "coinmarketcap": {
+    "id": 109,
+    "slug": "digibyte"
+  }
+}

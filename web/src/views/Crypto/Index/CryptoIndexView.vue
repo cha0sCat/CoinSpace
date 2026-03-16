@@ -9,11 +9,9 @@ import SmartLayout from '../../../layouts/SmartLayout.vue';
 
 import CryptoIndexActions from './CryptoIndexActions.vue';
 import CryptoIndexBalance from './CryptoIndexBalance.vue';
-import CryptoIndexBuySell from './CryptoIndexBuySell.vue';
 import CryptoIndexConfirmRemove from './CryptoIndexConfirmRemove.vue';
 import CryptoIndexDropdownMenu from './CryptoIndexDropdownMenu.vue';
 import CryptoIndexPrice from './CryptoIndexPrice.vue';
-import CryptoIndexSetupEOS from './CryptoIndexSetupEOS.vue';
 import CryptoIndexTools from './CryptoIndexTools.vue';
 
 import ArrowLeftIcon from '../../../assets/svg/arrowLeft.svg';
@@ -22,11 +20,9 @@ export default {
   components: {
     CryptoIndexActions,
     CryptoIndexBalance,
-    CryptoIndexBuySell,
     CryptoIndexConfirmRemove,
     CryptoIndexDropdownMenu,
     CryptoIndexPrice,
-    CryptoIndexSetupEOS,
     CryptoIndexTools,
     SmartLayout,
     CsPriceChart,
@@ -61,22 +57,35 @@ export default {
         return item.crypto._id === this.$wallet.crypto._id;
       })?.market;
     },
+    showMarket() {
+      return this.$isMarketEnabled && !!this.$wallet.crypto.coingecko;
+    },
   },
   mounted() {
     if (this.$walletState === this.$STATE_LOADED) {
       this.$wallet.cleanup();
       this.$account.emit('update');
     }
-    this.loadPriceChart();
+    if (this.showMarket) {
+      this.loadPriceChart();
+    } else {
+      this.isLoadingChart = false;
+    }
   },
   methods: {
     async refresh() {
       await Promise.all([
         this.$loadWallet(),
-        this.loadPriceChart(),
+        this.showMarket ? this.loadPriceChart() : Promise.resolve(),
       ]);
     },
     async loadPriceChart(period = this.period) {
+      if (!this.showMarket) {
+        this.chartSeries = [];
+        this.chartError = false;
+        this.isLoadingChart = false;
+        return;
+      }
       this.isLoadingChart = true;
       this.chartError = false;
       try {
@@ -152,14 +161,14 @@ export default {
     <div class="&__header-container">
       <div class="&__header">
         <CryptoIndexPrice
+          v-if="showMarket"
           :price="price"
           :change="change"
           :chartPoint="chartPoint"
         />
-        <CryptoIndexBuySell />
       </div>
       <CsPriceChart
-        v-if="$wallet.crypto.coingecko"
+        v-if="showMarket"
         :chartSeries="chartSeries"
         :period="period"
         :isLoading="isLoadingChart"
@@ -177,8 +186,6 @@ export default {
     >
       {{ $account.unknownError() }}
     </div>
-    <CryptoIndexSetupEOS />
-
     <CryptoIndexTools
       @remove="showConfirmRemove = true"
     />

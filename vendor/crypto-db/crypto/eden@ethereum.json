@@ -1,0 +1,18 @@
+{
+  "deprecated": true,
+  "_id": "eden@ethereum",
+  "asset": "eden",
+  "platform": "ethereum",
+  "type": "token",
+  "name": "Eden",
+  "symbol": "EDEN",
+  "address": "0x1559fa1b8f28238fd5d76d9f434ad86fd20d1559",
+  "decimals": 18,
+  "coingecko": {
+    "id": "eden"
+  },
+  "coinmarketcap": {
+    "id": 7750,
+    "slug": "eden-network"
+  }
+}

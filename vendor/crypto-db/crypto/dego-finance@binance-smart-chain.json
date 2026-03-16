@@ -1,0 +1,18 @@
+{
+  "deprecated": true,
+  "_id": "dego-finance@binance-smart-chain",
+  "asset": "dego-finance",
+  "platform": "binance-smart-chain",
+  "type": "token",
+  "name": "Dego Finance",
+  "symbol": "DEGO",
+  "address": "0x3da932456d082cba208feb0b096d49b202bf89c8",
+  "decimals": 18,
+  "coingecko": {
+    "id": "dego-finance"
+  },
+  "coinmarketcap": {
+    "id": 7087,
+    "slug": "dego-finance"
+  }
+}

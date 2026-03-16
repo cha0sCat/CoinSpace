@@ -1,0 +1,19 @@
+{
+  "deprecated": true,
+  "_id": "seedify-fund@binance-smart-chain",
+  "asset": "seedify-fund",
+  "platform": "binance-smart-chain",
+  "type": "token",
+  "name": "Seedify.fund",
+  "symbol": "SFUND",
+  "address": "0xffda10b7fd9cf172e0502a6bc0e5e355516c5232",
+  "decimals": 18,
+  "logo": "seedify-fund.svg",
+  "coingecko": {
+    "id": "seedify-fund"
+  },
+  "coinmarketcap": {
+    "id": 8972,
+    "slug": "seedify-fund"
+  }
+}

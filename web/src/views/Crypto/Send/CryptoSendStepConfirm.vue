@@ -5,9 +5,6 @@ import MainLayout from '../../../layouts/MainLayout.vue';
 import { errors } from '@coinspace/cs-common';
 import { walletSeed } from '../../../lib/mixins.js';
 
-import * as EOSErrors from '@coinspace/cs-eos-wallet/errors';
-import * as RippleErrors from '@coinspace/cs-ripple-wallet/errors';
-
 export default {
   components: {
     MainLayout,
@@ -36,19 +33,19 @@ export default {
           this.$account.emit('update');
           this.updateStorage({ status: true });
         } catch (err) {
-          if (err instanceof RippleErrors.DestinationTagNeededError) {
+          if (err?.name === 'DestinationTagNeededError') {
             this.updateStorage({ status: false, message: this.$t("Recipient's wallet requires a destination tag.") });
             return;
           }
-          if (err instanceof EOSErrors.DestinationAccountError) {
+          if (err?.name === 'DestinationAccountError') {
             this.updateStorage({ status: false, message: this.$t("Destination account doesn't exist.") });
             return;
           }
-          if (err instanceof EOSErrors.ExpiredTransactionError) {
+          if (err?.name === 'ExpiredTransactionError') {
             this.updateStorage({ status: false, message: this.$t('Transaction has been expired. Please try again.') });
             return;
           }
-          if (err instanceof EOSErrors.CPUExceededError) {
+          if (err?.name === 'CPUExceededError') {
             this.updateStorage({
               status: false,
               // eslint-disable-next-line max-len
@@ -56,7 +53,7 @@ export default {
             });
             return;
           }
-          if (err instanceof EOSErrors.NETExceededError) {
+          if (err?.name === 'NETExceededError') {
             this.updateStorage({
               status: false,
               // eslint-disable-next-line max-len

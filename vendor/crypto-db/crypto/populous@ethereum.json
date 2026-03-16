@@ -1,0 +1,19 @@
+{
+  "deprecated": true,
+  "_id": "populous@ethereum",
+  "asset": "populous",
+  "platform": "ethereum",
+  "type": "token",
+  "name": "Populous",
+  "symbol": "PPT",
+  "address": "0xd4fa1460f537bb9085d22c7bccb5dd450ef28e3a",
+  "decimals": 8,
+  "logo": "populous.svg",
+  "coingecko": {
+    "id": "populous"
+  },
+  "coinmarketcap": {
+    "id": 1789,
+    "slug": "populous"
+  }
+}

@@ -1,32 +1,50 @@
-import { EventEmitter } from 'events';
-import { ed25519 } from '@noble/curves/ed25519';
-import { hex } from '@scure/base';
-import { hmac } from '@noble/hashes/hmac';
-import { randomBytes } from '@noble/hashes/utils';
-import { sha256 } from '@noble/hashes/sha256';
-import { CsWallet, errors } from '@coinspace/cs-common';
+import { CsWallet } from '@coinspace/cs-common';
 
-import Biometry from './Biometry.js';
-import Cache from './Cache.js';
-import ClientStorage from '../storage/ClientStorage.js';
-import CryptoDB from './CryptoDB.js';
-import Details from '../storage/Details.js';
-import Exchanges from '../exchanges/Exchanges.js';
-import Hardware from './Hardware.js';
-import Market from './Market.js';
-import Mecto from './Mecto.js';
-import Ramps from './Ramps.js';
-import Request from './Request.js';
-import Seeds from './Seeds.js';
-import Settings from './Settings.js';
-import WalletStorage from '../storage/WalletStorage.js';
-import i18n from '../i18n/i18n.js';
+import { EventEmitter } from 'events';
+
+import { ed25519 } from '@noble/curves/ed25519';
+
+import { hex } from '@scure/base';
+
+import { hmac } from '@noble/hashes/hmac';
+
+import { randomBytes } from '@noble/hashes/utils';
+
+import { sha256 } from '@noble/hashes/sha256';
+
 import {
-  EVM_FAMILY,
-  getApiNode,
+  buildExplorerUrl,
+  getTokenInfo,
+  testNodeConnection,
+} from '../connections.js';
+import {
   getBaseURL,
   loadWalletModule,
 } from '../constants.js';
+
+import Biometry from './Biometry.js';
+
+import Cache from './Cache.js';
+
+import ClientStorage from '../storage/ClientStorage.js';
+
+import CryptoDB from './CryptoDB.js';
+
+import Details from '../storage/Details.js';
+
+import Exchanges from '../exchanges/Exchanges.js';
+
+import Market from './Market.js';
+
+import Request from './Request.js';
+
+import Seeds from './Seeds.js';
+
+import Settings from './Settings.js';
+
+import WalletStorage from '../storage/WalletStorage.js';
+
+import i18n from '../i18n/i18n.js';
 
 export class CryptoAlreadyAddedError extends TypeError {
   name = 'CryptoAlreadyAddedError';
@@ -94,6 +112,70 @@ class WalletManager {
   }
 }
 
+class MemoryCache {
+  #cache = {};
+
+  get(key) {
+    return this.#cache[key];
+  }
+
+  set(key, value) {
+    this.#cache[key] = value;
+  }
+}
+
+class MemoryStorage {
+  #storage = {};
+  #status = 'created';
+
+  async init(data) {
+    this.#storage = data ? { ...data } : {};
+    this.#status = 'ready';
+  }
+
+  async save() {
+    if (this.#status !== 'ready') {
+      throw new Error('MemoryStorage not ready');
+    }
+  }
+
+  get(key) {
+    if (this.#status !== 'ready') {
+      throw new Error('MemoryStorage not ready');
+    }
+    return this.#storage[key];
+  }
+
+  set(key, value) {
+    if (this.#status !== 'ready') {
+      throw new Error('MemoryStorage not ready');
+    }
+    this.#storage[key] = value;
+  }
+
+  delete(key) {
+    if (this.#status !== 'ready') {
+      throw new Error('MemoryStorage not ready');
+    }
+    delete this.#storage[key];
+  }
+}
+
+function normalizeBaseUrl(url) {
+  if (!url) return undefined;
+  return url.endsWith('/') ? url : `${url}/`;
+}
+
+function resolveAccountUrl(explicitUrl, baseUrl, path) {
+  if (explicitUrl) {
+    return explicitUrl;
+  }
+  if (!baseUrl) {
+    return undefined;
+  }
+  return new URL(path, baseUrl).toString();
+}
+
 export default class Account extends EventEmitter {
   #clientStorage;
   #seeds;
@@ -101,13 +183,10 @@ export default class Account extends EventEmitter {
   #settings;
   #details;
   #market;
-  #mecto;
   #cryptoDB;
   #wallets = new WalletManager();
   #deviceSeed;
   #biometry;
-  #hardware;
-  #ramps;
   #exchanges;
   #needToMigrateV5Balance = false;
   #walletConnect;
@@ -115,7 +194,54 @@ export default class Account extends EventEmitter {
   #cryptosToSelect = undefined;
 
   get siteUrl() {
-    return this.isOnion ? import.meta.env.VITE_SITE_URL_TOR : import.meta.env.VITE_SITE_URL;
+    const url = this.isOnion ? import.meta.env.VITE_SITE_URL_TOR : import.meta.env.VITE_SITE_URL;
+    return normalizeBaseUrl(url);
+  }
+
+  get appName() {
+    return import.meta.env.VITE_NAME || 'Wallet';
+  }
+
+  get supportUrl() {
+    return this.isOnion ?
+      import.meta.env.VITE_SUPPORT_URL_TOR || import.meta.env.VITE_SUPPORT_URL :
+      import.meta.env.VITE_SUPPORT_URL;
+  }
+
+  get termsUrl() {
+    const explicitUrl = this.isOnion ?
+      import.meta.env.VITE_TERMS_URL_TOR || import.meta.env.VITE_TERMS_URL :
+      import.meta.env.VITE_TERMS_URL;
+    return resolveAccountUrl(explicitUrl, this.siteUrl, 'terms-of-service/');
+  }
+
+  get privacyUrl() {
+    const explicitUrl = this.isOnion ?
+      import.meta.env.VITE_PRIVACY_URL_TOR || import.meta.env.VITE_PRIVACY_URL :
+      import.meta.env.VITE_PRIVACY_URL;
+    return resolveAccountUrl(explicitUrl, this.siteUrl, 'privacy-policy/');
+  }
+
+  get passphraseHelpUrl() {
+    return this.isOnion ?
+      import.meta.env.VITE_HELP_PASSPHRASE_URL_TOR || import.meta.env.VITE_HELP_PASSPHRASE_URL :
+      import.meta.env.VITE_HELP_PASSPHRASE_URL;
+  }
+
+  get walletConnectHelpUrl() {
+    return this.isOnion ?
+      import.meta.env.VITE_HELP_WALLETCONNECT_URL_TOR || import.meta.env.VITE_HELP_WALLETCONNECT_URL :
+      import.meta.env.VITE_HELP_WALLETCONNECT_URL;
+  }
+
+  get customTokenHelpUrl() {
+    return this.isOnion ?
+      import.meta.env.VITE_HELP_CUSTOM_TOKEN_URL_TOR || import.meta.env.VITE_HELP_CUSTOM_TOKEN_URL :
+      import.meta.env.VITE_HELP_CUSTOM_TOKEN_URL;
+  }
+
+  get shareUrl() {
+    return this.siteUrl || `${window.location.origin}/`;
   }
 
   get clientStorage() {
@@ -134,24 +260,12 @@ export default class Account extends EventEmitter {
     return this.#market;
   }
 
-  get mecto() {
-    return this.#mecto;
-  }
-
   get cryptoDB() {
     return this.#cryptoDB;
   }
 
   get biometry() {
     return this.#biometry;
-  }
-
-  get hardware() {
-    return this.#hardware;
-  }
-
-  get ramps() {
-    return this.#ramps;
   }
 
   get exchanges() {
@@ -172,6 +286,18 @@ export default class Account extends EventEmitter {
 
   get isOnion() {
     return this.#clientStorage.isOnion();
+  }
+
+  get isOfflineMode() {
+    return this.#settings?.isOfflineMode() || false;
+  }
+
+  get isMarketEnabled() {
+    return this.#settings?.isServerFeatureEnabled('market') ?? true;
+  }
+
+  get isSwapEnabled() {
+    return this.#settings?.isServerFeatureEnabled('swap') ?? true;
   }
 
   get user() {
@@ -226,32 +352,17 @@ export default class Account extends EventEmitter {
       release,
     });
     this.#settings = new Settings({
-      request: this.request,
+      clientStorage: this.#clientStorage,
     });
-    this.#cryptoDB = new CryptoDB({
-      request: this.request,
-      account: this,
-    });
+    this.#cryptoDB = new CryptoDB();
     this.#market = new Market({
       cryptoDB: this.#cryptoDB,
-      request: this.request,
-      account: this,
-    });
-    this.#mecto = new Mecto({
       request: this.request,
       account: this,
     });
     this.#biometry = new Biometry({
       request: this.request,
       clientStorage: this.#clientStorage,
-    });
-    this.#hardware = new Hardware({
-      request: this.request,
-      account: this,
-    });
-    this.#ramps = new Ramps({
-      request: this.request,
-      account: this,
     });
   }
 
@@ -264,27 +375,15 @@ export default class Account extends EventEmitter {
     }
     this.#clientStorage.clear();
 
-    const walletId = hex.encode(await ed25519.getPublicKey(walletSeed, false));
     const deviceSeed = randomBytes(32);
     const deviceId = hex.encode(await ed25519.getPublicKey(deviceSeed));
     const detailsKey = hmac(sha256, 'Coin Wallet', hex.encode(walletSeed));
     const pinKey = randomBytes(32);
-    const pinHash = this.pinHash(pin, pinKey);
+    const pinToken = this.pinToken(pin, pinKey);
     this.#deviceSeed = deviceSeed;
 
-    const { deviceToken, walletToken } = await this.request({
-      url: '/api/v4/register',
-      method: 'post',
-      data: {
-        walletId,
-        deviceId,
-        pinHash,
-      },
-      seed: walletSeed,
-      id: false,
-    });
-    this.#seeds.set('device', deviceSeed, hex.decode(deviceToken));
-    this.#seeds.set('wallet', walletSeed, hex.decode(walletToken));
+    this.#seeds.set('device', deviceSeed, pinToken);
+    this.#seeds.set('wallet', walletSeed, deviceSeed);
     this.#clientStorage.setPinKey(pinKey);
     this.#clientStorage.setId(deviceId);
     this.#clientStorage.setDetailsKey(detailsKey);
@@ -301,9 +400,10 @@ export default class Account extends EventEmitter {
 
   async #init() {
     await this.#settings.init();
+    this.emit('update', 'settings');
     await this.#cryptoDB.init();
     this.#details = new Details({
-      request: this.request,
+      clientStorage: this.#clientStorage,
       key: this.#clientStorage.getDetailsKey(),
       cryptoDB: this.#cryptoDB,
     });
@@ -313,12 +413,24 @@ export default class Account extends EventEmitter {
     this.emit('update', 'currency');
     this.emit('update', 'isHiddenBalance');
 
-    await this.#initMarket();
     this.#exchanges = new Exchanges({
       request: this.request,
       account: this,
     });
-    await this.#exchanges.init();
+    if (this.isMarketEnabled) {
+      try {
+        await this.#initMarket();
+      } catch (err) {
+        console.error('Market init failed', err);
+      }
+    }
+    if (this.isSwapEnabled) {
+      try {
+        await this.#exchanges.init();
+      } catch (err) {
+        console.error('Exchange init failed', err);
+      }
+    }
     this.#dummy = hex.encode(this.#clientStorage.getDetailsKey())
       === import.meta.env.VITE_DUMMY_ACCOUNT;
 
@@ -381,15 +493,22 @@ export default class Account extends EventEmitter {
     return wallet;
   }
 
-  #getApiNode(platform) {
-    return getApiNode(platform, this.isOnion);
-  }
-
   getBaseURL(service) {
+    if (!this.isServerFeatureEnabled(service)) {
+      return undefined;
+    }
     return getBaseURL(service, this.isOnion);
   }
 
+  isServerFeatureEnabled(service) {
+    return this.#settings?.isServerFeatureEnabled(service) ?? true;
+  }
+
   #getWalletOptions(crypto, platform, storage, settings) {
+    const connection = {
+      node: this.getNode(crypto.platform),
+      explorer: this.#settings.getExplorer(crypto.platform),
+    };
     const cache = new Cache({
       crypto,
       clientStorage: this.#clientStorage,
@@ -399,52 +518,48 @@ export default class Account extends EventEmitter {
       crypto,
       platform,
       request: this.request,
-      apiNode: this.#getApiNode(crypto.platform),
+      apiNode: connection.node.baseURL,
+      connection,
       cache,
       storage,
       settings: settings || this.#details.getPlatformSettings(crypto.platform),
       development: import.meta.env.DEV,
     };
-    if (crypto._id === 'monero@monero') {
-      options.wasm = (new URL('@coinspace/monero-core-js/build/MoneroCoreJS.wasm', import.meta.url)).href;
-    }
     return options;
   }
 
   async getCustomTokenInfo(platform, address = '') {
-    if (EVM_FAMILY.includes(platform)) {
-      address = address.toLowerCase();
-    }
     const token = this.#cryptoDB.getTokenByAddress(platform, address);
     if (token) return token;
-    const Wallet = await loadWalletModule(platform);
-    const info = await this.request({
-      baseURL: this.#getApiNode(platform),
-      url: Wallet.tokenApiUrl(address),
-    });
-    if (info?.name && info?.symbol && info?.decimals !== undefined) {
-      return {
-        _id: `${address}@${platform}`,
-        platform,
-        type: 'token',
-        name: info.name,
-        symbol: info.symbol,
-        address,
-        decimals: parseInt(info.decimals, 10),
-        custom: true,
-      };
-    } else {
-      throw new errors.AddressError(`Invalid contract address ${address}`);
-    }
+    const info = await getTokenInfo(platform, this.getNode(platform), address);
+    const normalizedToken = this.#cryptoDB.getTokenByAddress(platform, info.address);
+    if (normalizedToken) return normalizedToken;
+    return {
+      _id: `${info.address}@${platform}`,
+      platform,
+      type: 'token',
+      name: info.name,
+      symbol: info.symbol,
+      address: info.address,
+      decimals: info.decimals,
+      custom: true,
+    };
   }
 
   async getTokenUrl(platform, address) {
-    try {
-      const Wallet = await loadWalletModule(platform);
-      return Wallet.tokenUrl(platform, address, import.meta.env.DEV);
-    } catch {
-      return undefined;
-    }
+    return buildExplorerUrl(platform, 'token', address, this.#settings.getExplorer(platform));
+  }
+
+  getTransactionUrl(platform, id) {
+    return buildExplorerUrl(platform, 'tx', id, this.#settings.getExplorer(platform));
+  }
+
+  getAddressUrl(platform, address) {
+    return buildExplorerUrl(platform, 'address', address, this.#settings.getExplorer(platform));
+  }
+
+  getNode(platform) {
+    return this.#settings.getNode(platform);
   }
 
   wallet(id) {
@@ -460,6 +575,19 @@ export default class Account extends EventEmitter {
     return this.#wallets.tokensByPlatform(platform);
   }
 
+  platformWallet(platform) {
+    const crypto = this.#cryptoDB.platform(platform);
+    if (!crypto) return undefined;
+    return this.#wallets.get(crypto._id);
+  }
+
+  getAddressSettingsWallet(wallet) {
+    if (wallet?.crypto?.type === 'token') {
+      return this.platformWallet(wallet.crypto.platform) || wallet;
+    }
+    return wallet;
+  }
+
   walletByChainId(chainId) {
     return this.#wallets.getByChainId(chainId);
   }
@@ -470,9 +598,6 @@ export default class Account extends EventEmitter {
 
   toggleOnion() {
     this.#clientStorage.toggleOnion();
-    for (const wallet of this.#wallets.list()) {
-      wallet.apiNode = this.#getApiNode(wallet.crypto.platform);
-    }
     this.emit('update', 'isOnion');
   }
 
@@ -482,11 +607,7 @@ export default class Account extends EventEmitter {
   }
 
   async remove(walletSeed) {
-    await this.request({
-      url: '/api/v4/wallet',
-      method: 'delete',
-      seed: walletSeed,
-    });
+    void walletSeed;
     this.logout();
   }
 
@@ -495,7 +616,11 @@ export default class Account extends EventEmitter {
       throw new CryptoAlreadyAddedError(crypto._id);
     }
     await this.#addWallet(crypto, walletSeed);
-    await this.#initMarket();
+    try {
+      await this.#initMarket();
+    } catch (err) {
+      console.error('Market init failed', err);
+    }
     await this.#details.save();
     this.emit('update');
   }
@@ -505,7 +630,11 @@ export default class Account extends EventEmitter {
       if (this.#details.hasCrypto(crypto)) continue;
       await this.#addWallet(crypto, walletSeed);
     }
-    await this.#initMarket();
+    try {
+      await this.#initMarket();
+    } catch (err) {
+      console.error('Market init failed', err);
+    }
     await this.#details.save();
     this.emit('update');
   }
@@ -602,10 +731,40 @@ export default class Account extends EventEmitter {
     this.emit('update');
   }
 
+  async #createPreviewWallet(wallet, settings, walletSeed) {
+    const Wallet = await loadWalletModule(wallet.crypto.platform);
+    const platform = this.#cryptoDB.platform(wallet.crypto.platform);
+    const connection = {
+      node: this.getNode(wallet.crypto.platform),
+      explorer: this.#settings.getExplorer(wallet.crypto.platform),
+    };
+    const cache = new MemoryCache();
+    const storage = new MemoryStorage();
+    await storage.init();
+
+    const previewWallet = new Wallet({
+      crypto: wallet.crypto,
+      platform,
+      request: this.request,
+      apiNode: connection.node.baseURL,
+      connection,
+      cache,
+      storage,
+      settings,
+      development: import.meta.env.DEV,
+    });
+
+    await previewWallet.create(walletSeed);
+    if (wallet.isAddressTypesSupported) {
+      previewWallet.addressType = wallet.addressType;
+    }
+    return previewWallet;
+  }
+
   async updatePlatformSettings(wallet, settings, walletSeed) {
     const { platform } = wallet.crypto;
     const platformWallets = this.#wallets.filterByPlatform(platform);
-    platformWallets.forEach((item) => item.cleanup());
+    await Promise.all(platformWallets.map((item) => item.cleanup()));
     wallet.settings = settings;
     await wallet.create(walletSeed);
     const publicKey = wallet.getPublicKey();
@@ -618,19 +777,73 @@ export default class Account extends EventEmitter {
     }
     this.#details.setPlatformSettings(platform, settings);
     await this.#details.save();
+    this.emit('update');
+  }
+
+  async inspectPlatformSettings(wallet, settings, walletSeed) {
+    const previewWallet = await this.#createPreviewWallet(wallet, settings, walletSeed);
+    let active = false;
+    if (!active) {
+      try {
+        const inspection = await previewWallet.inspectAddressActivity();
+        active = !!inspection?.active;
+      } catch (err) {
+        console.error('inspectPlatformSettings inspectAddressActivity failed', err);
+      }
+    }
+
+    let balance;
+    if (active) {
+      try {
+        await previewWallet.load();
+        const { balance: loadedBalance } = previewWallet;
+        balance = loadedBalance;
+      } catch (err) {
+        console.error('inspectPlatformSettings load failed', err);
+      }
+    }
+
+    return {
+      address: previewWallet.address,
+      balance,
+      active,
+    };
+  }
+
+  async #loadPreviewBalance(wallet, settings, walletSeed) {
+    const previewWallet = await this.#createPreviewWallet(wallet, settings, walletSeed);
+    await previewWallet.load();
+    return {
+      address: previewWallet.address,
+      balance: previewWallet.balance,
+    };
+  }
+
+  async inspectAddressSettings(wallet, settings, walletSeed) {
+    const settingsWallet = this.getAddressSettingsWallet(wallet);
+    const preview = await this.inspectPlatformSettings(wallet, settings, walletSeed);
+    if (settingsWallet === wallet) {
+      return preview;
+    }
+    const linkedPreview = await this.inspectPlatformSettings(settingsWallet, settings, walletSeed);
+    if ((preview.active || linkedPreview.active) && preview.balance === undefined) {
+      try {
+        const loadedPreview = await this.#loadPreviewBalance(wallet, settings, walletSeed);
+        preview.address = preview.address || loadedPreview.address;
+        preview.balance = loadedPreview.balance;
+      } catch (err) {
+        console.error('inspectAddressSettings loadPreviewBalance failed', err);
+      }
+    }
+    return {
+      address: preview.address || linkedPreview.address,
+      balance: preview.balance,
+      active: preview.active || linkedPreview.active,
+    };
   }
 
   async updateUsername(username) {
-    if (this.user.username === username) return username;
-    const data = await this.request({
-      url: '/api/v4/username',
-      method: 'put',
-      data: {
-        username,
-      },
-      seed: this.#deviceSeed,
-    });
-    return data.username;
+    return username.trim();
   }
 
   // binded to this
@@ -657,19 +870,21 @@ export default class Account extends EventEmitter {
     return hex.encode(hmac(sha256, pinKey, pin));
   }
 
+  pinToken(pin, pinKey) {
+    return hex.decode(this.pinHash(pin, pinKey));
+  }
+
+  getDeviceSeedFromPin(pin) {
+    return this.getSeed('device', this.pinToken(pin));
+  }
+
+  getWalletSeedFromPin(pin) {
+    const deviceSeed = this.getDeviceSeedFromPin(pin);
+    return this.getSeed('wallet', deviceSeed);
+  }
+
   async getNormalSecurityWalletSeed() {
-    let walletToken;
-    if (this.settings.get('hasAuthenticators')) {
-      walletToken = await this.#hardware.walletToken();
-      if (!walletToken) return;
-    } else {
-      ({ walletToken } = await this.request({
-        url: '/api/v4/token/wallet',
-        method: 'get',
-        seed: 'device',
-      }));
-    }
-    return this.getSeed('wallet', hex.decode(walletToken));
+    return this.getSeed('wallet', this.#deviceSeed);
   }
 
   setPlatformWalletsStateInitialized(platform, excludeWallet) {
@@ -704,21 +919,71 @@ export default class Account extends EventEmitter {
     return this.#walletConnect;
   }
 
-  async getInvitationStatus() {
-    return this.request({
-      url: '/api/v4/invitation',
-      method: 'get',
-      seed: this.#deviceSeed,
-    });
+  async setOfflineMode(value) {
+    await this.#settings.setOfflineMode(value);
+    if (!value && this.isMarketEnabled) {
+      try {
+        await this.#initMarket();
+      } catch (err) {
+        console.error('Market init failed', err);
+      }
+    }
+    if (!value && this.isSwapEnabled) {
+      try {
+        await this.#exchanges.init();
+      } catch (err) {
+        console.error('Exchange init failed', err);
+      }
+    }
+    this.emit('update', 'settings');
+    this.emit('update');
   }
 
-  async sendInvitation(email) {
-    return this.request({
-      url: '/api/v4/invitation',
-      method: 'post',
-      seed: this.#deviceSeed,
-      data: { email },
-    });
+  async setServerFeatureEnabled(feature, value) {
+    await this.#settings.setServerFeatureEnabled(feature, value);
+    if (!this.isOfflineMode && feature === 'market' && value) {
+      try {
+        await this.#initMarket();
+      } catch (err) {
+        console.error('Market init failed', err);
+      }
+    }
+    if (!this.isOfflineMode && feature === 'swap' && value) {
+      try {
+        await this.#exchanges.init();
+      } catch (err) {
+        console.error('Exchange init failed', err);
+      }
+    }
+    this.emit('update', 'settings');
+    this.emit('update');
+  }
+
+  async setExplorer(platform, config) {
+    await this.#settings.setExplorer(platform, config);
+    this.#syncWalletConnections(platform);
+    this.emit('update', 'settings');
+  }
+
+  async setNode(platform, config) {
+    await this.#settings.setNode(platform, config);
+    this.#syncWalletConnections(platform);
+    this.emit('update', 'settings');
+  }
+
+  async testNode(platform, config) {
+    return testNodeConnection(platform, config);
+  }
+
+  #syncWalletConnections(platform) {
+    const connection = {
+      node: this.getNode(platform),
+      explorer: this.#settings.getExplorer(platform),
+    };
+    for (const wallet of this.#wallets.filterByPlatform(platform)) {
+      wallet.apiNode = connection.node.baseURL;
+      wallet.connection = connection;
+    }
   }
 
   unknownError() {

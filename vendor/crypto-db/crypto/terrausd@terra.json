@@ -1,0 +1,19 @@
+{
+  "deprecated": true,
+  "_id": "terrausd@terra",
+  "asset": "terrausd",
+  "platform": "terra",
+  "type": "token",
+  "name": "TerraClassicUSD",
+  "symbol": "USTC",
+  "address": "uusd",
+  "decimals": 6,
+  "supported": false,
+  "coingecko": {
+    "id": "terrausd"
+  },
+  "coinmarketcap": {
+    "id": 7129,
+    "slug": "terrausd"
+  }
+}

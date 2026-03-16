@@ -6,7 +6,6 @@ import CryptoExchangeStepAddress from './CryptoExchangeStepAddress.vue';
 import CryptoExchangeStepConfirm from './CryptoExchangeStepConfirm.vue';
 import CryptoExchangeStepFilterBlockchain from './CryptoExchangeStepFilterBlockchain.vue';
 import CryptoExchangeStepIndex from './CryptoExchangeStepIndex.vue';
-import CryptoExchangeStepMecto from './CryptoExchangeStepMecto.vue';
 import CryptoExchangeStepMeta from './CryptoExchangeStepMeta.vue';
 import CryptoExchangeStepPoor from './CryptoExchangeStepPoor.vue';
 import CryptoExchangeStepProvider from './CryptoExchangeStepProvider.vue';
@@ -18,6 +17,11 @@ export default {
   components: {
     CsSteps,
   },
+  mounted() {
+    if (!this.$isSwapEnabled) {
+      this.$router.replace({ name: 'crypto', params: { cryptoId: this.$wallet.crypto._id } });
+    }
+  },
   steps: {
     index: CryptoExchangeStepIndex,
     target: CryptoExchangeStepTarget,
@@ -26,7 +30,6 @@ export default {
     meta: CryptoExchangeStepMeta,
     confirm: CryptoExchangeStepConfirm,
     status: CryptoExchangeStepStatus,
-    mecto: CryptoExchangeStepMecto,
     pin: CsPinStep,
     qr: CryptoExchangeStepQr,
     poor: CryptoExchangeStepPoor,

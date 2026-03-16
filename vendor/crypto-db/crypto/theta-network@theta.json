@@ -1,0 +1,18 @@
+{
+  "_id": "theta-network@theta",
+  "asset": "theta-network",
+  "platform": "theta",
+  "type": "coin",
+  "name": "Theta Network",
+  "symbol": "THETA",
+  "decimals": 4,
+  "logo": "theta-network.svg",
+  "supported": false,
+  "coingecko": {
+    "id": "theta-token"
+  },
+  "coinmarketcap": {
+    "id": 2416,
+    "slug": "theta-network"
+  }
+}

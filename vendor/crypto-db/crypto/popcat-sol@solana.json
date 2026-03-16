@@ -1,0 +1,18 @@
+{
+  "_id": "popcat-sol@solana",
+  "asset": "popcat-sol",
+  "platform": "solana",
+  "type": "token",
+  "name": "Popcat",
+  "symbol": "POPCAT",
+  "address": "7GCihgDB8fe6KNjn2MYtkzZcRjQy3t9GHdC8uHYmW2hr",
+  "decimals": 9,
+  "logo": "popcat-sol.svg",
+  "coingecko": {
+    "id": "popcat"
+  },
+  "coinmarketcap": {
+    "id": 28782,
+    "slug": "popcat-sol"
+  }
+}

@@ -12,7 +12,13 @@ import { bytesToHex } from '@noble/hashes/utils';
 
 import { ethHex } from 'micro-eth-signer/utils.js';
 
-import { Amount, CsWallet } from '@coinspace/cs-common';
+import {
+  Amount,
+  CsWallet,
+  HistoryCache,
+  buildHistoryCursor,
+  normalizeHistoryCursor,
+} from '@coinspace/cs-common';
 
 import API from './API.js';
 
@@ -21,6 +27,10 @@ import TxTransformer from './TxTransformer.js';
 import networks from './networks.js';
 
 import utils from './utils.js';
+
+function getHistoryTxId(tx = {}) {
+  return tx.token ? tx.txId : tx._id;
+}
 
 export default class EvmWallet extends CsWallet {
   #api;
@@ -35,6 +45,7 @@ export default class EvmWallet extends CsWallet {
   #dustThreshold = 1n;
   #txTransformer;
   #transactions = new Map();
+  #history;
 
   #gasLimit;
   #gasLimitSmartContract;
@@ -164,6 +175,10 @@ export default class EvmWallet extends CsWallet {
     this.#getGasFees = this.memoize(this._getGasFees);
     this.#getAdditionalFee = this.memoize(this._getAdditionalFee);
     this.#prepareImport = this.memoize(this._prepareImport);
+    this.#history = new HistoryCache({
+      storage: this.storage,
+      getId: getHistoryTxId,
+    });
 
     this.#txTransformer = new TxTransformer({
       wallet: this,
@@ -203,6 +218,81 @@ export default class EvmWallet extends CsWallet {
     if (this.crypto.type === 'token') {
       this.#tokenBalance = BigInt(this.storage.get('balance') || 0);
     }
+  }
+
+  #getHistoryOwner() {
+    return this.#address;
+  }
+
+  async #ensureHistoryCacheLoaded() {
+    await this.#history.load(this.#getHistoryOwner());
+  }
+
+  async #saveHistoryCache() {
+    await this.#history.save(this.#getHistoryOwner());
+  }
+
+  async #fetchTransactions(cursor) {
+    return this.crypto.type === 'coin'
+      ? await this.#api.loadTransactions(this.#address, cursor)
+      : await this.#api.loadTokenTransactions(this.crypto.address, this.#address, cursor);
+  }
+
+  #rememberHistoryTransactions(txs = []) {
+    const transactions = this.#txTransformer.transformTxs(txs);
+    for (const transaction of transactions) {
+      this.#transactions.set(transaction.id, transaction);
+    }
+    return transactions;
+  }
+
+  #buildHistoryResult(offset = 0) {
+    const { items, hasMore, cursor } = this.#history.page(offset, this.txPerPage);
+    const raw = items;
+    const transactions = this.#rememberHistoryTransactions(raw);
+    return {
+      transactions,
+      hasMore,
+      cursor,
+    };
+  }
+
+  async #syncHistoryCache() {
+    await this.#ensureHistoryCacheLoaded();
+    const fetched = [];
+    let nextCursor;
+
+    if (!this.#history.items.length) {
+      const res = await this.#fetchTransactions();
+      this.#history.replace(res.txs, res.cursor);
+      await this.#saveHistoryCache();
+      return;
+    }
+
+    const cachedIds = new Set(this.#history.items.map((tx) => getHistoryTxId(tx)));
+    const boundaryTimestamp = this.#history.items.at(-1)?.timestamp || 0;
+    let cursor;
+    let hasMore = true;
+
+    while (hasMore) {
+      const res = await this.#fetchTransactions(cursor);
+      const page = res.txs || [];
+      nextCursor = res.cursor;
+      if (!page.length) {
+        nextCursor = undefined;
+        break;
+      }
+      fetched.push(...page);
+      const reachedBoundary = page.some((tx) => {
+        return cachedIds.has(getHistoryTxId(tx)) || tx.timestamp <= boundaryTimestamp;
+      });
+      hasMore = !reachedBoundary && res.hasMore && res.cursor !== undefined;
+      ({ cursor } = res);
+    }
+
+    if (!fetched.length) return;
+    this.#history.merge(fetched, nextCursor);
+    await this.#saveHistoryCache();
   }
 
   async load() {
@@ -544,33 +634,45 @@ export default class EvmWallet extends CsWallet {
   }
 
   async loadTransactions({ cursor } = {}) {
+    await this.#ensureHistoryCacheLoaded();
     if (!cursor) {
       this.#transactions.clear();
+      await this.#syncHistoryCache();
+      return this.#buildHistoryResult(0);
     }
-    const res = this.crypto.type === 'coin'
-      ? await this.#api.loadTransactions(this.#address, cursor)
-      : await this.#api.loadTokenTransactions(this.crypto.address, this.#address, cursor);
 
-    const transactions = this.#txTransformer.transformTxs(res.txs);
-    for (const transaction of transactions) {
-      this.#transactions.set(transaction.id, transaction);
+    const { cacheOffset, remoteCursor } = normalizeHistoryCursor(cursor);
+    if (cacheOffset < this.#history.items.length) {
+      return this.#buildHistoryResult(cacheOffset);
     }
+
+    const res = await this.#fetchTransactions(remoteCursor);
+    if (res.txs.length) {
+      this.#history.append(res.txs, res.cursor);
+      await this.#saveHistoryCache();
+    }
+    const transactions = this.#rememberHistoryTransactions(res.txs);
     return {
       transactions,
       hasMore: res.hasMore,
-      cursor: res.cursor,
+      cursor: res.hasMore ? buildHistoryCursor(this.#history.items.length, res.cursor) : undefined,
     };
   }
 
   async loadTransaction(id) {
+    await this.#ensureHistoryCacheLoaded();
     if (this.#transactions.has(id)) {
       return this.#transactions.get(id);
-    } else {
-      try {
-        return this.#txTransformer.transformTx(await this.#api.loadTransaction(id));
-      } catch {
-        return;
-      }
+    }
+    const cached = this.#history.find(id);
+    if (cached) {
+      const [transaction] = this.#rememberHistoryTransactions([cached]);
+      return transaction;
+    }
+    try {
+      return this.#txTransformer.transformTx(await this.#api.loadTransaction(id));
+    } catch {
+      return;
     }
   }
 

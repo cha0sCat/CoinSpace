@@ -8,6 +8,7 @@ import { HDKey } from '@scure/bip32';
 import {
   Amount,
   CsWallet,
+  HistoryCache,
   errors,
 } from '@coinspace/cs-common';
 
@@ -34,8 +35,10 @@ export default class BitcoinWallet extends CsWallet {
   #addressTypes = [];
   #accounts = new Map();
   #balance = 0n;
+  #history;
   #txIds = new Set();
   #historyLoaded = false;
+  #historyCacheHasMore = false;
   #unspents = [];
   #feeRates = new Map();
   #transactions = new Map();
@@ -158,6 +161,10 @@ export default class BitcoinWallet extends CsWallet {
       accounts: this.#accounts,
       network: this.#network,
     });
+    this.#history = new HistoryCache({
+      storage: this.storage,
+      getId: (tx) => tx?.txid,
+    });
 
     this.#estimateMaxAmount = this.memoize(this._estimateMaxAmount);
     this.#estimateTransactionFee = this.memoize(this._estimateTransactionFee);
@@ -230,6 +237,7 @@ export default class BitcoinWallet extends CsWallet {
       this.#unspents = unspents;
       this.#txIds = new Set();
       this.#historyLoaded = false;
+      this.#historyCacheHasMore = false;
       this.#balance = this.#calculateBalance();
       this.storage.set('balance', this.#balance.toString());
       await this.storage.save();
@@ -257,6 +265,51 @@ export default class BitcoinWallet extends CsWallet {
 
   #init() {
     this.#balance = BigInt(this.storage.get('balance') || 0);
+  }
+
+  #getHistoryOwner() {
+    return this.address;
+  }
+
+  async #ensureHistoryCacheLoaded() {
+    await this.#history.load(this.#getHistoryOwner());
+    this.#txIds = new Set();
+    if (this.#history.items.length) {
+      this.#api.transactions.hydrate(this.#history.items);
+      this.#history.items.forEach((tx) => this.#txIds.add(tx.txid));
+      this.#historyCacheHasMore = !!this.#history.meta?.hasMore;
+    } else {
+      this.#historyCacheHasMore = false;
+    }
+  }
+
+  async #saveHistoryCache({ hasMore = this.#historyCacheHasMore } = {}) {
+    const sortedTxIds = await this.#getSortedTxIds();
+    this.#historyCacheHasMore = !!hasMore;
+    this.#history.replace(this.#api.transactions.export(sortedTxIds), undefined, {
+      hasMore: this.#historyCacheHasMore,
+    });
+    await this.#history.save(this.#getHistoryOwner());
+  }
+
+  async #syncHistoryCache() {
+    await this.#ensureHistoryCacheLoaded();
+    if (this.#txIds.size === 0) {
+      return;
+    }
+    const known = Array.from(this.#txIds);
+    const txIds = await this.#api.addresses.txIds(this.#getKnownAddresses(), { stopTxIds: known });
+    let changed = false;
+    txIds.forEach((txId) => {
+      if (!this.#txIds.has(txId)) {
+        changed = true;
+        this.#txIds.add(txId);
+      }
+    });
+    if (changed) {
+      this.memoizeClear(this.#getSortedTxIds);
+    }
+    await this.#saveHistoryCache();
   }
 
   async cleanup() {
@@ -501,20 +554,32 @@ export default class BitcoinWallet extends CsWallet {
   }
 
   async loadTransactions({ cursor } = {}) {
-    await this.#ensureHistoryLoaded();
+    await this.#ensureHistoryCacheLoaded();
     if (!cursor) {
       this.memoizeClear(this.#getSortedTxIds);
       this.#transactions.clear();
+      if (this.#txIds.size) {
+        await this.#syncHistoryCache();
+      } else {
+        await this.#ensureHistoryLoaded();
+      }
     }
-    const sortedTxIds = await this.#getSortedTxIds();
-    const start = cursor ? sortedTxIds.indexOf(cursor) + 1 : 0;
+    let sortedTxIds = await this.#getSortedTxIds();
+    let start = cursor ? sortedTxIds.indexOf(cursor) + 1 : 0;
+    if (start >= sortedTxIds.length && !this.#historyLoaded && this.#historyCacheHasMore) {
+      await this.#ensureHistoryLoaded();
+      sortedTxIds = await this.#getSortedTxIds();
+      start = cursor ? sortedTxIds.indexOf(cursor) + 1 : 0;
+    }
     const txIds = sortedTxIds.slice(start, start + this.txPerPage);
     const txs = await this.#api.transactions.get(txIds);
     const transactions = this.#txTransformer.transformTxs(txs);
     for (const transaction of transactions) {
       this.#transactions.set(transaction.id, transaction);
     }
-    const hasMore = txs.length === this.txPerPage;
+    const hasMore = (start + txs.length) < sortedTxIds.length
+      || (!this.#historyLoaded && this.#historyCacheHasMore);
+    await this.#saveHistoryCache({ hasMore });
     return {
       transactions,
       hasMore,
@@ -523,7 +588,10 @@ export default class BitcoinWallet extends CsWallet {
   }
 
   async loadTransaction(id) {
-    await this.#ensureHistoryLoaded();
+    await this.#ensureHistoryCacheLoaded();
+    if (!this.#txIds.has(id) && !this.#historyLoaded && this.#historyCacheHasMore) {
+      await this.#ensureHistoryLoaded();
+    }
     if (!this.#txIds.has(id)) {
       return;
     }
@@ -652,9 +720,12 @@ export default class BitcoinWallet extends CsWallet {
     if (this.#historyLoaded) {
       return;
     }
+    await this.#ensureHistoryCacheLoaded();
     const txIds = await this.#api.addresses.txIds(this.#getKnownAddresses());
     txIds.forEach((txId) => this.#txIds.add(txId));
+    this.memoizeClear(this.#getSortedTxIds);
     this.#historyLoaded = true;
+    await this.#saveHistoryCache({ hasMore: false });
   }
 
   async #afterReplacement(tx, txBuilder) {

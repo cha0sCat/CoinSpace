@@ -8,22 +8,30 @@ export default class Addresses {
     this.#transactions = transactions;
   }
 
-  async #loadAddressTransactions(address) {
+  async #loadAddressTransactions(address, { stopTxIds } = {}) {
     const txIds = [];
+    const stopSet = stopTxIds ? new Set(stopTxIds) : undefined;
     const remember = (txs = []) => {
+      let reachedBoundary = false;
       txs.forEach((tx) => {
         this.#transactions.remember(tx);
         txIds.push(tx.txid);
+        if (stopSet?.has(tx.txid)) {
+          reachedBoundary = true;
+        }
       });
+      return reachedBoundary;
     };
 
     const txs = await this.#wallet.requestNode({
       method: 'GET',
       url: `address/${address}/txs`,
     });
-    remember(txs);
+    let reachedBoundary = remember(txs);
 
-    let lastSeen = txs.filter((tx) => tx.status?.confirmed).at(-1)?.txid;
+    let lastSeen = reachedBoundary
+      ? undefined
+      : txs.filter((tx) => tx.status?.confirmed).at(-1)?.txid;
 
     while (lastSeen) {
       const page = await this.#wallet.requestNode({
@@ -31,7 +39,8 @@ export default class Addresses {
         url: `address/${address}/txs/chain/${lastSeen}`,
       });
       if (!page.length) break;
-      remember(page);
+      reachedBoundary = remember(page);
+      if (reachedBoundary) break;
       lastSeen = page.filter((tx) => tx.status?.confirmed).at(-1)?.txid;
     }
 
@@ -62,13 +71,13 @@ export default class Addresses {
     return results;
   }
 
-  async txIds(addresses) {
+  async txIds(addresses, options = {}) {
     if (!addresses.length) {
       return [];
     }
     const txIds = [];
     for (const address of [...new Set(addresses)]) {
-      txIds.push(...await this.#loadAddressTransactions(address));
+      txIds.push(...await this.#loadAddressTransactions(address, options));
     }
     return [...new Set(txIds)];
   }

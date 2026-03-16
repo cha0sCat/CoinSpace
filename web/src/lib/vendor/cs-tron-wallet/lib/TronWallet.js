@@ -11,14 +11,21 @@ import {
 import {
   Amount,
   CsWallet,
+  HistoryCache,
   Transaction,
+  buildHistoryCursor,
   errors,
+  normalizeHistoryCursor,
 } from '@coinspace/cs-common';
 
 import API from './API.js';
 
 const TESTNET_EXPLORER = 'https://nile.tronscan.org';
 const MAINNET_EXPLORER = 'https://tronscan.org';
+
+function getHistoryTxId(tx = {}) {
+  return tx.transaction_id || tx.txID;
+}
 
 export class TronTransaction extends Transaction {
   get url() {
@@ -39,6 +46,7 @@ export default class TronWallet extends CsWallet {
   #dustThreshold = 1n;
   #minConfirmations = 21;
   #transactions = new Map();
+  #history;
 
   // memorized functions
   #getMinerFee;
@@ -132,6 +140,10 @@ export default class TronWallet extends CsWallet {
     this.#api = new API(this);
     this.#getMinerFee = this.memoize(this._getMinerFee);
     this.#getChainParameters = this.memoize(this._getChainParameters);
+    this.#history = new HistoryCache({
+      storage: this.storage,
+      getId: getHistoryTxId,
+    });
   }
 
   #keypairFromSeed(seed) {
@@ -173,6 +185,91 @@ export default class TronWallet extends CsWallet {
     if (this.crypto.type === 'token') {
       this.#tokenBalance = BigInt(this.storage.get('balance') || 0);
     }
+  }
+
+  #getHistoryOwner() {
+    return this.#addressString;
+  }
+
+  async #ensureHistoryCacheLoaded() {
+    await this.#history.load(this.#getHistoryOwner());
+  }
+
+  async #saveHistoryCache() {
+    await this.#history.save(this.#getHistoryOwner());
+  }
+
+  async #fetchTransactions(cursor, options = {}) {
+    const res = this.crypto.type === 'coin'
+      ? await this.#api.loadTransactions(this.#addressString, this.txPerPage, cursor, options)
+      : await this.#api.loadTokenTransactions(
+        this.#addressString,
+        this.crypto.address,
+        this.txPerPage,
+        cursor,
+        options
+      );
+    return {
+      txs: res?.data || [],
+      hasMore: !!res?.meta?.fingerprint && (res?.data?.length || 0) >= this.txPerPage,
+      cursor: res?.meta?.fingerprint,
+    };
+  }
+
+  #rememberHistoryTransactions(txs = []) {
+    const transactions = this.#transformTxs(txs);
+    for (const transaction of transactions) {
+      this.#transactions.set(transaction.id, transaction);
+    }
+    return transactions;
+  }
+
+  #buildHistoryResult(offset = 0) {
+    const { items, hasMore, cursor } = this.#history.page(offset, this.txPerPage);
+    const raw = items;
+    const transactions = this.#rememberHistoryTransactions(raw);
+    return {
+      transactions,
+      hasMore,
+      cursor,
+    };
+  }
+
+  async #syncHistoryCache() {
+    await this.#ensureHistoryCacheLoaded();
+    if (!this.#history.items.length) {
+      const res = await this.#fetchTransactions();
+      this.#history.replace(res.txs, res.cursor);
+      await this.#saveHistoryCache();
+      return;
+    }
+
+    const cachedIds = new Set(this.#history.items.map((tx) => getHistoryTxId(tx)));
+    const boundaryTimestamp = this.#history.items.at(-1)?.block_timestamp || 0;
+    const fetched = [];
+    let cursor;
+    let nextCursor;
+    let hasMore = true;
+
+    while (hasMore) {
+      const res = await this.#fetchTransactions(cursor, { minTimestamp: boundaryTimestamp });
+      const page = res.txs || [];
+      nextCursor = res.cursor;
+      if (!page.length) {
+        nextCursor = undefined;
+        break;
+      }
+      fetched.push(...page);
+      const reachedBoundary = page.some((tx) => {
+        return cachedIds.has(getHistoryTxId(tx)) || (tx.block_timestamp || 0) <= boundaryTimestamp;
+      });
+      hasMore = !reachedBoundary && res.hasMore && res.cursor !== undefined;
+      ({ cursor } = res);
+    }
+
+    if (!fetched.length) return;
+    this.#history.merge(fetched, nextCursor);
+    await this.#saveHistoryCache();
   }
 
   async load() {
@@ -413,31 +510,44 @@ export default class TronWallet extends CsWallet {
   }
 
   async loadTransactions({ cursor } = {}) {
+    await this.#ensureHistoryCacheLoaded();
     if (!cursor) {
       this.#transactions.clear();
+      await this.#syncHistoryCache();
+      return this.#buildHistoryResult(0);
     }
-    const res = this.crypto.type === 'coin'
-      ? await this.#api.loadTransactions(this.#addressString, this.txPerPage, cursor)
-      : await this.#api.loadTokenTransactions(this.#addressString, this.crypto.address, this.txPerPage, cursor);
-    const transactions = this.#transformTxs(res.data);
-    for (const transaction of transactions) {
-      this.#transactions.set(transaction.id, transaction);
+
+    const { cacheOffset, remoteCursor } = normalizeHistoryCursor(cursor);
+    if (cacheOffset < this.#history.items.length) {
+      return this.#buildHistoryResult(cacheOffset);
     }
+
+    const res = await this.#fetchTransactions(remoteCursor);
+    if (res.txs.length) {
+      this.#history.append(res.txs, res.cursor);
+      await this.#saveHistoryCache();
+    }
+    const transactions = this.#rememberHistoryTransactions(res.txs);
     return {
       transactions,
-      hasMore: res.data.length === this.txPerPage,
-      cursor: res.meta?.fingerprint,
+      hasMore: res.hasMore,
+      cursor: res.hasMore ? buildHistoryCursor(this.#history.items.length, res.cursor) : undefined,
     };
   }
 
   async loadTransaction(id) {
+    await this.#ensureHistoryCacheLoaded();
     if (this.#transactions.has(id)) {
       return this.#transactions.get(id);
-    } else {
-      const tx = await this.#api.loadTransaction(id);
-      if (!tx) return;
-      return this.#transformTx(tx);
     }
+    const cached = this.#history.find(id);
+    if (cached) {
+      const [transaction] = this.#rememberHistoryTransactions([cached]);
+      return transaction;
+    }
+    const tx = await this.#api.loadTransaction(id);
+    if (!tx) return;
+    return this.#transformTx(tx);
   }
 
   #transformTxs(txs) {

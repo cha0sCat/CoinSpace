@@ -165,21 +165,23 @@ export default class API {
     };
   }
 
-  async loadTransactions(address, limit, cursor) {
+  async loadTransactions(address, limit, cursor, { minTimestamp } = {}) {
     return this.#history(`v1/accounts/${address}/transactions`, {
       limit,
       fingerprint: cursor,
       only_confirmed: false,
       order_by: 'block_timestamp,desc',
+      min_timestamp: minTimestamp,
     });
   }
 
-  async loadTokenTransactions(address, token, limit, cursor) {
+  async loadTokenTransactions(address, token, limit, cursor, { minTimestamp } = {}) {
     return this.#history(`v1/accounts/${address}/transactions/trc20`, {
       contract_address: token,
       limit,
       fingerprint: cursor,
       order_by: 'block_timestamp,desc',
+      min_timestamp: minTimestamp,
     });
   }
 

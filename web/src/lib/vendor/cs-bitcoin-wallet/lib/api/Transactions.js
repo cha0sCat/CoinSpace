@@ -9,12 +9,19 @@ export default class Transactions {
 
   remember(tx) {
     if (!tx?.txid) return;
-    if (!this.#cache.has(tx.txid)) {
-      this.#cache.set(tx.txid, tx);
-    }
+    this.#cache.set(tx.txid, tx);
     if (!this.#seen.has(tx.txid)) {
       this.#seen.set(tx.txid, this.#seenCounter++);
     }
+  }
+
+  hydrate(txs = []) {
+    txs.forEach((tx) => this.remember(tx));
+  }
+
+  export(txIds = []) {
+    const ids = txIds.length ? txIds : [...this.#cache.keys()];
+    return ids.map((txId) => this.#cache.get(txId)).filter(Boolean);
   }
 
   async getRaw(txIds) {

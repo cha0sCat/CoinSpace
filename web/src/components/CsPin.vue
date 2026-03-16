@@ -6,6 +6,8 @@ import { onShowOnHide } from '../lib/mixins.js';
 import FaceIdSolidIcon from '../assets/svg/faceIdSolid.svg';
 import TouchIdSolidIcon from '../assets/svg/touchIdSolid.svg';
 
+const PIN_LENGTH = 6;
+
 export default {
   components: {
     CsButton,
@@ -30,6 +32,7 @@ export default {
   data() {
     const { type, isEnabled } = this.$account.biometry;
     return {
+      pinLength: PIN_LENGTH,
       value: '',
       isLoading: false,
       isWrong: false,
@@ -41,7 +44,7 @@ export default {
   },
   watch: {
     async value(value) {
-      if (value.length === 4) {
+      if (value.length === this.pinLength) {
         await this.confirm(value);
       }
     },
@@ -58,7 +61,7 @@ export default {
   methods: {
     enter(number) {
       if (this.isLoading) return;
-      if (this.value.length === 4) return;
+      if (this.value.length === this.pinLength) return;
       this.value += number;
       this.error = undefined;
       window.taptic?.tap();
@@ -89,14 +92,14 @@ export default {
             return await this.onSuccess(pin);
           case 'deviceSeed': {
             try {
-              return await this.onSuccess(this.$account.getDeviceSeedFromPin(pin), pin);
+              return await this.onSuccess(await this.$account.getDeviceSeedFromPin(pin), pin);
             } catch {
               throw { status: 401 };
             }
           }
           case 'walletSeed': {
             try {
-              return await this.onSuccess(this.$account.getWalletSeedFromPin(pin), pin);
+              return await this.onSuccess(await this.$account.getWalletSeedFromPin(pin), pin);
             } catch {
               throw { status: 401 };
             }
@@ -191,20 +194,10 @@ export default {
     </span>
     <template v-else>
       <div
+        v-for="index in pinLength"
+        :key="index"
         class="&__dot"
-        :class="{ '&__dot--active': value.length > 0 }"
-      />
-      <div
-        class="&__dot"
-        :class="{ '&__dot--active': value.length > 1 }"
-      />
-      <div
-        class="&__dot"
-        :class="{ '&__dot--active': value.length > 2 }"
-      />
-      <div
-        class="&__dot"
-        :class="{ '&__dot--active': value.length > 3 }"
+        :class="{ '&__dot--active': value.length >= index }"
       />
     </template>
   </div>

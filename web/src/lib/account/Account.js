@@ -5,11 +5,8 @@ import { EventEmitter } from 'events';
 import { ed25519 } from '@noble/curves/ed25519';
 
 import { hex } from '@scure/base';
-
 import { hmac } from '@noble/hashes/hmac';
-
 import { randomBytes } from '@noble/hashes/utils';
-
 import { sha256 } from '@noble/hashes/sha256';
 
 import {
@@ -24,6 +21,10 @@ import {
 
 import Biometry from './Biometry.js';
 import WebAuthnUnlock from './WebAuthnUnlock.js';
+import {
+  createPinUnlockConfig,
+  unlockDeviceSeedWithPin,
+} from './PinUnlock.js';
 
 import Cache from './Cache.js';
 
@@ -288,9 +289,8 @@ export default class Account extends EventEmitter {
 
   get isCreated() {
     return this.#clientStorage.hasId()
-      && this.#clientStorage.hasSeed('device')
       && this.#clientStorage.hasSeed('wallet')
-      && this.#clientStorage.hasPinKey();
+      && this.#clientStorage.hasPinUnlock();
   }
 
   get isLocked() {
@@ -394,14 +394,12 @@ export default class Account extends EventEmitter {
 
     const deviceSeed = randomBytes(32);
     const deviceId = hex.encode(await ed25519.getPublicKey(deviceSeed));
-    const pinKey = randomBytes(32);
-    const pinToken = this.pinToken(pin, pinKey);
+    const pinUnlock = await createPinUnlockConfig(pin, deviceSeed);
     this.#deviceSeed = deviceSeed;
     this.#storageKey = this.getStorageKeyFromWalletSeed(walletSeed);
 
-    this.#seeds.set('device', deviceSeed, pinToken);
+    this.#clientStorage.setPinUnlock(pinUnlock);
     this.#seeds.set('wallet', walletSeed, deviceSeed);
-    this.#clientStorage.setPinKey(pinKey);
     this.#clientStorage.setId(deviceId);
 
     await this.#init();
@@ -899,20 +897,12 @@ export default class Account extends EventEmitter {
     return this.#deviceSeed;
   }
 
-  pinHash(pin, pinKey) {
-    if (typeof pin !== 'string') {
-      throw new TypeError('pin must be string');
+  async getDeviceSeedFromPin(pin) {
+    const config = this.#clientStorage.getPinUnlock();
+    if (!config) {
+      throw new Error('PIN unlock is not configured');
     }
-    pinKey = pinKey || this.#clientStorage.getPinKey();
-    return hex.encode(hmac(sha256, pinKey, pin));
-  }
-
-  pinToken(pin, pinKey) {
-    return hex.decode(this.pinHash(pin, pinKey));
-  }
-
-  getDeviceSeedFromPin(pin) {
-    return this.getSeed('device', this.pinToken(pin));
+    return unlockDeviceSeedWithPin(pin, config);
   }
 
   getDeviceSeedFromBiometrySecret(secret) {
@@ -926,8 +916,8 @@ export default class Account extends EventEmitter {
     return this.getSeed('wallet', deviceSeed);
   }
 
-  getWalletSeedFromPin(pin) {
-    return this.getWalletSeedFromDeviceSeed(this.getDeviceSeedFromPin(pin));
+  async getWalletSeedFromPin(pin) {
+    return this.getWalletSeedFromDeviceSeed(await this.getDeviceSeedFromPin(pin));
   }
 
   async getNormalSecurityWalletSeed() {

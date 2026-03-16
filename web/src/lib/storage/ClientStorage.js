@@ -71,16 +71,19 @@ export default class ClientStorage {
   }
 
   /**
-   * PIN key
+   * PIN unlock
    */
-  getPinKey() {
-    return this.#getItem('_cs_pin_key', { type: BUFFER });
+  getPinUnlock() {
+    return this.#getItem('_cs_pin_unlock', { type: OBJECT });
   }
-  hasPinKey() {
-    return this.#hasItem('_cs_pin_key');
+  hasPinUnlock() {
+    return this.#hasItem('_cs_pin_unlock');
   }
-  setPinKey(pinKey) {
-    this.#setItem('_cs_pin_key', pinKey, { type: BUFFER });
+  setPinUnlock(config) {
+    this.#setItem('_cs_pin_unlock', config, { type: OBJECT });
+  }
+  unsetPinUnlock() {
+    this.#unsetItem('_cs_pin_unlock');
   }
 
   /**
@@ -94,6 +97,9 @@ export default class ClientStorage {
   }
   setSeed(type, seed, token) {
     this.#setItem(`_cs_seed_${type}`, seed, { type: BUFFER, token });
+  }
+  unsetSeed(type) {
+    this.#unsetItem(`_cs_seed_${type}`);
   }
 
   /**

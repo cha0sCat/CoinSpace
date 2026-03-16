@@ -137,12 +137,17 @@ export default class ClientStorage {
   /**
    * Biometry
    */
-  isBiometryEnabled() {
-    return !!this.#getItem('_cs_biometry_enabled');
+  getBiometry() {
+    return this.#getItem('_cs_biometry', { type: OBJECT });
   }
-  setBiometryEnabled(value) {
-    if (!value) return this.#unsetItem('_cs_biometry_enabled');
-    this.#setItem('_cs_biometry_enabled', value);
+  hasBiometry() {
+    return this.#hasItem('_cs_biometry');
+  }
+  setBiometry(config) {
+    this.#setItem('_cs_biometry', config, { type: OBJECT });
+  }
+  unsetBiometry() {
+    this.#unsetItem('_cs_biometry');
   }
 
   /**

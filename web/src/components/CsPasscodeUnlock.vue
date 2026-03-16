@@ -284,9 +284,8 @@ export default {
       this.passwordError = undefined;
       try {
         if (this.env.VITE_BUILD_TYPE === 'phonegap') {
-          const secret = await this.$account.biometry.phonegap();
-          if (!secret) return;
-          const deviceSeed = this.$account.getDeviceSeedFromBiometrySecret(secret);
+          const deviceSeed = await this.$account.biometry.unlock();
+          if (!deviceSeed) return;
           switch (this.mode) {
             case 'deviceSeed':
               return await this.onSuccess(deviceSeed);

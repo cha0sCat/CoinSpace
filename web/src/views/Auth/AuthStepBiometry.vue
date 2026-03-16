@@ -100,7 +100,7 @@ export default {
   methods: {
     async setupBiometry() {
       this.isLoading = true;
-      const result = await this.$account.biometry.enable(this.$account.getUnlockedDeviceSeed(), this.storage.seed);
+      const result = await this.$account.biometry.enable(this.$account.getUnlockedDeviceSeed());
       this.isLoading = false;
       if (!result) return;
       this.done();

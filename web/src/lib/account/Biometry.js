@@ -1,3 +1,6 @@
+import encryption from '../encryption.js';
+
+import { randomBytes } from '@noble/hashes/utils';
 import { hex } from '@scure/base';
 import i18n from '../i18n/i18n.js';
 
@@ -7,6 +10,35 @@ export const TYPES = {
   TOUCH_ID: Symbol('TOUCH_ID'),
   FACE_ID: Symbol('FACE_ID'),
 };
+
+function normalizeBiometryConfig(config) {
+  if (!config || typeof config !== 'object') {
+    throw new TypeError('Biometry config must be an object');
+  }
+  if (typeof config.wrappedDeviceSeed !== 'string') {
+    throw new TypeError('Invalid biometry config');
+  }
+  return {
+    wrappedDeviceSeed: config.wrappedDeviceSeed,
+  };
+}
+
+function wrapDeviceSeed(deviceSeed, secret) {
+  if (!(deviceSeed instanceof Uint8Array)) {
+    throw new TypeError('deviceSeed must be Uint8Array or Buffer');
+  }
+  if (typeof secret !== 'string') {
+    throw new TypeError('biometry secret must be string');
+  }
+  return encryption.encrypt(hex.encode(deviceSeed), secret);
+}
+
+function unwrapDeviceSeed(wrappedDeviceSeed, secret) {
+  if (typeof secret !== 'string') {
+    throw new TypeError('biometry secret must be string');
+  }
+  return hex.decode(encryption.decrypt(wrappedDeviceSeed, secret));
+}
 
 export default class Biometry {
   #clientStorage;
@@ -19,7 +51,7 @@ export default class Biometry {
 
   get isEnabled() {
     if (!this.#isAvailable) return false;
-    return this.#clientStorage.isBiometryEnabled();
+    return this.#clientStorage.hasBiometry();
   }
 
   get type() {
@@ -72,13 +104,10 @@ export default class Biometry {
     this.#type = type;
   }
 
-  async enable(secret, seed) {
-    void seed;
+  async enable(deviceSeed) {
     try {
       if (import.meta.env.VITE_BUILD_TYPE !== 'phonegap') return false;
-      if (secret instanceof Uint8Array) {
-        secret = hex.encode(secret);
-      }
+      const secret = hex.encode(randomBytes(32));
       await new Promise((resolve, reject) => {
         window.Fingerprint.registerBiometricSecret({
           description: import.meta.env.VITE_PLATFORM === 'ios' ? i18n.global.t('Scan your fingerprint please') : '',
@@ -88,7 +117,9 @@ export default class Biometry {
           disableBackup: true,
         }, resolve, reject);
       });
-      this.#clientStorage.setBiometryEnabled(true);
+      this.#clientStorage.setBiometry({
+        wrappedDeviceSeed: wrapDeviceSeed(deviceSeed, secret),
+      });
       return true;
     } catch (err) {
       console.error(err);
@@ -96,10 +127,9 @@ export default class Biometry {
     }
   }
 
-  async disable(seed) {
-    void seed;
+  async disable() {
     try {
-      this.#clientStorage.setBiometryEnabled(false);
+      this.#clientStorage.unsetBiometry();
       return true;
     } catch (err) {
       console.error(err);
@@ -118,5 +148,14 @@ export default class Biometry {
       });
       return secret;
     } catch (err) { /* empty */ }
+  }
+
+  async unlock() {
+    const secret = await this.phonegap();
+    if (!secret) return;
+    const config = this.#clientStorage.getBiometry();
+    if (!config) return;
+    const normalized = normalizeBiometryConfig(config);
+    return unwrapDeviceSeed(normalized.wrappedDeviceSeed, secret);
   }
 }
